@@ -45,21 +45,32 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	const MovingCow = __webpack_require__(1)
+	const Game = __webpack_require__(3)
+	
+	
+	function GameView(game, ctx) {
+	  this.game = game;
+	  this.ctx = ctx;
+	}
+	
+	GameView.prototype.start = function() {
+	  let that = this;
+	  setInterval(function() {
+	    that.game.draw(that.ctx);
+	    that.game.step(that.ctx);
+	  }, 20);
+	};
+	
+	
 	
 	window.MovingCow = MovingCow;
 	
 	document.addEventListener('DOMContentLoaded', () => {
 	    const el = document.getElementById('game-canvas');
 	    const ctx = el.getContext('2d');
-	
-	    let cow1 = new MovingCow({ pos: [50, 50], vel: [15, 15], radius: 5, color: 'brown' })
-	    let cow2 = new MovingCow({ pos: [100, 100], vel: [20, 100], radius: 5, color: 'brown' })
-	    let cow3 = new MovingCow({ pos: [200, 200], vel: [300, 500], radius: 5, color: 'brown' })
-	    let cow4 = new MovingCow({ pos: [1000, 400], vel: [150, 200], radius: 5, color: 'brown' })
-	    cow1.draw(ctx)
-	    cow2.draw(ctx)
-	    cow3.draw(ctx)
-	    cow4.draw(ctx)
+	    let game = new Game();
+	    let gv = new GameView(game, ctx);
+	    gv.start();
 	    
 	    console.log('in add event listener')
 	
@@ -77,16 +88,16 @@
 	    this.radius = data.radius;
 	    this.color = data.color
 	    const img = new Image();
-	    img.src = '../images/cow.png';
+	    img.src = "../images/cow.png";
 	    this.sprite = img;
 	    // this.vel = Util.randomVec(15);
 	}
 	
 	MovingCow.prototype.draw = function(ctx) {
 	    ctx.fillStyle = this.color;
-	    this.sprite.addEventListener('load', e => {
-	        ctx.drawImage(this.sprite, 37, 71);
-	    })
+	    this.sprite.onload = function() {
+	        ctx.drawImage(this.sprite, this.pos[0], this.pos[1]);
+	    }
 	}
 	
 	MovingCow.prototype.move = function() {
@@ -125,6 +136,57 @@
 	
 	module.exports = Util;
 
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	const MovingCow = __webpack_require__(1);
+	
+	Game.DIM_X = 1300;
+	Game.DIM_Y = 800;
+	Game.NUM_COWS = 10;
+	
+	function Game() {
+	    this.cows = [];
+	    this.addCows();
+	}
+	
+	Game.prototype.addCows = function() {
+	    let i = 0;
+	    while (i < Game.NUM_COWS) {
+	        this.cows.push( 
+	            new MovingCow({pos: this.randomPosition(), vel: [1, 0], radius: 5, color: 'white' })
+	        )
+	        i++;
+	    }
+	}
+	
+	Game.prototype.randomPosition = function() {
+	  let x = Math.floor(Math.random() * Math.floor(Game.DIM_X));
+	  let y = Math.floor(Math.random() * Math.floor(Game.DIM_Y));
+	  return [x, y];
+	};
+	
+	
+	Game.prototype.draw = function(ctx) {
+	  ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
+	  this.cows.forEach(cow => {
+	    cow.draw(ctx);
+	  });
+	};
+	
+	Game.prototype.step = function(ctx) {
+	    this.moveCows(ctx);
+	}
+	
+	Game.prototype.moveCows = function() {
+	    this.cows.forEach(cow => {
+	        cow.move();
+	    })
+	}
+	
+	module.exports = Game;
 
 /***/ })
 /******/ ]);

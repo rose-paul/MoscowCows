@@ -6,16 +6,16 @@ function MovingCow(data) {
     this.radius = data.radius;
     this.color = data.color
     const img = new Image();
-    img.src = '../images/cow.png';
+    img.src = "../images/cow.png";
     this.sprite = img;
     // this.vel = Util.randomVec(15);
 }
 
 MovingCow.prototype.draw = function(ctx) {
     ctx.fillStyle = this.color;
-    this.sprite.addEventListener('load', e => {
-        ctx.drawImage(this.sprite, 37, 71);
-    })
+    this.sprite.onload = function() {
+        ctx.drawImage(this.sprite, this.pos[0], this.pos[1]);
+    }
 }
 
 MovingCow.prototype.move = function() {
