@@ -52,16 +52,25 @@
 	    const el = document.getElementById('game-canvas');
 	    const ctx = el.getContext('2d');
 	
-	    let cow1 = new MovingCow({ pos: [50, 50], vel: [10, 10], radius: 5, color: 'brown' })
+	    let cow1 = new MovingCow({ pos: [50, 50], vel: [15, 15], radius: 5, color: 'brown' })
+	    let cow2 = new MovingCow({ pos: [100, 100], vel: [20, 100], radius: 5, color: 'brown' })
+	    let cow3 = new MovingCow({ pos: [200, 200], vel: [300, 500], radius: 5, color: 'brown' })
+	    let cow4 = new MovingCow({ pos: [1000, 400], vel: [150, 200], radius: 5, color: 'brown' })
 	    cow1.draw(ctx)
+	    cow2.draw(ctx)
+	    cow3.draw(ctx)
+	    cow4.draw(ctx)
+	    
 	    console.log('in add event listener')
 	
 	})
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
+	const Util = __webpack_require__(2)
+	
 	function MovingCow(data) {
 	    this.pos = data.pos;
 	    this.vel = data.vel;
@@ -70,6 +79,7 @@
 	    const img = new Image();
 	    img.src = '../images/cow.png';
 	    this.sprite = img;
+	    // this.vel = Util.randomVec(15);
 	}
 	
 	MovingCow.prototype.draw = function(ctx) {
@@ -79,7 +89,7 @@
 	    })
 	}
 	
-	MovingObject.prototype.move = function() {
+	MovingCow.prototype.move = function() {
 	  if (this.pos[0] > 1300) {
 	    this.pos[0] = 0;
 	  } else if (this.pos[0] < 0) {
@@ -97,6 +107,24 @@
 	
 	
 	module.exports = MovingCow;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+	const Util = {
+	  randomVec(length) {
+	    const deg = 2 * Math.PI * Math.random();
+	    return Util.scale([Math.sin(deg), Math.cos(deg)], length);
+	  },
+	
+	  scale(vec, m) {
+	    return [vec[0] * m, vec[1] * m];
+	  }
+	};
+	
+	module.exports = Util;
+
 
 /***/ })
 /******/ ]);

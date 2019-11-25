@@ -1,3 +1,5 @@
+const Util = require('./util')
+
 function MovingCow(data) {
     this.pos = data.pos;
     this.vel = data.vel;
@@ -6,6 +8,7 @@ function MovingCow(data) {
     const img = new Image();
     img.src = '../images/cow.png';
     this.sprite = img;
+    // this.vel = Util.randomVec(15);
 }
 
 MovingCow.prototype.draw = function(ctx) {
@@ -15,7 +18,7 @@ MovingCow.prototype.draw = function(ctx) {
     })
 }
 
-MovingObject.prototype.move = function() {
+MovingCow.prototype.move = function() {
   if (this.pos[0] > 1300) {
     this.pos[0] = 0;
   } else if (this.pos[0] < 0) {
