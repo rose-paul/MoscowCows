@@ -96,7 +96,7 @@
 	MovingCow.prototype.draw = function(ctx) {
 	    ctx.fillStyle = this.color;
 	    this.sprite.onload = function() {
-	        ctx.drawImage(this.sprite, this.pos[0], this.pos[1]);
+	        ctx.drawImage(this.sprite, 37, 71);
 	    }
 	}
 	
