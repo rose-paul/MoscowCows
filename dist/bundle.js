@@ -60,7 +60,7 @@
 	  setInterval(function() {
 	    that.game.draw(that.ctx);
 	    that.game.step(that.ctx);
-	  }, 2000);
+	  }, 20);
 	};
 	
 	document.addEventListener('DOMContentLoaded', () => {
@@ -92,12 +92,9 @@
 	}
 	
 	MovingCow.prototype.draw = function(ctx) {
-	    ctx.fillStyle = this.color;
+	
 	    ctx.beginPath();
-	    let that = this;
-	    this.sprite.onload = function() {
-	      ctx.drawImage(that.sprite, that.pos[0], that.pos[1])
-	    }
+	    ctx.drawImage(this.sprite, this.pos[0], this.pos[1])
 	    
 	}
 	

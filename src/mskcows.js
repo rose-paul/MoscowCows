@@ -14,7 +14,7 @@ GameView.prototype.start = function() {
   setInterval(function() {
     that.game.draw(that.ctx);
     that.game.step(that.ctx);
-  }, 2000);
+  }, 20);
 };
 
 document.addEventListener('DOMContentLoaded', () => {
