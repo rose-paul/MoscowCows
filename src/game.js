@@ -14,6 +14,7 @@ function Game() {
     this.collected = 0;
     this.size = 60;
     this.addCows();
+    this.lost = false;
     // this.level = 0;
 }
 
@@ -120,7 +121,8 @@ Game.prototype.lose = function() {
     const ctx = el.getContext('2d');
     ctx.fillStyle = "red"
     ctx.font = "bold 48px Arial"
-    ctx.fillText("Ya trampled on", el.width * .38, el.height * .5)
+    ctx.fillText("Ya trampled", el.width * .38, el.height * .5)
+    this.lost = true;
 }
 
 module.exports = Game;

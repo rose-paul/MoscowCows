@@ -79,6 +79,7 @@
 	    this.collected = 0;
 	    this.size = 60;
 	    this.addCows();
+	    this.lost = false;
 	    // this.level = 0;
 	}
 	
@@ -185,7 +186,8 @@
 	    const ctx = el.getContext('2d');
 	    ctx.fillStyle = "red"
 	    ctx.font = "bold 48px Arial"
-	    ctx.fillText("Ya trampled on", el.width * .38, el.height * .5)
+	    ctx.fillText("Ya trampled", el.width * .38, el.height * .5)
+	    this.lost = true;
 	}
 	
 	module.exports = Game;
@@ -349,9 +351,10 @@
 	GameView.prototype.start = function () {
 	    let that = this;
 	    this.bindKeyHandlers();
-	    setInterval(function () {
+	    let intId = setInterval(function () {
 	        that.game.draw(that.ctx);
 	        that.game.step(that.ctx);
+	        if (that.game.lost) clearInterval(intId);
 	    }, 20);
 	};
 	

@@ -28,9 +28,10 @@ GameView.prototype.bindKeyHandlers = function() {
 GameView.prototype.start = function () {
     let that = this;
     this.bindKeyHandlers();
-    setInterval(function () {
+    let intId = setInterval(function () {
         that.game.draw(that.ctx);
         that.game.step(that.ctx);
+        if (that.game.lost) clearInterval(intId);
     }, 20);
 };
 
