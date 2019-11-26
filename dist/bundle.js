@@ -344,14 +344,22 @@
 	    });
 	};
 	
+	const gameTimer = (gameView) => setInterval( function() {
+	    gameView.game.draw(gameView.ctx);
+	    gameView.game.step(gameView.ctx);
+	    if (gameView.game.lost) {
+	        gameView.end();
+	    }
+	}, 20);
+	
 	GameView.prototype.start = function () {
-	    let that = this;
 	    this.bindKeyHandlers();
-	    setInterval(function () {
-	        that.game.draw(that.ctx);
-	        that.game.step(that.ctx);
-	    }, 20);
+	    gameTimer(this);
 	};
+	
+	GameView.prototype.end = function() {
+	    clearInterval(gameTimer);
+	}
 	
 	module.exports = GameView;
 
