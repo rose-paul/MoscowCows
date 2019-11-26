@@ -50,12 +50,12 @@ Game.prototype.draw = function(ctx) {
 };
 
 Game.prototype.step = function(ctx) {
-    this.moveCows(ctx);
+    this.moveAll(ctx);
 }
 
-Game.prototype.moveCows = function(ctx) {
-    this.cows.forEach(cow => {
-        cow.move();
+Game.prototype.moveAll = function(ctx) {
+    this.all().forEach(thing => {
+        thing.move();
     })
 }
 

@@ -13,7 +13,7 @@ function Player(data) {
 Player.prototype = Object.create(MovingCow.prototype);
 Player.prototype.constructor = Player;
 
-Player.prototype.move = function(direction) {
+Player.prototype.movee = function(direction) {
     // this.vel[0] += direction[0];
     // this.vel[1] += direction[1];
     if (this.pos[0] > 1300) {

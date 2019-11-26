@@ -115,12 +115,12 @@
 	};
 	
 	Game.prototype.step = function(ctx) {
-	    this.moveCows(ctx);
+	    this.moveAll(ctx);
 	}
 	
-	Game.prototype.moveCows = function(ctx) {
-	    this.cows.forEach(cow => {
-	        cow.move();
+	Game.prototype.moveAll = function(ctx) {
+	    this.all().forEach(thing => {
+	        thing.move();
 	    })
 	}
 	
@@ -204,7 +204,7 @@
 	Player.prototype = Object.create(MovingCow.prototype);
 	Player.prototype.constructor = Player;
 	
-	Player.prototype.move = function(direction) {
+	Player.prototype.movee = function(direction) {
 	    // this.vel[0] += direction[0];
 	    // this.vel[1] += direction[1];
 	    if (this.pos[0] > 1300) {
@@ -239,17 +239,21 @@
 	
 	
 	GameView.MOVES = {
-	    w: [0, -7],
-	    a: [-7, 0],
-	    s: [0, 7],
-	    d: [7, 0],
+	    w: [0, -10],
+	    a: [-10, 0],
+	    s: [0, 10],
+	    d: [10, 0],
+	    "s+d": [10, 10],
+	    "s+a": [-10, 10],
+	    "w+d": [10, -10],
+	    "w+a": [-10, -10]
 	};
-	
+	// 
 	GameView.prototype.bindKeyHandlers = function() {
 	    const player = this.player;
 	    Object.keys(GameView.MOVES).forEach(function (k) {
 	        const direction = GameView.MOVES[k];
-	        key(k, function () { player.move(direction); });
+	        key(k, function () { player.movee(direction); });
 	    });
 	};
 	
