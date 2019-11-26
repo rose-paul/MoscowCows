@@ -9,7 +9,6 @@ function Game() {
     this.cows = [];
     this.players = [];
     this.addCows();
-    this.addPlayer();
 }
 
 Game.prototype.addCows = function() {

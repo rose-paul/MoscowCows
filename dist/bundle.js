@@ -44,24 +44,8 @@
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	const MovingCow = __webpack_require__(2)
 	const Game = __webpack_require__(1)
-	
-	
-	function GameView(game, ctx) {
-	  this.game = game;
-	  this.ctx = ctx;
-	}
-	
-	window.MovingCow = MovingCow;
-	
-	GameView.prototype.start = function() {
-	  let that = this;
-	  setInterval(function() {
-	    that.game.draw(that.ctx);
-	    that.game.step(that.ctx);
-	  }, 20);
-	};
+	const GameView = __webpack_require__(5)
 	
 	document.addEventListener('DOMContentLoaded', () => {
 	    const el = document.getElementById('game-canvas');
@@ -90,7 +74,6 @@
 	    this.cows = [];
 	    this.players = [];
 	    this.addCows();
-	    this.addPlayer();
 	}
 	
 	Game.prototype.addCows = function() {
@@ -221,11 +204,65 @@
 	Player.prototype = Object.create(MovingCow.prototype);
 	Player.prototype.constructor = Player;
 	
+	Player.prototype.move = function(direction) {
+	    // this.vel[0] += direction[0];
+	    // this.vel[1] += direction[1];
+	    if (this.pos[0] > 1300) {
+	        this.pos[0] = 0;
+	    } else if (this.pos[0] < 0) {
+	        this.pos[0] = 1300;
+	    }
+	    if (this.pos[1] > 800) {
+	        this.pos[1] = 0;
+	    } else if (this.pos[1] < 0) {
+	        this.pos[1] = 800;
+	    }
+	    this.pos[0] = (this.pos[0] + direction[0]) % 1300;
+	    this.pos[1] = (this.pos[1] + direction[1]) % 800;
+	}
+	
 	module.exports = Player;
 	
 	
 	
 
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+	function GameView(game, ctx) {
+	    this.game = game;
+	    this.ctx = ctx;
+	    this.player = this.game.addPlayer();
+	}
+	
+	
+	GameView.MOVES = {
+	    w: [0, -7],
+	    a: [-7, 0],
+	    s: [0, 7],
+	    d: [7, 0],
+	};
+	
+	GameView.prototype.bindKeyHandlers = function() {
+	    const player = this.player;
+	    Object.keys(GameView.MOVES).forEach(function (k) {
+	        const direction = GameView.MOVES[k];
+	        key(k, function () { player.move(direction); });
+	    });
+	};
+	
+	GameView.prototype.start = function () {
+	    let that = this;
+	    this.bindKeyHandlers();
+	    setInterval(function () {
+	        that.game.draw(that.ctx);
+	        that.game.step(that.ctx);
+	    }, 20);
+	};
+	
+	module.exports = GameView;
 
 /***/ })
 /******/ ]);
