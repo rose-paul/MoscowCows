@@ -80,24 +80,37 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	const MovingCow = __webpack_require__(2);
+	const Player = __webpack_require__(4)
 	
 	Game.DIM_X = 1300;
 	Game.DIM_Y = 800;
-	Game.NUM_COWS = 3;
+	Game.NUM_COWS = 25;
 	
 	function Game() {
 	    this.cows = [];
+	    this.players = [];
 	    this.addCows();
+	    this.addPlayer();
 	}
 	
 	Game.prototype.addCows = function() {
 	    let i = 0;
 	    while (i < Game.NUM_COWS) {
 	        this.cows.push( 
-	            new MovingCow({pos: this.randomPosition(), vel: [-1, 0], radius: 5, color: 'white' })
+	            new MovingCow({pos: this.randomPosition(), vel: [-1, 0], radius: 5 })
 	        )
 	        i++;
 	    }
+	}
+	
+	Game.prototype.addPlayer = function() {
+	    const player = new Player({
+	        pos: this.randomPosition()
+	    })
+	
+	    this.players.push(player);
+	    debugger
+	    return player;
 	}
 	
 	Game.prototype.randomPosition = function() {
@@ -106,11 +119,15 @@
 	  return [x, y];
 	};
 	
+	Game.prototype.all = function() {
+	    return [].concat(this.cows, this.players);
+	}
+	
 	
 	Game.prototype.draw = function(ctx) {
 	  ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
-	  this.cows.forEach(cow => {
-	    cow.draw(ctx);
+	  this.all().forEach(thing => {
+	    thing.draw(ctx);
 	  });
 	};
 	
@@ -136,7 +153,6 @@
 	    this.pos = data.pos;
 	    this.vel = data.vel;
 	    this.radius = data.radius;
-	    this.color = data.color
 	    let img = new Image();
 	    img.src = "../images/cow.png";
 	    this.sprite = img;
@@ -184,6 +200,31 @@
 	};
 	
 	module.exports = Util;
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	const Util = __webpack_require__(3);
+	const MovingCow = __webpack_require__(2)
+	
+	function Player(data) {
+	    this.radius = 5;
+	    this.vel = data.vel || [0, 0];
+	    let img2 = new Image();
+	    img2.src = "../images/002-russia.png"
+	    this.sprite = img2;
+	    this.pos = data.pos
+	}
+	
+	Player.prototype = Object.create(MovingCow.prototype);
+	Player.prototype.constructor = Player;
+	
+	module.exports = Player;
+	
+	
+	
 
 
 /***/ })

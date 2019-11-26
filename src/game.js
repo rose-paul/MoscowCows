@@ -1,22 +1,35 @@
 const MovingCow = require("./moving_cow");
+const Player = require("./player")
 
 Game.DIM_X = 1300;
 Game.DIM_Y = 800;
-Game.NUM_COWS = 3;
+Game.NUM_COWS = 25;
 
 function Game() {
     this.cows = [];
+    this.players = [];
     this.addCows();
+    this.addPlayer();
 }
 
 Game.prototype.addCows = function() {
     let i = 0;
     while (i < Game.NUM_COWS) {
         this.cows.push( 
-            new MovingCow({pos: this.randomPosition(), vel: [-1, 0], radius: 5, color: 'white' })
+            new MovingCow({pos: this.randomPosition(), vel: [-1, 0], radius: 5 })
         )
         i++;
     }
+}
+
+Game.prototype.addPlayer = function() {
+    const player = new Player({
+        pos: this.randomPosition()
+    })
+
+    this.players.push(player);
+    debugger
+    return player;
 }
 
 Game.prototype.randomPosition = function() {
@@ -25,11 +38,15 @@ Game.prototype.randomPosition = function() {
   return [x, y];
 };
 
+Game.prototype.all = function() {
+    return [].concat(this.cows, this.players);
+}
+
 
 Game.prototype.draw = function(ctx) {
   ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
-  this.cows.forEach(cow => {
-    cow.draw(ctx);
+  this.all().forEach(thing => {
+    thing.draw(ctx);
   });
 };
 
