@@ -1,5 +1,6 @@
 const MovingCow = require("./moving_cow");
-const Player = require("./player")
+const Player = require("./player");
+const Doll = require('./doll');
 
 Game.DIM_X = 1300;
 Game.DIM_Y = 800;
@@ -8,6 +9,9 @@ Game.NUM_COWS = 25;
 function Game() {
     this.cows = [];
     this.players = [];
+    this.doll;
+    this.collected = 0;
+    this.size = 60;
     this.addCows();
 }
 
@@ -27,8 +31,17 @@ Game.prototype.addPlayer = function() {
     })
 
     this.players.push(player);
-    debugger
     return player;
+}
+
+Game.prototype.addDoll = function() {
+    const doll = new Doll({
+        pos: this.randomPosition(),
+        radius: 5
+    })
+
+    this.doll = doll;
+    return doll
 }
 
 Game.prototype.randomPosition = function() {
@@ -47,11 +60,32 @@ Game.prototype.draw = function(ctx) {
   this.all().forEach(thing => {
     thing.draw(ctx);
   });
+  if (this.collected === 1) {
+      this.size = 54;
+  } else if (this.collected === 2) {
+      this.size = 48;
+  } else if (this.collected === 3) {
+      this.size = 42;
+  } else if (this.collected === 4) {
+      this.size = 36;
+  } else if (this.collected === 5) {
+      this.size = 30;
+  } else if (this.collected === 6) {
+      this.size === 24;
+  } else if (this.collected === 7) {
+      this.size = 18;
+  } else if (this.collected === 8) {
+      this.size = 12
+  } else if (this.collected === 9) {
+      this.size = 6;
+  }
+  this.doll.draw(ctx, this.size);
 };
 
 Game.prototype.step = function(ctx) {
     this.moveAll(ctx);
     this.trampled();
+    this.collect();
 }
 
 Game.prototype.moveAll = function(ctx) {
@@ -66,6 +100,17 @@ Game.prototype.trampled = function() {
             this.players[0].pos = this.randomPosition();
         }
     })
+}
+
+Game.prototype.collect = function() {
+    if (this.players[0].collects(this.doll)) {
+        this.collected++;
+        console.log(this.collected)
+        this.doll.pos = this.randomPosition();
+        if (this.collected === 9) {
+            this.collected = 0;
+        }
+    }
 }
 
 module.exports = Game;
