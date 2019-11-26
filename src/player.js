@@ -30,6 +30,18 @@ Player.prototype.movee = function(direction) {
     this.pos[1] = (this.pos[1] + direction[1]) % 800;
 }
 
+Player.prototype.collects = function(doll) {
+    const xDist = Math.abs(this.pos[0] - doll.pos[0]);
+    const yDist = Math.abs(this.pos[1] - doll.pos[1]);
+    const rDist = this.radius + doll.radius;
+
+    if (rDist > xDist && rDist > yDist) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 module.exports = Player;
 
 

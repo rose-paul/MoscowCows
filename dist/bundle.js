@@ -64,7 +64,8 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	const MovingCow = __webpack_require__(2);
-	const Player = __webpack_require__(4)
+	const Player = __webpack_require__(4);
+	const Doll = __webpack_require__(6);
 	
 	Game.DIM_X = 1300;
 	Game.DIM_Y = 800;
@@ -73,6 +74,9 @@
 	function Game() {
 	    this.cows = [];
 	    this.players = [];
+	    this.doll;
+	    this.collected = 0;
+	    this.size = 60;
 	    this.addCows();
 	}
 	
@@ -92,8 +96,17 @@
 	    })
 	
 	    this.players.push(player);
-	    debugger
 	    return player;
+	}
+	
+	Game.prototype.addDoll = function() {
+	    const doll = new Doll({
+	        pos: this.randomPosition(),
+	        radius: 15
+	    })
+	
+	    this.doll = doll;
+	    return doll
 	}
 	
 	Game.prototype.randomPosition = function() {
@@ -112,11 +125,32 @@
 	  this.all().forEach(thing => {
 	    thing.draw(ctx);
 	  });
+	  if (this.collected === 1) {
+	      this.size = 54;
+	  } else if (this.collected === 2) {
+	      this.size = 48;
+	  } else if (this.collected === 3) {
+	      this.size = 42;
+	  } else if (this.collected === 4) {
+	      this.size = 36;
+	  } else if (this.collected === 5) {
+	      this.size = 30;
+	  } else if (this.collected === 6) {
+	      this.size === 24;
+	  } else if (this.collected === 7) {
+	      this.size = 18;
+	  } else if (this.collected === 8) {
+	      this.size = 12
+	  } else if (this.collected === 9) {
+	      this.size = 6;
+	  }
+	  this.doll.draw(ctx, this.size);
 	};
 	
 	Game.prototype.step = function(ctx) {
 	    this.moveAll(ctx);
 	    this.trampled();
+	    this.collect();
 	}
 	
 	Game.prototype.moveAll = function(ctx) {
@@ -131,6 +165,17 @@
 	            this.players[0].pos = this.randomPosition();
 	        }
 	    })
+	}
+	
+	Game.prototype.collect = function() {
+	    if (this.players[0].collects(this.doll)) {
+	        this.collected++;
+	        console.log(this.collected)
+	        this.doll.pos = this.randomPosition();
+	        if (this.collected === 9) {
+	            this.collected = 0;
+	        }
+	    }
 	}
 	
 	module.exports = Game;
@@ -242,6 +287,18 @@
 	    this.pos[1] = (this.pos[1] + direction[1]) % 800;
 	}
 	
+	Player.prototype.collects = function(doll) {
+	    const xDist = Math.abs(this.pos[0] - doll.pos[0]);
+	    const yDist = Math.abs(this.pos[1] - doll.pos[1]);
+	    const rDist = this.radius + doll.radius;
+	
+	    if (rDist > xDist && rDist > yDist) {
+	        return true;
+	    } else {
+	        return false;
+	    }
+	}
+	
 	module.exports = Player;
 	
 	
@@ -256,6 +313,7 @@
 	    this.game = game;
 	    this.ctx = ctx;
 	    this.player = this.game.addPlayer();
+	    this.doll = this.game.addDoll();
 	}
 	
 	
@@ -288,6 +346,28 @@
 	};
 	
 	module.exports = GameView;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	const Util = __webpack_require__(3)
+	
+	function Doll(data) {
+	    this.pos = data.pos;
+	    this.radius = data.radius;
+	    let img = new Image();
+	    img.src = "../images/matryoshka.png";
+	    this.sprite = img;
+	}
+	
+	Doll.prototype.draw = function (ctx, size) {
+	    ctx.beginPath();
+	    ctx.drawImage(this.sprite, this.pos[0], this.pos[1], size, size)
+	}
+	
+	
+	module.exports = Doll;
 
 /***/ })
 /******/ ]);
