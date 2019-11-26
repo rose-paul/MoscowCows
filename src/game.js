@@ -15,7 +15,7 @@ Game.prototype.addCows = function() {
     let i = 0;
     while (i < Game.NUM_COWS) {
         this.cows.push( 
-            new MovingCow({pos: this.randomPosition(), vel: [-1, 0], radius: 5 })
+            new MovingCow({pos: this.randomPosition(), vel: [-1, 0], radius: 10 })
         )
         i++;
     }
@@ -51,11 +51,20 @@ Game.prototype.draw = function(ctx) {
 
 Game.prototype.step = function(ctx) {
     this.moveAll(ctx);
+    this.trampled();
 }
 
 Game.prototype.moveAll = function(ctx) {
     this.all().forEach(thing => {
         thing.move();
+    })
+}
+
+Game.prototype.trampled = function() {
+    this.cows.forEach( cow => {
+        if (cow.tramples(this.players[0])) {
+            this.players[0].pos = this.randomPosition();
+        }
     })
 }
 

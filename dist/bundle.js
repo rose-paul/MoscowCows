@@ -80,7 +80,7 @@
 	    let i = 0;
 	    while (i < Game.NUM_COWS) {
 	        this.cows.push( 
-	            new MovingCow({pos: this.randomPosition(), vel: [-1, 0], radius: 5 })
+	            new MovingCow({pos: this.randomPosition(), vel: [-1, 0], radius: 10 })
 	        )
 	        i++;
 	    }
@@ -116,11 +116,20 @@
 	
 	Game.prototype.step = function(ctx) {
 	    this.moveAll(ctx);
+	    this.trampled();
 	}
 	
 	Game.prototype.moveAll = function(ctx) {
 	    this.all().forEach(thing => {
 	        thing.move();
+	    })
+	}
+	
+	Game.prototype.trampled = function() {
+	    this.cows.forEach( cow => {
+	        if (cow.tramples(this.players[0])) {
+	            this.players[0].pos = this.randomPosition();
+	        }
 	    })
 	}
 	
@@ -162,6 +171,18 @@
 	  this.pos[0] = (this.pos[0] + this.vel[0]) % 1300;
 	  this.pos[1] = (this.pos[1] + this.vel[1]) % 800;
 	};
+	
+	MovingCow.prototype.tramples = function(player) {
+	  const xDist = Math.abs(this.pos[0] - player.pos[0]);
+	  const yDist = Math.abs(this.pos[1] - player.pos[1]);
+	  const rDist = this.radius + player.radius;
+	
+	  if (rDist > xDist && rDist > yDist) {
+	    return true;
+	  } else {
+	    return false;
+	  }
+	}
 	
 	
 	

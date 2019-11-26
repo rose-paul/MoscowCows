@@ -31,6 +31,18 @@ MovingCow.prototype.move = function() {
   this.pos[1] = (this.pos[1] + this.vel[1]) % 800;
 };
 
+MovingCow.prototype.tramples = function(player) {
+  const xDist = Math.abs(this.pos[0] - player.pos[0]);
+  const yDist = Math.abs(this.pos[1] - player.pos[1]);
+  const rDist = this.radius + player.radius;
+
+  if (rDist > xDist && rDist > yDist) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 
 
 module.exports = MovingCow;
