@@ -44,7 +44,7 @@
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	const MovingCow = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./moving_cow\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()))
+	const MovingCow = __webpack_require__(1)
 	const Game = __webpack_require__(3)
 	
 	
@@ -53,17 +53,15 @@
 	  this.ctx = ctx;
 	}
 	
+	window.MovingCow = MovingCow;
+	
 	GameView.prototype.start = function() {
 	  let that = this;
 	  setInterval(function() {
-	    that.game.step(that.ctx);
 	    that.game.draw(that.ctx);
-	  }, 20);
+	    that.game.step(that.ctx);
+	  }, 2000);
 	};
-	
-	
-	
-	window.MovingCow = MovingCow;
 	
 	document.addEventListener('DOMContentLoaded', () => {
 	    const el = document.getElementById('game-canvas');
@@ -72,21 +70,83 @@
 	    let gv = new GameView(game, ctx);
 	    gv.start();
 	    
+	
 	    console.log('in add event listener')
 	
 	})
 
 /***/ }),
-/* 1 */,
-/* 2 */,
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	const Util = __webpack_require__(2)
+	
+	function MovingCow(data) {
+	    this.pos = data.pos;
+	    this.vel = data.vel;
+	    this.radius = data.radius;
+	    this.color = data.color
+	    let img = new Image();
+	    img.src = "../images/cow.png";
+	    this.sprite = img;
+	}
+	
+	MovingCow.prototype.draw = function(ctx) {
+	    ctx.fillStyle = this.color;
+	    ctx.beginPath();
+	    let that = this;
+	    this.sprite.onload = function() {
+	      ctx.drawImage(that.sprite, that.pos[0], that.pos[1])
+	    }
+	    
+	}
+	
+	MovingCow.prototype.move = function() {
+	  if (this.pos[0] > 1300) {
+	    this.pos[0] = 0;
+	  } else if (this.pos[0] < 0) {
+	    this.pos[0] = 1300;
+	  }
+	  if (this.pos[1] > 800) {
+	    this.pos[1] = 0;
+	  } else if (this.pos[1] < 0) {
+	    this.pos[1] = 800;
+	  }
+	  this.pos[0] = (this.pos[0] + this.vel[0]) % 1300;
+	  this.pos[1] = (this.pos[1] + this.vel[1]) % 800;
+	};
+	
+	
+	
+	module.exports = MovingCow;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+	const Util = {
+	  randomVec(length) {
+	    const deg = 2 * Math.PI * Math.random();
+	    return Util.scale([Math.sin(deg), Math.cos(deg)], length);
+	  },
+	
+	  scale(vec, m) {
+	    return [vec[0] * m, vec[1] * m];
+	  }
+	};
+	
+	module.exports = Util;
+
+
+/***/ }),
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	const MovingCow = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./moving_cow\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	const MovingCow = __webpack_require__(1);
 	
 	Game.DIM_X = 1300;
 	Game.DIM_Y = 800;
-	Game.NUM_COWS = 10;
+	Game.NUM_COWS = 3;
 	
 	function Game() {
 	    this.cows = [];
@@ -121,7 +181,7 @@
 	    this.moveCows(ctx);
 	}
 	
-	Game.prototype.moveCows = function() {
+	Game.prototype.moveCows = function(ctx) {
 	    this.cows.forEach(cow => {
 	        cow.move();
 	    })

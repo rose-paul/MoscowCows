@@ -2,7 +2,7 @@ const MovingCow = require("./moving_cow");
 
 Game.DIM_X = 1300;
 Game.DIM_Y = 800;
-Game.NUM_COWS = 10;
+Game.NUM_COWS = 3;
 
 function Game() {
     this.cows = [];
@@ -37,7 +37,7 @@ Game.prototype.step = function(ctx) {
     this.moveCows(ctx);
 }
 
-Game.prototype.moveCows = function() {
+Game.prototype.moveCows = function(ctx) {
     this.cows.forEach(cow => {
         cow.move();
     })

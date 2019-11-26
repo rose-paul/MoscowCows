@@ -7,17 +7,15 @@ function GameView(game, ctx) {
   this.ctx = ctx;
 }
 
+window.MovingCow = MovingCow;
+
 GameView.prototype.start = function() {
   let that = this;
   setInterval(function() {
-    that.game.step(that.ctx);
     that.game.draw(that.ctx);
-  }, 20);
+    that.game.step(that.ctx);
+  }, 2000);
 };
-
-
-
-window.MovingCow = MovingCow;
 
 document.addEventListener('DOMContentLoaded', () => {
     const el = document.getElementById('game-canvas');
@@ -26,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let gv = new GameView(game, ctx);
     gv.start();
     
+
     console.log('in add event listener')
 
 })

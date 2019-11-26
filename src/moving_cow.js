@@ -5,16 +5,19 @@ function MovingCow(data) {
     this.vel = data.vel;
     this.radius = data.radius;
     this.color = data.color
-    const img = new Image();
+    let img = new Image();
     img.src = "../images/cow.png";
     this.sprite = img;
 }
 
 MovingCow.prototype.draw = function(ctx) {
     ctx.fillStyle = this.color;
-    this.sprite.onload = () => (
-      ctx.drawImage(this.sprite, this.pos[0], this.pos[1]);
-    )
+    ctx.beginPath();
+    let that = this;
+    this.sprite.onload = function() {
+      ctx.drawImage(that.sprite, that.pos[0], that.pos[1])
+    }
+    
 }
 
 MovingCow.prototype.move = function() {
