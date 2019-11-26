@@ -12,9 +12,9 @@ function MovingCow(data) {
 
 MovingCow.prototype.draw = function(ctx) {
     ctx.fillStyle = this.color;
-    this.sprite.onload = function() {
-        ctx.drawImage(this.sprite, this.pos[0], this.pos[1]);
-    }
+    this.sprite.onload = () => (
+      ctx.drawImage(this.sprite, this.pos[0], this.pos[1]);
+    )
 }
 
 MovingCow.prototype.move = function() {
