@@ -1,21 +1,5 @@
-const MovingCow = require('./moving_cow')
-const Game = require('./game')
-
-
-function GameView(game, ctx) {
-  this.game = game;
-  this.ctx = ctx;
-}
-
-window.MovingCow = MovingCow;
-
-GameView.prototype.start = function() {
-  let that = this;
-  setInterval(function() {
-    that.game.draw(that.ctx);
-    that.game.step(that.ctx);
-  }, 20);
-};
+const Game = require("./game")
+const GameView = require("./gameview")
 
 document.addEventListener('DOMContentLoaded', () => {
     const el = document.getElementById('game-canvas');

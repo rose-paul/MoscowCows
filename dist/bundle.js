@@ -44,24 +44,8 @@
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	const MovingCow = __webpack_require__(1)
-	const Game = __webpack_require__(3)
-	
-	
-	function GameView(game, ctx) {
-	  this.game = game;
-	  this.ctx = ctx;
-	}
-	
-	window.MovingCow = MovingCow;
-	
-	GameView.prototype.start = function() {
-	  let that = this;
-	  setInterval(function() {
-	    that.game.draw(that.ctx);
-	    that.game.step(that.ctx);
-	  }, 20);
-	};
+	const Game = __webpack_require__(1)
+	const GameView = __webpack_require__(5)
 	
 	document.addEventListener('DOMContentLoaded', () => {
 	    const el = document.getElementById('game-canvas');
@@ -79,13 +63,88 @@
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	const Util = __webpack_require__(2)
+	const MovingCow = __webpack_require__(2);
+	const Player = __webpack_require__(4)
+	
+	Game.DIM_X = 1300;
+	Game.DIM_Y = 800;
+	Game.NUM_COWS = 25;
+	
+	function Game() {
+	    this.cows = [];
+	    this.players = [];
+	    this.addCows();
+	}
+	
+	Game.prototype.addCows = function() {
+	    let i = 0;
+	    while (i < Game.NUM_COWS) {
+	        this.cows.push( 
+	            new MovingCow({pos: this.randomPosition(), vel: [-1, 0], radius: 10 })
+	        )
+	        i++;
+	    }
+	}
+	
+	Game.prototype.addPlayer = function() {
+	    const player = new Player({
+	        pos: this.randomPosition()
+	    })
+	
+	    this.players.push(player);
+	    debugger
+	    return player;
+	}
+	
+	Game.prototype.randomPosition = function() {
+	  let x = Math.floor(Math.random() * Math.floor(Game.DIM_X));
+	  let y = Math.floor(Math.random() * Math.floor(Game.DIM_Y));
+	  return [x, y];
+	};
+	
+	Game.prototype.all = function() {
+	    return [].concat(this.cows, this.players);
+	}
+	
+	
+	Game.prototype.draw = function(ctx) {
+	  ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
+	  this.all().forEach(thing => {
+	    thing.draw(ctx);
+	  });
+	};
+	
+	Game.prototype.step = function(ctx) {
+	    this.moveAll(ctx);
+	    this.trampled();
+	}
+	
+	Game.prototype.moveAll = function(ctx) {
+	    this.all().forEach(thing => {
+	        thing.move();
+	    })
+	}
+	
+	Game.prototype.trampled = function() {
+	    this.cows.forEach( cow => {
+	        if (cow.tramples(this.players[0])) {
+	            this.players[0].pos = this.randomPosition();
+	        }
+	    })
+	}
+	
+	module.exports = Game;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	const Util = __webpack_require__(3)
 	
 	function MovingCow(data) {
 	    this.pos = data.pos;
 	    this.vel = data.vel;
 	    this.radius = data.radius;
-	    this.color = data.color
 	    let img = new Image();
 	    img.src = "../images/cow.png";
 	    this.sprite = img;
@@ -113,12 +172,24 @@
 	  this.pos[1] = (this.pos[1] + this.vel[1]) % 800;
 	};
 	
+	MovingCow.prototype.tramples = function(player) {
+	  const xDist = Math.abs(this.pos[0] - player.pos[0]);
+	  const yDist = Math.abs(this.pos[1] - player.pos[1]);
+	  const rDist = this.radius + player.radius;
+	
+	  if (rDist > xDist && rDist > yDist) {
+	    return true;
+	  } else {
+	    return false;
+	  }
+	}
+	
 	
 	
 	module.exports = MovingCow;
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports) {
 
 	const Util = {
@@ -136,55 +207,87 @@
 
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	const MovingCow = __webpack_require__(1);
+	const Util = __webpack_require__(3);
+	const MovingCow = __webpack_require__(2)
 	
-	Game.DIM_X = 1300;
-	Game.DIM_Y = 800;
-	Game.NUM_COWS = 3;
-	
-	function Game() {
-	    this.cows = [];
-	    this.addCows();
+	function Player(data) {
+	    this.radius = 5;
+	    this.vel = data.vel || [0, 0];
+	    let img2 = new Image();
+	    img2.src = "../images/002-russia.png"
+	    this.sprite = img2;
+	    this.pos = data.pos
 	}
 	
-	Game.prototype.addCows = function() {
-	    let i = 0;
-	    while (i < Game.NUM_COWS) {
-	        this.cows.push( 
-	            new MovingCow({pos: this.randomPosition(), vel: [1, 0], radius: 5, color: 'white' })
-	        )
-	        i++;
+	Player.prototype = Object.create(MovingCow.prototype);
+	Player.prototype.constructor = Player;
+	
+	Player.prototype.movee = function(direction) {
+	    // this.vel[0] += direction[0];
+	    // this.vel[1] += direction[1];
+	    if (this.pos[0] > 1300) {
+	        this.pos[0] = 0;
+	    } else if (this.pos[0] < 0) {
+	        this.pos[0] = 1300;
 	    }
+	    if (this.pos[1] > 800) {
+	        this.pos[1] = 0;
+	    } else if (this.pos[1] < 0) {
+	        this.pos[1] = 800;
+	    }
+	    this.pos[0] = (this.pos[0] + direction[0]) % 1300;
+	    this.pos[1] = (this.pos[1] + direction[1]) % 800;
 	}
 	
-	Game.prototype.randomPosition = function() {
-	  let x = Math.floor(Math.random() * Math.floor(Game.DIM_X));
-	  let y = Math.floor(Math.random() * Math.floor(Game.DIM_Y));
-	  return [x, y];
+	module.exports = Player;
+	
+	
+	
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+	function GameView(game, ctx) {
+	    this.game = game;
+	    this.ctx = ctx;
+	    this.player = this.game.addPlayer();
+	}
+	
+	
+	GameView.MOVES = {
+	    w: [0, -10],
+	    a: [-10, 0],
+	    s: [0, 10],
+	    d: [10, 0],
+	    "s+d": [10, 10],
+	    "s+a": [-10, 10],
+	    "w+d": [10, -10],
+	    "w+a": [-10, -10]
+	};
+	// 
+	GameView.prototype.bindKeyHandlers = function() {
+	    const player = this.player;
+	    Object.keys(GameView.MOVES).forEach(function (k) {
+	        const direction = GameView.MOVES[k];
+	        key(k, function () { player.movee(direction); });
+	    });
 	};
 	
-	
-	Game.prototype.draw = function(ctx) {
-	  ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
-	  this.cows.forEach(cow => {
-	    cow.draw(ctx);
-	  });
+	GameView.prototype.start = function () {
+	    let that = this;
+	    this.bindKeyHandlers();
+	    setInterval(function () {
+	        that.game.draw(that.ctx);
+	        that.game.step(that.ctx);
+	    }, 20);
 	};
 	
-	Game.prototype.step = function(ctx) {
-	    this.moveCows(ctx);
-	}
-	
-	Game.prototype.moveCows = function(ctx) {
-	    this.cows.forEach(cow => {
-	        cow.move();
-	    })
-	}
-	
-	module.exports = Game;
+	module.exports = GameView;
 
 /***/ })
 /******/ ]);
