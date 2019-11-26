@@ -66,6 +66,7 @@
 	const MovingCow = __webpack_require__(2);
 	const Player = __webpack_require__(4);
 	const Doll = __webpack_require__(6);
+	// const Level = require('./level')
 	
 	Game.DIM_X = 1300;
 	Game.DIM_Y = 800;
@@ -78,6 +79,7 @@
 	    this.collected = 0;
 	    this.size = 60;
 	    this.addCows();
+	    // this.level = 0;
 	}
 	
 	Game.prototype.addCows = function() {
@@ -344,22 +346,14 @@
 	    });
 	};
 	
-	const gameTimer = (gameView) => setInterval( function() {
-	    gameView.game.draw(gameView.ctx);
-	    gameView.game.step(gameView.ctx);
-	    if (gameView.game.lost) {
-	        gameView.end();
-	    }
-	}, 20);
-	
 	GameView.prototype.start = function () {
+	    let that = this;
 	    this.bindKeyHandlers();
-	    gameTimer(this);
+	    setInterval(function () {
+	        that.game.draw(that.ctx);
+	        that.game.step(that.ctx);
+	    }, 20);
 	};
-	
-	GameView.prototype.end = function() {
-	    clearInterval(gameTimer);
-	}
 	
 	module.exports = GameView;
 

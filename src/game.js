@@ -1,6 +1,7 @@
 const MovingCow = require("./moving_cow");
 const Player = require("./player");
 const Doll = require('./doll');
+// const Level = require('./level')
 
 Game.DIM_X = 1300;
 Game.DIM_Y = 800;
@@ -13,6 +14,7 @@ function Game() {
     this.collected = 0;
     this.size = 60;
     this.addCows();
+    // this.level = 0;
 }
 
 Game.prototype.addCows = function() {
