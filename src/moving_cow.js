@@ -4,7 +4,6 @@ function MovingCow(data) {
     this.pos = data.pos;
     this.vel = data.vel;
     this.radius = data.radius;
-    this.color = data.color
     let img = new Image();
     img.src = "../images/cow.png";
     this.sprite = img;
@@ -31,6 +30,18 @@ MovingCow.prototype.move = function() {
   this.pos[0] = (this.pos[0] + this.vel[0]) % 1300;
   this.pos[1] = (this.pos[1] + this.vel[1]) % 800;
 };
+
+MovingCow.prototype.tramples = function(player) {
+  const xDist = Math.abs(this.pos[0] - player.pos[0]);
+  const yDist = Math.abs(this.pos[1] - player.pos[1]);
+  const rDist = this.radius + player.radius;
+
+  if (rDist > xDist && rDist > yDist) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 
 
