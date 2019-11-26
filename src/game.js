@@ -15,6 +15,7 @@ function Game() {
     this.size = 60;
     this.addCows();
     this.lost = false;
+    this.won = false;
     // this.level = 0;
 }
 
@@ -111,7 +112,7 @@ Game.prototype.collect = function() {
         console.log(this.collected)
         this.doll.pos = this.randomPosition();
         if (this.collected === 9) {
-            this.collected = 0;
+            this.win();
         }
     }
 }
@@ -121,8 +122,17 @@ Game.prototype.lose = function() {
     const ctx = el.getContext('2d');
     ctx.fillStyle = "red"
     ctx.font = "bold 48px Arial"
-    ctx.fillText("Ya trampled", el.width * .38, el.height * .5)
+    ctx.fillText("Moo. Trampled.", el.width * .38, el.height * .5)
     this.lost = true;
+}
+
+Game.prototype.win = function() {
+    const el = document.getElementById('game-canvas');
+    const ctx = el.getContext('2d');
+    ctx.fillStyle = "blue"
+    ctx.font = "bold 48px Arial"
+    ctx.fillText("Молодец, все собрали", el.width * .38, el.height * .5)
+    this.won = true;
 }
 
 module.exports = Game;
