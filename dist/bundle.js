@@ -162,7 +162,7 @@
 	Game.prototype.trampled = function() {
 	    this.cows.forEach( cow => {
 	        if (cow.tramples(this.players[0])) {
-	            this.players[0].pos = this.randomPosition();
+	            this.lose();
 	        }
 	    })
 	}
@@ -176,6 +176,14 @@
 	            this.collected = 0;
 	        }
 	    }
+	}
+	
+	Game.prototype.lose = function() {
+	    const el = document.getElementById('game-canvas');
+	    const ctx = el.getContext('2d');
+	    ctx.fillStyle = "red"
+	    ctx.font = "bold 48px Arial"
+	    ctx.fillText("Ya trampled on", el.width * .38, el.height * .5)
 	}
 	
 	module.exports = Game;

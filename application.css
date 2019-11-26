@@ -8,3 +8,7 @@
 .title {
     color: red;
 }
+
+canvas {
+    background: rgb(74, 141, 74);
+}
