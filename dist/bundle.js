@@ -70,7 +70,7 @@
 	
 	Game.DIM_X = 1300;
 	Game.DIM_Y = 800;
-	Game.NUM_COWS = 25;
+	Game.NUM_COWS = 30;
 	
 	function Game() {
 	    this.cows = [];
