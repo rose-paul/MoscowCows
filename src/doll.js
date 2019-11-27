@@ -4,7 +4,7 @@ function Doll(data) {
     this.pos = data.pos;
     this.radius = data.radius;
     let img = new Image();
-    img.src = "../images/matryoshka.png";
+    img.src = "./images/matryoshka.png";
     this.sprite = img;
 }
 
