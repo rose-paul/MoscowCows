@@ -66,10 +66,11 @@
 	const MovingCow = __webpack_require__(2);
 	const Player = __webpack_require__(4);
 	const Doll = __webpack_require__(6);
+	// const Level = require('./level')
 	
 	Game.DIM_X = 1300;
 	Game.DIM_Y = 800;
-	Game.NUM_COWS = 25;
+	Game.NUM_COWS = 30;
 	
 	function Game() {
 	    this.cows = [];
@@ -78,6 +79,9 @@
 	    this.collected = 0;
 	    this.size = 60;
 	    this.addCows();
+	    this.lost = false;
+	    this.won = false;
+	    // this.level = 0;
 	}
 	
 	Game.prototype.addCows = function() {
@@ -162,7 +166,7 @@
 	Game.prototype.trampled = function() {
 	    this.cows.forEach( cow => {
 	        if (cow.tramples(this.players[0])) {
-	            this.players[0].pos = this.randomPosition();
+	            this.lose();
 	        }
 	    })
 	}
@@ -173,9 +177,27 @@
 	        console.log(this.collected)
 	        this.doll.pos = this.randomPosition();
 	        if (this.collected === 9) {
-	            this.collected = 0;
+	            this.win();
 	        }
 	    }
+	}
+	
+	Game.prototype.lose = function() {
+	    const el = document.getElementById('game-canvas');
+	    const ctx = el.getContext('2d');
+	    ctx.fillStyle = "red"
+	    ctx.font = "bold 48px Arial"
+	    ctx.fillText("Moo. Trampled.", el.width * .38, el.height * .5)
+	    this.lost = true;
+	}
+	
+	Game.prototype.win = function() {
+	    const el = document.getElementById('game-canvas');
+	    const ctx = el.getContext('2d');
+	    ctx.fillStyle = "blue"
+	    ctx.font = "bold 48px Arial"
+	    ctx.fillText("Молодец, все собрали", el.width * .38, el.height * .5)
+	    this.won = true;
 	}
 	
 	module.exports = Game;
@@ -339,9 +361,11 @@
 	GameView.prototype.start = function () {
 	    let that = this;
 	    this.bindKeyHandlers();
-	    setInterval(function () {
+	    let intId = setInterval(function () {
 	        that.game.draw(that.ctx);
 	        that.game.step(that.ctx);
+	        if (that.game.lost) clearInterval(intId);
+	        if (that.game.won) clearInterval(intId);
 	    }, 20);
 	};
 	
