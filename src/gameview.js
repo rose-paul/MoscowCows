@@ -31,12 +31,11 @@ GameView.prototype.start = function () {
     let intId = setInterval(function () {
         that.game.draw(that.ctx);
         that.game.step(that.ctx);
+        let restart = document.getElementById('restart')
+        restart.className = "hidden"
         if (that.game.lost) {
+            restart.className = "shown"
             clearInterval(intId);
-            // let restart = document.getElementById('restart')
-            // restart.addEventListener('click', () => {
-
-            // })
         } else if (that.game.won) {
             clearInterval(intId);
         }

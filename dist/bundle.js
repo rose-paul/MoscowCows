@@ -56,6 +56,12 @@
 	    start.addEventListener('click', () => {
 	        gv.start();
 	    })
+	    let restart = document.getElementById('restart')
+	    restart.addEventListener('click', () => {
+	        let game = new Game();
+	        let gv = new GameView(game, ctx);
+	        gv.start();
+	    })
 	    
 	
 	    console.log('in add event listener')
@@ -392,12 +398,11 @@
 	    let intId = setInterval(function () {
 	        that.game.draw(that.ctx);
 	        that.game.step(that.ctx);
+	        let restart = document.getElementById('restart')
+	        restart.className = "hidden"
 	        if (that.game.lost) {
+	            restart.className = "shown"
 	            clearInterval(intId);
-	            // let restart = document.getElementById('restart')
-	            // restart.addEventListener('click', () => {
-	
-	            // })
 	        } else if (that.game.won) {
 	            clearInterval(intId);
 	        }

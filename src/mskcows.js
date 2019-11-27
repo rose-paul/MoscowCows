@@ -10,6 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
     start.addEventListener('click', () => {
         gv.start();
     })
+    let restart = document.getElementById('restart')
+    restart.addEventListener('click', () => {
+        let game = new Game();
+        let gv = new GameView(game, ctx);
+        gv.start();
+    })
     
 
     console.log('in add event listener')
