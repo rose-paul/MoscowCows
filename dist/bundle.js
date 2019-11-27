@@ -45,7 +45,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	const Game = __webpack_require__(1)
-	const GameView = __webpack_require__(5)
+	const GameView = __webpack_require__(6)
 	
 	document.addEventListener('DOMContentLoaded', () => {
 	    const el = document.getElementById('game-canvas');
@@ -65,7 +65,7 @@
 
 	const MovingCow = __webpack_require__(2);
 	const Player = __webpack_require__(4);
-	const Doll = __webpack_require__(6);
+	const Doll = __webpack_require__(5);
 	// const Level = require('./level')
 	
 	Game.DIM_X = 1300;
@@ -329,6 +329,28 @@
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	const Util = __webpack_require__(3)
+	
+	function Doll(data) {
+	    this.pos = data.pos;
+	    this.radius = data.radius;
+	    let img = new Image();
+	    img.src = "../images/matryoshka.png";
+	    this.sprite = img;
+	}
+	
+	Doll.prototype.draw = function (ctx, size) {
+	    ctx.beginPath();
+	    ctx.drawImage(this.sprite, this.pos[0], this.pos[1], size, size)
+	}
+	
+	
+	module.exports = Doll;
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports) {
 
 	function GameView(game, ctx) {
@@ -370,28 +392,6 @@
 	};
 	
 	module.exports = GameView;
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	const Util = __webpack_require__(3)
-	
-	function Doll(data) {
-	    this.pos = data.pos;
-	    this.radius = data.radius;
-	    let img = new Image();
-	    img.src = "../images/matryoshka.png";
-	    this.sprite = img;
-	}
-	
-	Doll.prototype.draw = function (ctx, size) {
-	    ctx.beginPath();
-	    ctx.drawImage(this.sprite, this.pos[0], this.pos[1], size, size)
-	}
-	
-	
-	module.exports = Doll;
 
 /***/ })
 /******/ ]);
