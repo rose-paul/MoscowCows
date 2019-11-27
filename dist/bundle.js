@@ -52,7 +52,10 @@
 	    const ctx = el.getContext('2d');
 	    let game = new Game();
 	    let gv = new GameView(game, ctx);
-	    gv.start();
+	    let start = document.getElementById('start')
+	    start.addEventListener('click', () => {
+	        gv.start();
+	    })
 	    
 	
 	    console.log('in add event listener')
@@ -389,8 +392,15 @@
 	    let intId = setInterval(function () {
 	        that.game.draw(that.ctx);
 	        that.game.step(that.ctx);
-	        if (that.game.lost) clearInterval(intId);
-	        if (that.game.won) clearInterval(intId);
+	        if (that.game.lost) {
+	            clearInterval(intId);
+	            // let restart = document.getElementById('restart')
+	            // restart.addEventListener('click', () => {
+	
+	            // })
+	        } else if (that.game.won) {
+	            clearInterval(intId);
+	        }
 	    }, 20);
 	};
 	
