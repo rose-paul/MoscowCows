@@ -5,7 +5,7 @@ function MovingCow(data) {
     this.vel = data.vel;
     this.radius = data.radius;
     let img = new Image();
-    img.src = "../images/cow.png";
+    img.src = "./images/cow.png";
     this.sprite = img;
 }
 

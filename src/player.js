@@ -5,7 +5,7 @@ function Player(data) {
     this.radius = 5;
     this.vel = data.vel || [0, 0];
     let img2 = new Image();
-    img2.src = "../images/002-russia.png"
+    img2.src = "./images/002-russia.png"
     this.sprite = img2;
     this.pos = data.pos
 }

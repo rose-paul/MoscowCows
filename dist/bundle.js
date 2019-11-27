@@ -213,7 +213,7 @@
 	    this.vel = data.vel;
 	    this.radius = data.radius;
 	    let img = new Image();
-	    img.src = "../images/cow.png";
+	    img.src = "./images/cow.png";
 	    this.sprite = img;
 	}
 	
@@ -284,7 +284,7 @@
 	    this.radius = 5;
 	    this.vel = data.vel || [0, 0];
 	    let img2 = new Image();
-	    img2.src = "../images/002-russia.png"
+	    img2.src = "./images/002-russia.png"
 	    this.sprite = img2;
 	    this.pos = data.pos
 	}
@@ -337,7 +337,7 @@
 	    this.pos = data.pos;
 	    this.radius = data.radius;
 	    let img = new Image();
-	    img.src = "../images/matryoshka.png";
+	    img.src = "./images/matryoshka.png";
 	    this.sprite = img;
 	}
 	
