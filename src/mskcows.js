@@ -1,9 +1,11 @@
 const Game = require("./game")
 const GameView = require("./gameview")
+const Modal = require("./modal")
 
 document.addEventListener('DOMContentLoaded', () => {
     const el = document.getElementById('game-canvas');
     const ctx = el.getContext('2d');
+    Modal();
     let game = new Game();
     let gv = new GameView(game, ctx);
     let start = document.getElementById('start')

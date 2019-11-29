@@ -46,10 +46,12 @@
 
 	const Game = __webpack_require__(1)
 	const GameView = __webpack_require__(6)
+	const Modal = __webpack_require__(7)
 	
 	document.addEventListener('DOMContentLoaded', () => {
 	    const el = document.getElementById('game-canvas');
 	    const ctx = el.getContext('2d');
+	    Modal();
 	    let game = new Game();
 	    let gv = new GameView(game, ctx);
 	    let start = document.getElementById('start')
@@ -416,6 +418,31 @@
 	};
 	
 	module.exports = GameView;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+	function Modal() {
+	    let modal = document.querySelector(".modal");
+	    let trigger = document.querySelector(".trigger");
+	    let closeButton = document.querySelector(".close-button");
+	    
+	    function toggleModal() {
+	        modal.classList.toggle("show-modal");
+	    }
+	    
+	    function windowOnClick(event) {
+	        if (event.target === modal) {
+	            toggleModal();
+	        }
+	    }
+	    trigger.addEventListener("click", toggleModal);
+	    closeButton.addEventListener("click", toggleModal);
+	    window.addEventListener("click", windowOnClick)
+	}
+	
+	module.exports = Modal;
 
 /***/ })
 /******/ ]);
