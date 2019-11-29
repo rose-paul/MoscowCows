@@ -31,8 +31,11 @@ GameView.prototype.start = function () {
     let intId = setInterval(function () {
         that.game.draw(that.ctx);
         that.game.step(that.ctx);
-        if (that.game.lost) clearInterval(intId);
-        if (that.game.won) clearInterval(intId);
+        if (that.game.lost) {
+            clearInterval(intId);
+        } else if (that.game.won) {
+            clearInterval(intId);
+        }
     }, 20);
 };
 

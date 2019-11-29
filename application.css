@@ -12,3 +12,8 @@
 canvas {
     background: rgb(74, 141, 74);
 }
+
+.hidden {
+    height: 0;
+    width: 0;
+}

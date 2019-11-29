@@ -3,9 +3,9 @@ const Player = require("./player");
 const Doll = require('./doll');
 // const Level = require('./level')
 
-Game.DIM_X = 1300;
-Game.DIM_Y = 800;
-Game.NUM_COWS = 30;
+Game.DIM_X = 1000;
+Game.DIM_Y = 500;
+Game.NUM_COWS = 15;
 
 function Game() {
     this.cows = [];
@@ -23,7 +23,10 @@ Game.prototype.addCows = function() {
     let i = 0;
     while (i < Game.NUM_COWS) {
         this.cows.push( 
-            new MovingCow({pos: this.randomPosition(), vel: [-1, 0], radius: 10 })
+            new MovingCow({pos: this.randomPosition(), vel: [-1, 0], radius: 10, cowType: "brown-left" })
+        )
+        this.cows.push( 
+            new MovingCow({pos: this.randomPosition(), vel: [1, 0], radius: 10, cowType: "brown-right" })
         )
         i++;
     }
@@ -124,6 +127,11 @@ Game.prototype.lose = function() {
     ctx.font = "bold 48px Arial"
     ctx.fillText("Moo. Trampled.", el.width * .38, el.height * .5)
     this.lost = true;
+    let restart = document.getElementById('restart')
+    restart.disabled = false;
+    restart.addEventListener('click', () => {
+        restart.disabled = true;
+    })
 }
 
 Game.prototype.win = function() {

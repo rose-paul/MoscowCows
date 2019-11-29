@@ -52,7 +52,20 @@
 	    const ctx = el.getContext('2d');
 	    let game = new Game();
 	    let gv = new GameView(game, ctx);
-	    gv.start();
+	    let start = document.getElementById('start')
+	    start.className = 'shown'
+	    start.addEventListener('click', () => {
+	        gv.start();
+	        start.disabled = 'true'
+	    })
+	    let restart = document.getElementById('restart')
+	    restart.disabled = true;
+	    restart.addEventListener('click', () => {
+	        ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
+	        let newGame = new Game();
+	        let newGv = new GameView(newGame, ctx);
+	        newGv.start();
+	    })
 	    
 	
 	    console.log('in add event listener')
@@ -68,9 +81,9 @@
 	const Doll = __webpack_require__(5);
 	// const Level = require('./level')
 	
-	Game.DIM_X = 1300;
-	Game.DIM_Y = 800;
-	Game.NUM_COWS = 30;
+	Game.DIM_X = 1000;
+	Game.DIM_Y = 500;
+	Game.NUM_COWS = 15;
 	
 	function Game() {
 	    this.cows = [];
@@ -88,7 +101,10 @@
 	    let i = 0;
 	    while (i < Game.NUM_COWS) {
 	        this.cows.push( 
-	            new MovingCow({pos: this.randomPosition(), vel: [-1, 0], radius: 10 })
+	            new MovingCow({pos: this.randomPosition(), vel: [-1, 0], radius: 10, cowType: "brown-left" })
+	        )
+	        this.cows.push( 
+	            new MovingCow({pos: this.randomPosition(), vel: [1, 0], radius: 10, cowType: "brown-right" })
 	        )
 	        i++;
 	    }
@@ -189,6 +205,11 @@
 	    ctx.font = "bold 48px Arial"
 	    ctx.fillText("Moo. Trampled.", el.width * .38, el.height * .5)
 	    this.lost = true;
+	    let restart = document.getElementById('restart')
+	    restart.disabled = false;
+	    restart.addEventListener('click', () => {
+	        restart.disabled = true;
+	    })
 	}
 	
 	Game.prototype.win = function() {
@@ -213,7 +234,7 @@
 	    this.vel = data.vel;
 	    this.radius = data.radius;
 	    let img = new Image();
-	    img.src = "./images/cow.png";
+	    data.cowType === "brown-left" ? img.src = "./images/cow.png" : img.src = "./images/001-cow.png"
 	    this.sprite = img;
 	}
 	
@@ -225,18 +246,18 @@
 	}
 	
 	MovingCow.prototype.move = function() {
-	  if (this.pos[0] > 1300) {
+	  if (this.pos[0] > 999) {
 	    this.pos[0] = 0;
 	  } else if (this.pos[0] < 0) {
-	    this.pos[0] = 1300;
+	    this.pos[0] = 999;
 	  }
-	  if (this.pos[1] > 800) {
+	  if (this.pos[1] > 499) {
 	    this.pos[1] = 0;
 	  } else if (this.pos[1] < 0) {
-	    this.pos[1] = 800;
+	    this.pos[1] = 499;
 	  }
-	  this.pos[0] = (this.pos[0] + this.vel[0]) % 1300;
-	  this.pos[1] = (this.pos[1] + this.vel[1]) % 800;
+	  this.pos[0] = (this.pos[0] + this.vel[0]) % 999;
+	  this.pos[1] = (this.pos[1] + this.vel[1]) % 499;
 	};
 	
 	MovingCow.prototype.tramples = function(player) {
@@ -386,8 +407,11 @@
 	    let intId = setInterval(function () {
 	        that.game.draw(that.ctx);
 	        that.game.step(that.ctx);
-	        if (that.game.lost) clearInterval(intId);
-	        if (that.game.won) clearInterval(intId);
+	        if (that.game.lost) {
+	            clearInterval(intId);
+	        } else if (that.game.won) {
+	            clearInterval(intId);
+	        }
 	    }, 20);
 	};
 	

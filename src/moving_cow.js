@@ -5,7 +5,7 @@ function MovingCow(data) {
     this.vel = data.vel;
     this.radius = data.radius;
     let img = new Image();
-    img.src = "./images/cow.png";
+    data.cowType === "brown-left" ? img.src = "./images/cow.png" : img.src = "./images/001-cow.png"
     this.sprite = img;
 }
 
@@ -17,18 +17,18 @@ MovingCow.prototype.draw = function(ctx) {
 }
 
 MovingCow.prototype.move = function() {
-  if (this.pos[0] > 1300) {
+  if (this.pos[0] > 999) {
     this.pos[0] = 0;
   } else if (this.pos[0] < 0) {
-    this.pos[0] = 1300;
+    this.pos[0] = 999;
   }
-  if (this.pos[1] > 800) {
+  if (this.pos[1] > 499) {
     this.pos[1] = 0;
   } else if (this.pos[1] < 0) {
-    this.pos[1] = 800;
+    this.pos[1] = 499;
   }
-  this.pos[0] = (this.pos[0] + this.vel[0]) % 1300;
-  this.pos[1] = (this.pos[1] + this.vel[1]) % 800;
+  this.pos[0] = (this.pos[0] + this.vel[0]) % 999;
+  this.pos[1] = (this.pos[1] + this.vel[1]) % 499;
 };
 
 MovingCow.prototype.tramples = function(player) {
