@@ -13,6 +13,8 @@ body {
 .title {
     font-family: 'Press Start 2P', cursive;
     color: rgb(155, 50, 50);
+    margin-bottom: 15px;
+    margin-top: 15px;
 }
 
 canvas {
@@ -61,3 +63,24 @@ button {
     border-radius: 5px;
     color: white;
 }
+
+button:disabled {
+    color: rgb(139, 133, 133);
+}
+
+.links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    align-content: space-around;
+
+}
+
+.links img {
+    height: 48px;
+    width: 48px;
+    margin-left: 200px;
+    margin-right: 200px;
+}
+
