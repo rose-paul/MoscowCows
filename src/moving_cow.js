@@ -22,13 +22,13 @@ MovingCow.prototype.move = function() {
   } else if (this.pos[0] < 0) {
     this.pos[0] = 999;
   }
-  if (this.pos[1] > 499) {
+  if (this.pos[1] > 480) {
     this.pos[1] = 0;
   } else if (this.pos[1] < 0) {
-    this.pos[1] = 499;
+    this.pos[1] = 480;
   }
   this.pos[0] = (this.pos[0] + this.vel[0]) % 999;
-  this.pos[1] = (this.pos[1] + this.vel[1]) % 499;
+  this.pos[1] = (this.pos[1] + this.vel[1]) % 480;
 };
 
 MovingCow.prototype.tramples = function(player) {

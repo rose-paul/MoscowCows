@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let restart = document.getElementById('restart')
     restart.disabled = true;
     restart.addEventListener('click', () => {
-        ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
+        ctx.clearRect(0, 0, Game.DIM_X, 500);
         let newGame = new Game();
         let newGv = new GameView(newGame, ctx);
         newGv.start();
