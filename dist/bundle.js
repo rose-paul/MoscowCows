@@ -53,14 +53,18 @@
 	    let game = new Game();
 	    let gv = new GameView(game, ctx);
 	    let start = document.getElementById('start')
+	    start.className = 'shown'
 	    start.addEventListener('click', () => {
 	        gv.start();
+	        start.disabled = 'true'
 	    })
 	    let restart = document.getElementById('restart')
+	    restart.disabled = true;
 	    restart.addEventListener('click', () => {
-	        let game = new Game();
-	        let gv = new GameView(game, ctx);
-	        gv.start();
+	        ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
+	        let newGame = new Game();
+	        let newGv = new GameView(newGame, ctx);
+	        newGv.start();
 	    })
 	    
 	
@@ -77,9 +81,9 @@
 	const Doll = __webpack_require__(5);
 	// const Level = require('./level')
 	
-	Game.DIM_X = 1300;
-	Game.DIM_Y = 800;
-	Game.NUM_COWS = 30;
+	Game.DIM_X = 1000;
+	Game.DIM_Y = 500;
+	Game.NUM_COWS = 15;
 	
 	function Game() {
 	    this.cows = [];
@@ -201,6 +205,11 @@
 	    ctx.font = "bold 48px Arial"
 	    ctx.fillText("Moo. Trampled.", el.width * .38, el.height * .5)
 	    this.lost = true;
+	    let restart = document.getElementById('restart')
+	    restart.disabled = false;
+	    restart.addEventListener('click', () => {
+	        restart.disabled = true;
+	    })
 	}
 	
 	Game.prototype.win = function() {
@@ -237,18 +246,18 @@
 	}
 	
 	MovingCow.prototype.move = function() {
-	  if (this.pos[0] > 1300) {
+	  if (this.pos[0] > 999) {
 	    this.pos[0] = 0;
 	  } else if (this.pos[0] < 0) {
-	    this.pos[0] = 1300;
+	    this.pos[0] = 999;
 	  }
-	  if (this.pos[1] > 800) {
+	  if (this.pos[1] > 499) {
 	    this.pos[1] = 0;
 	  } else if (this.pos[1] < 0) {
-	    this.pos[1] = 800;
+	    this.pos[1] = 499;
 	  }
-	  this.pos[0] = (this.pos[0] + this.vel[0]) % 1300;
-	  this.pos[1] = (this.pos[1] + this.vel[1]) % 800;
+	  this.pos[0] = (this.pos[0] + this.vel[0]) % 999;
+	  this.pos[1] = (this.pos[1] + this.vel[1]) % 499;
 	};
 	
 	MovingCow.prototype.tramples = function(player) {
@@ -398,10 +407,7 @@
 	    let intId = setInterval(function () {
 	        that.game.draw(that.ctx);
 	        that.game.step(that.ctx);
-	        let restart = document.getElementById('restart')
-	        restart.className = "hidden"
 	        if (that.game.lost) {
-	            restart.className = "shown"
 	            clearInterval(intId);
 	        } else if (that.game.won) {
 	            clearInterval(intId);
