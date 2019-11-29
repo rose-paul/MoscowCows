@@ -54,6 +54,13 @@ canvas {
     margin-left: auto;   
 }
 
+audio {
+    width: 20px;
+    /* background-color: rgb(155, 50, 50); */
+    color: rgb(155, 50, 50);
+    
+}
+
 button {
     margin-top: 10px;
     margin-bottom: 10px;
