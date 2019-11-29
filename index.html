@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="./application.css" />
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
     <title>Moscow Cows </title>
     <script type="application/javascript" src="./src/keymaster.js"></script>
     <script src="./dist/bundle.js"></script>
@@ -13,12 +14,44 @@
 </head>
 
 <body>
-    <div class="center-col">
-        <button id="start">Start</button>
-        <button id="restart">Restart</button>
-        <h1 class="title">MOSCOW COWS </h1>
-        <canvas id="game-canvas" width="1000px" height="500px" ></canvas>
-        <!-- style="background-color: rgb(74, 141, 74);" -->
+    <div class="outer">
+    <div class="page-row">
+        <div class="buttons">
+            <button id="start">Start</button>
+            <button id="restart">Restart</button>
+            <button class="trigger">Instructions</button>
+            <div class="modal">
+                <div class="modal-content">
+                    <span class="close-button"></span>
+                    <h1>Game Instructions</h1>
+                    <p><b>Player:</b> Use the WASD keys to move your character. </p>
+                    <p><b>Matryoshka: </b>A large Russian nesting doll will appear on the screen.
+                        The goal is to collect all the dolls in the set. When you collect, the next inner doll will 
+                        appear elsewhere on the field. 
+                    </p>
+                    <p><b>Moscow Cows: </b>While collecting the dolls, be careful of the Moscow Cows coming across the screen! 
+                    If you get trampled, you will be notified and you may restart the game using the button on the left.</p>
+                    
+                    <p>Удачи!</p>
+                </div>
+            </div>
+        </div>
+        <div class="center-col">
+            <h1 class="title">MOSCOW COWS </h1>
+            <canvas id="game-canvas" width="1000px" height="500px" ></canvas>
+            <div class="links"> 
+                <a href="https://www.linkedin.com/in/paul-rose-72626952/"><img src="images/001-linkedin.png"/></a>
+                <a href="https://github.com/rose-paul"><img src="images/002-cat.png" /></a>
+            </div>
+        </div>
+        <div class="sound">
+            <audio controls>
+                <source src="./music/midnight.m4a" >
+            </audio>
+            <!-- <img src="images/icons8-mute-100.png" /> -->
+        </div>
+        
+    </div>
     </div>
 </body>
 

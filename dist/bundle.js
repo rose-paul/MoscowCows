@@ -46,10 +46,12 @@
 
 	const Game = __webpack_require__(1)
 	const GameView = __webpack_require__(6)
+	const Modal = __webpack_require__(7)
 	
 	document.addEventListener('DOMContentLoaded', () => {
 	    const el = document.getElementById('game-canvas');
 	    const ctx = el.getContext('2d');
+	    Modal();
 	    let game = new Game();
 	    let gv = new GameView(game, ctx);
 	    let start = document.getElementById('start')
@@ -61,7 +63,7 @@
 	    let restart = document.getElementById('restart')
 	    restart.disabled = true;
 	    restart.addEventListener('click', () => {
-	        ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
+	        ctx.clearRect(0, 0, Game.DIM_X, 500);
 	        let newGame = new Game();
 	        let newGv = new GameView(newGame, ctx);
 	        newGv.start();
@@ -82,7 +84,7 @@
 	// const Level = require('./level')
 	
 	Game.DIM_X = 1000;
-	Game.DIM_Y = 500;
+	Game.DIM_Y = 480;
 	Game.NUM_COWS = 15;
 	
 	function Game() {
@@ -141,7 +143,7 @@
 	
 	
 	Game.prototype.draw = function(ctx) {
-	  ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
+	  ctx.clearRect(0, 0, Game.DIM_X, 500);
 	  this.all().forEach(thing => {
 	    thing.draw(ctx);
 	  });
@@ -203,7 +205,7 @@
 	    const ctx = el.getContext('2d');
 	    ctx.fillStyle = "red"
 	    ctx.font = "bold 48px Arial"
-	    ctx.fillText("Moo. Trampled.", el.width * .38, el.height * .5)
+	    ctx.fillText("Moo. Trampled.", el.width * .34, el.height * .5)
 	    this.lost = true;
 	    let restart = document.getElementById('restart')
 	    restart.disabled = false;
@@ -217,7 +219,7 @@
 	    const ctx = el.getContext('2d');
 	    ctx.fillStyle = "blue"
 	    ctx.font = "bold 48px Arial"
-	    ctx.fillText("Молодец, все собрали", el.width * .38, el.height * .5)
+	    ctx.fillText("Молодец, все собрали", el.width * .3, el.height * .5)
 	    this.won = true;
 	}
 	
@@ -251,13 +253,13 @@
 	  } else if (this.pos[0] < 0) {
 	    this.pos[0] = 999;
 	  }
-	  if (this.pos[1] > 499) {
+	  if (this.pos[1] > 480) {
 	    this.pos[1] = 0;
 	  } else if (this.pos[1] < 0) {
-	    this.pos[1] = 499;
+	    this.pos[1] = 480;
 	  }
 	  this.pos[0] = (this.pos[0] + this.vel[0]) % 999;
-	  this.pos[1] = (this.pos[1] + this.vel[1]) % 499;
+	  this.pos[1] = (this.pos[1] + this.vel[1]) % 480;
 	};
 	
 	MovingCow.prototype.tramples = function(player) {
@@ -416,6 +418,31 @@
 	};
 	
 	module.exports = GameView;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+	function Modal() {
+	    let modal = document.querySelector(".modal");
+	    let trigger = document.querySelector(".trigger");
+	    let closeButton = document.querySelector(".close-button");
+	    
+	    function toggleModal() {
+	        modal.classList.toggle("show-modal");
+	    }
+	    
+	    function windowOnClick(event) {
+	        if (event.target === modal) {
+	            toggleModal();
+	        }
+	    }
+	    trigger.addEventListener("click", toggleModal);
+	    closeButton.addEventListener("click", toggleModal);
+	    window.addEventListener("click", windowOnClick)
+	}
+	
+	module.exports = Modal;
 
 /***/ })
 /******/ ]);
