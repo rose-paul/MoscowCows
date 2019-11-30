@@ -85,7 +85,7 @@
 	
 	Game.DIM_X = 990;
 	Game.DIM_Y = 480;
-	Game.NUM_COWS = 20;
+	Game.NUM_COWS = 3;
 	
 	function Game() {
 	    this.cows = [];
@@ -104,10 +104,10 @@
 	    let i = 0;
 	    while (i < Game.NUM_COWS) {
 	        this.cows.push( 
-	            new MovingCow({pos: this.randomPosition(), vel: [-2.5, 0], radius: 10, cowType: "brown-left" })
+	            new MovingCow({pos: this.randomPosition(), vel: [-1, 0], radius: 10, cowType: "brown-left" })
 	        )
 	        this.cows.push( 
-	            new MovingCow({pos: this.randomPosition(), vel: [2.5, 0], radius: 10, cowType: "brown-right" })
+	            new MovingCow({pos: this.randomPosition(), vel: [1, 0], radius: 10, cowType: "brown-right" })
 	        )
 	        i++;
 	    }
@@ -254,13 +254,13 @@
 	  } else if (this.pos[0] < 0) {
 	    this.pos[0] = 990;
 	  }
-	  if (this.pos[1] > 480) {
+	  if (this.pos[1] > 490) {
 	    this.pos[1] = 0;
 	  } else if (this.pos[1] < 0) {
-	    this.pos[1] = 480;
+	    this.pos[1] = 490;
 	  }
-	  this.pos[0] = (this.pos[0] + this.vel[0]) % 990;
-	  this.pos[1] = (this.pos[1] + this.vel[1]) % 480;
+	  this.pos[0] = (this.pos[0] + this.vel[0]) % 1000;
+	  this.pos[1] = (this.pos[1] + this.vel[1]) % 500;
 	};
 	
 	MovingCow.prototype.tramples = function(player) {
