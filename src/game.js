@@ -5,7 +5,7 @@ const Doll = require('./doll');
 
 Game.DIM_X = 990;
 Game.DIM_Y = 480;
-Game.NUM_COWS = 10;
+Game.NUM_COWS = 20;
 
 function Game() {
     this.cows = [];
@@ -24,10 +24,10 @@ Game.prototype.addCows = function() {
     let i = 0;
     while (i < Game.NUM_COWS) {
         this.cows.push( 
-            new MovingCow({pos: this.randomPosition(), vel: [-1, 0], radius: 10, cowType: "brown-left" })
+            new MovingCow({pos: this.randomPosition(), vel: [-2, 0], radius: 10, cowType: "brown-left" })
         )
         this.cows.push( 
-            new MovingCow({pos: this.randomPosition(), vel: [1, 0], radius: 10, cowType: "brown-right" })
+            new MovingCow({pos: this.randomPosition(), vel: [2, 0], radius: 10, cowType: "brown-right" })
         )
         i++;
     }
