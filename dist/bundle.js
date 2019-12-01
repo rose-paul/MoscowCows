@@ -63,7 +63,7 @@
 	    let restart = document.getElementById('restart')
 	    restart.disabled = true;
 	    restart.addEventListener('click', () => {
-	        ctx.clearRect(0, 0, Game.DIM_X, 500);
+	        ctx.clearRect(0, 0, 1000, 500);
 	        let newGame = new Game();
 	        let newGv = new GameView(newGame, ctx);
 	        newGv.start();
@@ -83,9 +83,9 @@
 	const Doll = __webpack_require__(5);
 	// const Level = require('./level')
 	
-	Game.DIM_X = 1000;
+	Game.DIM_X = 990;
 	Game.DIM_Y = 480;
-	Game.NUM_COWS = 15;
+	Game.NUM_COWS = 20;
 	
 	function Game() {
 	    this.cows = [];
@@ -99,14 +99,15 @@
 	    // this.level = 0;
 	}
 	
+	
 	Game.prototype.addCows = function() {
 	    let i = 0;
 	    while (i < Game.NUM_COWS) {
 	        this.cows.push( 
-	            new MovingCow({pos: this.randomPosition(), vel: [-1, 0], radius: 10, cowType: "brown-left" })
+	            new MovingCow({pos: this.randomPosition(), vel: [-1.5, 0], radius: 10, cowType: "brown-left" })
 	        )
 	        this.cows.push( 
-	            new MovingCow({pos: this.randomPosition(), vel: [1, 0], radius: 10, cowType: "brown-right" })
+	            new MovingCow({pos: this.randomPosition(), vel: [1.5, 0], radius: 10, cowType: "brown-right" })
 	        )
 	        i++;
 	    }
@@ -143,7 +144,7 @@
 	
 	
 	Game.prototype.draw = function(ctx) {
-	  ctx.clearRect(0, 0, Game.DIM_X, 500);
+	  ctx.clearRect(0, 0, 1000, 500);
 	  this.all().forEach(thing => {
 	    thing.draw(ctx);
 	  });
@@ -248,18 +249,18 @@
 	}
 	
 	MovingCow.prototype.move = function() {
-	  if (this.pos[0] > 999) {
+	  if (this.pos[0] > 990) {
 	    this.pos[0] = 0;
 	  } else if (this.pos[0] < 0) {
-	    this.pos[0] = 999;
+	    this.pos[0] = 990;
 	  }
-	  if (this.pos[1] > 480) {
+	  if (this.pos[1] > 490) {
 	    this.pos[1] = 0;
 	  } else if (this.pos[1] < 0) {
-	    this.pos[1] = 480;
+	    this.pos[1] = 490;
 	  }
-	  this.pos[0] = (this.pos[0] + this.vel[0]) % 999;
-	  this.pos[1] = (this.pos[1] + this.vel[1]) % 480;
+	  this.pos[0] = (this.pos[0] + this.vel[0]) % 1000;
+	  this.pos[1] = (this.pos[1] + this.vel[1]) % 500;
 	};
 	
 	MovingCow.prototype.tramples = function(player) {
