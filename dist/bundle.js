@@ -308,9 +308,45 @@
 	    this.radius = 5;
 	    this.vel = data.vel || [0, 0];
 	    let img2 = new Image();
-	    img2.src = "./images/002-russia.png"
+	    img2.src = "../images/playersprite.png"
 	    this.sprite = img2;
-	    this.pos = data.pos
+	    this.pos = data.pos;
+	    this.scale = 2.5;
+	    this.width = 16;
+	    this.height = 18;
+	    this.scaledWidth = this.scale * this.width;
+	    this.scaledHeight = this.scale * this.height;
+	    }
+	
+	MovingCow.prototype.draw = function (ctx) {
+	    window.requestAnimationFrame(() => this.step(ctx))
+	}
+	
+	MovingCow.prototype.drawFrame = function (frameX, frameY, canvasX, canvasY, ctx) {
+	    ctx.drawImage(
+	        this.sprite,
+	        frameX * this.width,
+	        frameY * this.height,
+	        this.width,
+	        this.height,
+	        canvasX,
+	        canvasY,
+	        this.scaledWidth,
+	        this.scaledHeight
+	    );
+	}
+	
+	MovingCow.prototype.step = function (ctx) {
+	    const canvas = document.getElementById("game-canvas");
+	    ctx.clearRect(0, 0, canvas.width, canvas.height);
+	    this.drawFrame(CYCLELOOP[CURRENTLOOPINDEX], 0, this.pos[0], this.pos[1], ctx);
+	    CURRENTLOOPINDEX++;
+	    if (CURRENTLOOPINDEX >= CYCLELOOP.length) {
+	        CURRENTLOOPINDEX = 0;
+	    }
+	    let that = this;
+	    window.requestAnimationFrame(() => that.step(ctx))
+	
 	}
 	
 	Player.prototype = Object.create(MovingCow.prototype);
