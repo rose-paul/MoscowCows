@@ -304,11 +304,16 @@
 	const Util = __webpack_require__(3);
 	const MovingCow = __webpack_require__(2)
 	
+	const CYCLELOOP = [0, 1, 0, 2];
+	let CURRENTLOOPINDEX = 0;
+	let FRAMECOUNT = 0;
+	
+	
 	function Player(data) {
 	    this.radius = 5;
 	    this.vel = data.vel || [0, 0];
 	    let img2 = new Image();
-	    img2.src = "../images/playersprite.png"
+	    img2.src = "./images/playersprite.png"
 	    this.sprite = img2;
 	    this.pos = data.pos;
 	    this.scale = 2.5;
@@ -318,11 +323,11 @@
 	    this.scaledHeight = this.scale * this.height;
 	    }
 	
-	MovingCow.prototype.draw = function (ctx) {
+	Player.prototype.draw = function (ctx) {
 	    window.requestAnimationFrame(() => this.step(ctx))
 	}
 	
-	MovingCow.prototype.drawFrame = function (frameX, frameY, canvasX, canvasY, ctx) {
+	Player.prototype.drawFrame = function (frameX, frameY, canvasX, canvasY, ctx) {
 	    ctx.drawImage(
 	        this.sprite,
 	        frameX * this.width,
@@ -336,10 +341,10 @@
 	    );
 	}
 	
-	MovingCow.prototype.step = function (ctx) {
+	Player.prototype.step = function (ctx) {
 	    const canvas = document.getElementById("game-canvas");
 	    ctx.clearRect(0, 0, canvas.width, canvas.height);
-	    this.drawFrame(CYCLELOOP[CURRENTLOOPINDEX], 0, this.pos[0], this.pos[1], ctx);
+	    this.drawFrame(CYCLELOOP[CURRENTLOOPINDEX], 0, 0, 0, ctx);
 	    CURRENTLOOPINDEX++;
 	    if (CURRENTLOOPINDEX >= CYCLELOOP.length) {
 	        CURRENTLOOPINDEX = 0;
