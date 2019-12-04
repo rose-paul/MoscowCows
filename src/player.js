@@ -3,7 +3,6 @@ const MovingCow = require('./moving_cow')
 
 const CYCLELOOP = [0, 1, 0, 2];
 let CURRENTLOOPINDEX = 0;
-let FRAMECOUNT = 0;
 
 const FACING_DOWN = 0;
 const FACING_UP = 1;
@@ -26,6 +25,7 @@ function Player(data) {
     const ctx = el.getContext('2d');
     this.alive = true;
     this.currentDirection = FACING_DOWN;
+    this.frameCount = 0;
     }
 
 // Player.prototype.draw = function (ctx) {
@@ -47,9 +47,8 @@ Player.prototype.drawFrame = function (frameX, frameY, canvasX, canvasY, ctx) {
 }
 
 Player.prototype.looperino = function(ctx) {
-    // const canvas = document.getElementById("game-canvas");
-    // ctx.clearRect(0, 0, canvas.width, canvas.height);
-    this.drawFrame(0, this.currentDirection, this.pos[0], this.pos[1], ctx)
+    
+    this.drawFrame(CYCLELOOP[CURRENTLOOPINDEX], this.currentDirection, this.pos[0], this.pos[1], ctx)
     let animationId = window.requestAnimationFrame(() => this.looperino(ctx))
     if (!this.alive) {
         window.cancelAnimationFrame(animationId);
@@ -86,6 +85,7 @@ Player.prototype.looperino = function(ctx) {
 Player.prototype.move = function(direction) {
     // this.vel[0] += direction[0];
     // this.vel[1] += direction[1];
+
     if (direction[1] < 0) {
         this.currentDirection = FACING_UP;
     } else if (direction[0] < 0) {
@@ -95,6 +95,15 @@ Player.prototype.move = function(direction) {
     } else {
         this.currentDirection = FACING_RIGHT;
     }
+
+    // this.frameCount++;
+    // if (this.frameCount >= 60) {
+    //     this.frameCount = 0;
+        CURRENTLOOPINDEX++
+        if (CURRENTLOOPINDEX >= 3) {
+            CURRENTLOOPINDEX = 0;
+        }
+    // }
 
     if (this.pos[0] > 1500) {
         this.pos[0] = 0;

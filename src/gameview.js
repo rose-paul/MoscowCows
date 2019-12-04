@@ -12,7 +12,7 @@ GameView.MOVES = {
     s: [0, 10],
     d: [10, 0],
 };
-// 
+
 GameView.prototype.bindKeyHandlers = function() {
     const player = this.player;
     Object.keys(GameView.MOVES).forEach(function (k) {
