@@ -52,6 +52,7 @@
 	    //MUSIC
 	    browser = window.navigator.userAgent.toLowerCase();
 	    const audio = document.getElementById('audio')
+	    const moos = document.getElementById('moos')
 	    muteUnmute = document.getElementById('music')
 	    muteUnmute.src = 'images/icons8-audio-100.png'
 	    // if (browser.indexOf('firefox') === -1) {
@@ -84,15 +85,21 @@
 	    // } else {
 	                audio.loop = true;
 	                audio.muted = true;
+	                moos.loop = true;
+	                moos.muted = true;
 	                audio.load();
+	                moos.load();
 	                document.getElementById('musicToggle').addEventListener('click', function() {
 	                    if (audio.muted) {
-	                        audio.play();
+	                        audio.play().then( () => moos.play());
 	                        audio.muted = false;
+	                        moos.muted = false;
 	                        muteUnmute.setAttribute('src', 'images/icons8-mute-100.png')
 	                    } else {
 	                        audio.pause();
+	                        moos.pause();
 	                        audio.muted = true;
+	                        moos.muted = false;
 	                        muteUnmute.src = 'images/icons8-audio-100.png'
 	                    }
 	                })
