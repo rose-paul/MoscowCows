@@ -3,6 +3,7 @@ const GameView = require("./gameview")
 const Modal = require("./modal")
 
 document.addEventListener('DOMContentLoaded', () => {
+    const music = document.getElementById('music').loop = true;
     const el = document.getElementById('game-canvas');
     const ctx = el.getContext('2d');
     Modal();

@@ -49,6 +49,7 @@
 	const Modal = __webpack_require__(7)
 	
 	document.addEventListener('DOMContentLoaded', () => {
+	    const music = document.getElementById('music').loop = true;
 	    const el = document.getElementById('game-canvas');
 	    const ctx = el.getContext('2d');
 	    Modal();
