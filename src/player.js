@@ -18,8 +18,6 @@ function Player(data) {
     this.height = 18;
     this.scaledWidth = this.scale * this.width;
     this.scaledHeight = this.scale * this.height;
-    const el = document.getElementById('game-canvas');
-    const ctx = el.getContext('2d');
     this.alive = true;
     this.currentDirection = FACING_DOWN;
     this.frameCount = 0;
