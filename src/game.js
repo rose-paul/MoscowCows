@@ -35,8 +35,7 @@ Game.prototype.addCows = function() {
 
 Game.prototype.addPlayer = function() {
     const player = new Player({
-        pos: this.randomPosition(),
-        vel: [1, 1]
+        pos: this.randomPosition()
     })
 
     this.players.push(player);

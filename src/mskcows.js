@@ -3,7 +3,31 @@ const GameView = require("./gameview")
 const Modal = require("./modal")
 
 document.addEventListener('DOMContentLoaded', () => {
-    const music = document.getElementById('music').loop = true;
+    //MUSIC
+    const musicSource = './music/midnight.m4a';
+    const audio = document.createElement('audio')
+    audio.setAttribute('src', musicSource);
+    audio.autoplay = true;
+    audio.loop = true;
+    audio.muted = true;
+    audio.load();
+    audio.addEventListener('load', function() {
+        audio.play();
+    }, true);
+    muteUnmute = document.getElementById('music')
+    muteUnmute.src = 'images/icons8-audio-100.png'
+    document.getElementById('musicToggle').addEventListener('click', function() {
+        if (audio.muted) {
+            audio.muted = false;
+            muteUnmute.setAttribute('src', 'images/icons8-mute-100.png')
+        } else {
+            audio.muted = true;
+            muteUnmute.src = 'images/icons8-audio-100.png'
+        }
+    })
+
+
+    //GAME
     const el = document.getElementById('game-canvas');
     const ctx = el.getContext('2d');
     Modal();

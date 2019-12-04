@@ -49,7 +49,31 @@
 	const Modal = __webpack_require__(7)
 	
 	document.addEventListener('DOMContentLoaded', () => {
-	    const music = document.getElementById('music').loop = true;
+	    //MUSIC
+	    const musicSource = './music/midnight.m4a';
+	    const audio = document.createElement('audio')
+	    audio.setAttribute('src', musicSource);
+	    audio.autoplay = true;
+	    audio.loop = true;
+	    audio.muted = true;
+	    audio.load();
+	    audio.addEventListener('load', function() {
+	        audio.play();
+	    }, true);
+	    muteUnmute = document.getElementById('music')
+	    muteUnmute.src = 'images/icons8-audio-100.png'
+	    document.getElementById('musicToggle').addEventListener('click', function() {
+	        if (audio.muted) {
+	            audio.muted = false;
+	            muteUnmute.setAttribute('src', 'images/icons8-mute-100.png')
+	        } else {
+	            audio.muted = true;
+	            muteUnmute.src = 'images/icons8-audio-100.png'
+	        }
+	    })
+	
+	
+	    //GAME
 	    const el = document.getElementById('game-canvas');
 	    const ctx = el.getContext('2d');
 	    Modal();
@@ -116,8 +140,7 @@
 	
 	Game.prototype.addPlayer = function() {
 	    const player = new Player({
-	        pos: this.randomPosition(),
-	        vel: [1, 1]
+	        pos: this.randomPosition()
 	    })
 	
 	    this.players.push(player);
@@ -365,18 +388,18 @@
 	        this.currentDirection = FACING_RIGHT;
 	    }
 	
-	    if (this.vel[1] < 0 && direction[1] > 0) {
-	        this.vel[1] = 0;
-	    } else if (this.vel[1] > 0 && direction[1] < 0) {
-	        this.vel[1] = 0;
-	    } else if (this.vel[0] < 0 && direction[0] > 0) {
-	        this.vel[0] = 0;
-	    } else if (this.vel[0] > 0 && direction[0] < 0) {
-	        this.vel[0] = 0;
-	    } else {
-	        this.vel[0] += direction[0];
-	        this.vel[1] += direction[1];
-	    }
+	    // if (this.vel[1] < 0 && direction[1] > 0) {
+	    //     this.vel[1] = 0;
+	    // } else if (this.vel[1] > 0 && direction[1] < 0) {
+	    //     this.vel[1] = 0;
+	    // } else if (this.vel[0] < 0 && direction[0] > 0) {
+	    //     this.vel[0] = 0;
+	    // } else if (this.vel[0] > 0 && direction[0] < 0) {
+	    //     this.vel[0] = 0;
+	    // } else {
+	    //     this.vel[0] += direction[0];
+	    //     this.vel[1] += direction[1];
+	    // }
 	    
 	    CURRENTLOOPINDEX++
 	    if (CURRENTLOOPINDEX >= 3) {
@@ -393,6 +416,8 @@
 	    } else if (this.pos[1] < 0) {
 	        this.pos[1] = 500;
 	    }
+	    // this.pos[0] = (this.pos[0] + this.vel[0]) % 1000;
+	    // this.pos[1] = (this.pos[1] + this.vel[1]) % 500;
 	    this.pos[0] = (this.pos[0] + direction[0]) % 1000;
 	    this.pos[1] = (this.pos[1] + direction[1]) % 500;
 	}
@@ -450,10 +475,10 @@
 	
 	
 	GameView.MOVES = {
-	    w: [0, -.1],
-	    a: [-.1, 0],
-	    s: [0, .1],
-	    d: [.1, 0],
+	    w: [0, -5],
+	    a: [-5, 0],
+	    s: [0, 5],
+	    d: [5, 0],
 	};
 	
 	GameView.prototype.bindKeyHandlers = function() {
