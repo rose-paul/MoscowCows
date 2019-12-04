@@ -1,33 +1,82 @@
-const Util = require('./util');
-const MovingCow = require('./moving_cow')
+const CYCLELOOP = [0, 1, 0, 2];
+let CURRENTLOOPINDEX = 0;
+
+const FACING_DOWN = 0;
+const FACING_UP = 1;
+const FACING_LEFT = 2;
+const FACING_RIGHT = 3;
 
 function Player(data) {
     this.radius = 5;
     this.vel = data.vel || [0, 0];
     let img2 = new Image();
-    img2.src = "./images/002-russia.png"
+    img2.src = "./images/playersprite.png"
     this.sprite = img2;
-    this.pos = data.pos
+    this.pos = data.pos;
+    this.scale = 1.5;
+    this.width = 16;
+    this.height = 18;
+    this.scaledWidth = this.scale * this.width;
+    this.scaledHeight = this.scale * this.height;
+    const el = document.getElementById('game-canvas');
+    const ctx = el.getContext('2d');
+    this.alive = true;
+    this.currentDirection = FACING_DOWN;
+    this.frameCount = 0;
+    }
+
+Player.prototype.drawFrame = function (frameX, frameY, canvasX, canvasY, ctx) {
+    ctx.drawImage(
+        this.sprite,
+        frameX * this.width,
+        frameY * this.height,
+        this.width,
+        this.height,
+        canvasX,
+        canvasY,
+        this.scaledWidth,
+        this.scaledHeight
+    );
 }
 
-Player.prototype = Object.create(MovingCow.prototype);
-Player.prototype.constructor = Player;
+Player.prototype.looperino = function(ctx) {
+    
+    this.drawFrame(CYCLELOOP[CURRENTLOOPINDEX], this.currentDirection, this.pos[0], this.pos[1], ctx)
+    let animationId = window.requestAnimationFrame(() => this.looperino(ctx))
+    if (!this.alive) {
+        window.cancelAnimationFrame(animationId);
+    }
+}
 
-Player.prototype.movee = function(direction) {
-    // this.vel[0] += direction[0];
-    // this.vel[1] += direction[1];
-    if (this.pos[0] > 1300) {
+Player.prototype.move = function(direction) {
+
+    if (direction[1] < 0) {
+        this.currentDirection = FACING_UP;
+    } else if (direction[0] < 0) {
+        this.currentDirection = FACING_LEFT;
+    } else if (direction[1] > 0) {
+        this.currentDirection = FACING_DOWN
+    } else {
+        this.currentDirection = FACING_RIGHT;
+    }
+    
+    CURRENTLOOPINDEX++
+    if (CURRENTLOOPINDEX >= 3) {
+        CURRENTLOOPINDEX = 0;
+    }
+
+    if (this.pos[0] > 1500) {
         this.pos[0] = 0;
     } else if (this.pos[0] < 0) {
-        this.pos[0] = 1300;
+        this.pos[0] = 1500;
     }
-    if (this.pos[1] > 800) {
+    if (this.pos[1] > 500) {
         this.pos[1] = 0;
     } else if (this.pos[1] < 0) {
-        this.pos[1] = 800;
+        this.pos[1] = 500;
     }
-    this.pos[0] = (this.pos[0] + direction[0]) % 1300;
-    this.pos[1] = (this.pos[1] + direction[1]) % 800;
+    this.pos[0] = (this.pos[0] + direction[0]) % 1000;
+    this.pos[1] = (this.pos[1] + direction[1]) % 500;
 }
 
 Player.prototype.collects = function(doll) {

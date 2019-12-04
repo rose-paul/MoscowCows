@@ -59,15 +59,17 @@ Game.prototype.randomPosition = function() {
 };
 
 Game.prototype.all = function() {
-    return [].concat(this.cows, this.players);
+    return [].concat(this.cows);
 }
 
 
 Game.prototype.draw = function(ctx) {
-  ctx.clearRect(0, 0, 1000, 500);
+    const canvas = document.getElementById("game-canvas");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
   this.all().forEach(thing => {
     thing.draw(ctx);
   });
+  this.players[0].looperino(ctx);
   if (this.collected === 1) {
       this.size = 54;
   } else if (this.collected === 2) {
@@ -106,6 +108,7 @@ Game.prototype.trampled = function() {
     this.cows.forEach( cow => {
         if (cow.tramples(this.players[0])) {
             this.lose();
+            this.players[0].alive = false;
         }
     })
 }
@@ -113,7 +116,6 @@ Game.prototype.trampled = function() {
 Game.prototype.collect = function() {
     if (this.players[0].collects(this.doll)) {
         this.collected++;
-        console.log(this.collected)
         this.doll.pos = this.randomPosition();
         if (this.collected === 9) {
             this.win();
