@@ -51,36 +51,54 @@
 	document.addEventListener('DOMContentLoaded', () => {
 	    //MUSIC
 	    browser = window.navigator.userAgent.toLowerCase();
-	    const musicSource = './music/midnight.m4a';
-	    const audio = document.createElement('audio')
-	    audio.setAttribute('src', musicSource);
-	    audio.autoplay = true;
-	    audio.loop = true;
-	    audio.muted = true;
-	    audio.load();
-	    audio.addEventListener('load', function() {
-	        audio.play();
-	    }, true);
+	    const audio = document.getElementById('audio')
 	    muteUnmute = document.getElementById('music')
 	    muteUnmute.src = 'images/icons8-audio-100.png'
-	    document.getElementById('musicToggle').addEventListener('click', function() {
-	        if (audio.muted) {
-	            audio.muted = false;
-	            muteUnmute.setAttribute('src', 'images/icons8-mute-100.png')
-	        } else {
-	            audio.muted = true;
-	            muteUnmute.src = 'images/icons8-audio-100.png'
-	        }
-	    })
 	    if (browser.indexOf('firefox') === -1) {
-	        const audio = document.createElement('embed');
-	        audio.className = "audio"
-	        audio.setAttribute('src', musicSource);
-	        audio.autostart = true;
-	        audio.loop = true;
-	        audio.muted = true;
-	        audio.controls = true;
-	    } 
+	
+	        AudioContext = window.AudioContext || window.webkitAudioContext;
+	        const audioCtx = new AudioContext();
+	        const track = audioCtx.createMediaElementSource(audio);
+	        track.connect(audioCtx.destination);
+	        audioCtx.onstatechange = () => { console.log( audioCtx.state )}
+	        document.getElementById('musicToggle').addEventListener('click', function () {
+	            
+	            if (audioCtx.state === "suspended") {
+	                this.dataset.playing = "true"
+	                audioCtx.resume().then( () => audio.play() )
+	            }  
+	            console.log(this.dataset.playing);
+	            if (this.dataset.playing === 'false') {
+	                audio.play();
+	                this.dataset.playing = "true";
+	                muteUnmute.src = 'images/icons8-audio-100.png'
+	            } else if (this.dataset.playing === 'true') {
+	                audio.pause();
+	                this.dataset.playing = "false";
+	                muteUnmute.setAttribute('src', 'images/icons8-mute-100.png')
+	            }
+	        }, false)
+	
+	    } else {
+	        
+	                audio.autoplay = true;
+	                audio.loop = true;
+	                audio.muted = true;
+	                audio.load();
+	                audio.addEventListener('load', function() {
+	                    audio.play();
+	                }, true);
+	                document.getElementById('musicToggle').addEventListener('click', function() {
+	                    if (audio.muted) {
+	                        audio.muted = false;
+	                        muteUnmute.setAttribute('src', 'images/icons8-mute-100.png')
+	                    } else {
+	                        audio.muted = true;
+	                        muteUnmute.src = 'images/icons8-audio-100.png'
+	                    }
+	                })
+	    }
+	   
 	
 	
 	    //GAME

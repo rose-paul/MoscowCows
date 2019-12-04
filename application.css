@@ -47,7 +47,7 @@ canvas {
     align-items: center;
 }
 
-.sound {
+#sound {
     display: flex;
     flex-direction: column;
     justify-content: center;
