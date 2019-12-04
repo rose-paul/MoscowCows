@@ -82,25 +82,26 @@
 	        }, false)
 	
 	    } else {
-	        
-	                audio.autoplay = true;
 	                audio.loop = true;
 	                audio.muted = true;
 	                audio.load();
-	                audio.addEventListener('load', function() {
-	                    audio.play();
-	                }, true);
+	                // audio.addEventListener('load', function() {
+	                //     audio.play();
+	                // }, true);
 	                document.getElementById('musicToggle').addEventListener('click', function() {
 	                    if (audio.muted) {
+	                        audio.play();
 	                        audio.muted = false;
 	                        muteUnmute.setAttribute('src', 'images/icons8-mute-100.png')
 	                    } else {
+	                        // audio.muted = true;
+	                        audio.pause();
 	                        audio.muted = true;
 	                        muteUnmute.src = 'images/icons8-audio-100.png'
 	                    }
 	                })
-	    }
-	   
+	    
+	            }
 	
 	
 	    //GAME
