@@ -10,7 +10,6 @@ Game.NUM_COWS = 20;
 function Game() {
     this.cows = [];
     this.players = [];
-    debugger
     this.doll;
     this.collected = 0;
     this.size = 60;
@@ -117,7 +116,6 @@ Game.prototype.trampled = function() {
 Game.prototype.collect = function() {
     if (this.players[0].collects(this.doll)) {
         this.collected++;
-        console.log(this.collected)
         this.doll.pos = this.randomPosition();
         if (this.collected === 9) {
             this.win();

@@ -1,6 +1,3 @@
-const Util = require('./util');
-const MovingCow = require('./moving_cow')
-
 const CYCLELOOP = [0, 1, 0, 2];
 let CURRENTLOOPINDEX = 0;
 
@@ -28,10 +25,6 @@ function Player(data) {
     this.frameCount = 0;
     }
 
-// Player.prototype.draw = function (ctx) {
-//     window.requestAnimationFrame(() => this.(ctx))
-// }
-
 Player.prototype.drawFrame = function (frameX, frameY, canvasX, canvasY, ctx) {
     ctx.drawImage(
         this.sprite,
@@ -55,36 +48,7 @@ Player.prototype.looperino = function(ctx) {
     }
 }
 
-// Player.prototype.step = function (ctx) {
-//     FRAMECOUNT++;
-//     debugger
-//     if (FRAMECOUNT < 15) {
-//         window.requestAnimationFrame(() => this.step(ctx));
-//         return;
-//     }
-//     FRAMECOUNT = 0;
-//     const canvas = document.getElementById("game-canvas");
-//     ctx.clearRect(0, 0, canvas.width, canvas.height);
-//     this.drawFrame(CYCLELOOP[CURRENTLOOPINDEX], CURRENTDIRECTION, 0, 0, ctx);
-//     CURRENTLOOPINDEX++;
-//     if (CURRENTLOOPINDEX >= CYCLELOOP.length) {
-//         CURRENTLOOPINDEX = 0;
-//         CURRENTDIRECTION ++
-//     }
-
-//     if (CURRENTDIRECTION >= 4) {
-//         CURRENTDIRECTION = 0;
-//     }
-//     window.requestAnimationFrame(() => this.step(ctx))
-
-// }
-
-// Player.prototype = Object.create(MovingCow.prototype);
-// Player.prototype.constructor = Player;
-
 Player.prototype.move = function(direction) {
-    // this.vel[0] += direction[0];
-    // this.vel[1] += direction[1];
 
     if (direction[1] < 0) {
         this.currentDirection = FACING_UP;
@@ -95,15 +59,11 @@ Player.prototype.move = function(direction) {
     } else {
         this.currentDirection = FACING_RIGHT;
     }
-
-    // this.frameCount++;
-    // if (this.frameCount >= 60) {
-    //     this.frameCount = 0;
-        CURRENTLOOPINDEX++
-        if (CURRENTLOOPINDEX >= 3) {
-            CURRENTLOOPINDEX = 0;
-        }
-    // }
+    
+    CURRENTLOOPINDEX++
+    if (CURRENTLOOPINDEX >= 3) {
+        CURRENTLOOPINDEX = 0;
+    }
 
     if (this.pos[0] > 1500) {
         this.pos[0] = 0;

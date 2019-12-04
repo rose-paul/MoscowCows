@@ -64,7 +64,6 @@
 	    restart.disabled = true;
 	    restart.addEventListener('click', () => {
 	        ctx.clearRect(0, 0, 1000, 500);
-	        debugger
 	        let newGame = new Game();
 	        let newGv = new GameView(newGame, ctx);
 	        newGv.start();
@@ -91,7 +90,6 @@
 	function Game() {
 	    this.cows = [];
 	    this.players = [];
-	    debugger
 	    this.doll;
 	    this.collected = 0;
 	    this.size = 60;
@@ -198,7 +196,6 @@
 	Game.prototype.collect = function() {
 	    if (this.players[0].collects(this.doll)) {
 	        this.collected++;
-	        console.log(this.collected)
 	        this.doll.pos = this.randomPosition();
 	        if (this.collected === 9) {
 	            this.win();
@@ -304,11 +301,8 @@
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-	const Util = __webpack_require__(3);
-	const MovingCow = __webpack_require__(2)
-	
 	const CYCLELOOP = [0, 1, 0, 2];
 	let CURRENTLOOPINDEX = 0;
 	
@@ -336,10 +330,6 @@
 	    this.frameCount = 0;
 	    }
 	
-	// Player.prototype.draw = function (ctx) {
-	//     window.requestAnimationFrame(() => this.(ctx))
-	// }
-	
 	Player.prototype.drawFrame = function (frameX, frameY, canvasX, canvasY, ctx) {
 	    ctx.drawImage(
 	        this.sprite,
@@ -363,36 +353,7 @@
 	    }
 	}
 	
-	// Player.prototype.step = function (ctx) {
-	//     FRAMECOUNT++;
-	//     debugger
-	//     if (FRAMECOUNT < 15) {
-	//         window.requestAnimationFrame(() => this.step(ctx));
-	//         return;
-	//     }
-	//     FRAMECOUNT = 0;
-	//     const canvas = document.getElementById("game-canvas");
-	//     ctx.clearRect(0, 0, canvas.width, canvas.height);
-	//     this.drawFrame(CYCLELOOP[CURRENTLOOPINDEX], CURRENTDIRECTION, 0, 0, ctx);
-	//     CURRENTLOOPINDEX++;
-	//     if (CURRENTLOOPINDEX >= CYCLELOOP.length) {
-	//         CURRENTLOOPINDEX = 0;
-	//         CURRENTDIRECTION ++
-	//     }
-	
-	//     if (CURRENTDIRECTION >= 4) {
-	//         CURRENTDIRECTION = 0;
-	//     }
-	//     window.requestAnimationFrame(() => this.step(ctx))
-	
-	// }
-	
-	// Player.prototype = Object.create(MovingCow.prototype);
-	// Player.prototype.constructor = Player;
-	
 	Player.prototype.move = function(direction) {
-	    // this.vel[0] += direction[0];
-	    // this.vel[1] += direction[1];
 	
 	    if (direction[1] < 0) {
 	        this.currentDirection = FACING_UP;
@@ -403,15 +364,11 @@
 	    } else {
 	        this.currentDirection = FACING_RIGHT;
 	    }
-	
-	    // this.frameCount++;
-	    // if (this.frameCount >= 60) {
-	    //     this.frameCount = 0;
-	        CURRENTLOOPINDEX++
-	        if (CURRENTLOOPINDEX >= 3) {
-	            CURRENTLOOPINDEX = 0;
-	        }
-	    // }
+	    
+	    CURRENTLOOPINDEX++
+	    if (CURRENTLOOPINDEX >= 3) {
+	        CURRENTLOOPINDEX = 0;
+	    }
 	
 	    if (this.pos[0] > 1500) {
 	        this.pos[0] = 0;
