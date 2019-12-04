@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     restart.disabled = true;
     restart.addEventListener('click', () => {
         ctx.clearRect(0, 0, 1000, 500);
+        debugger
         let newGame = new Game();
         let newGv = new GameView(newGame, ctx);
         newGv.start();

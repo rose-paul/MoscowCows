@@ -3,8 +3,8 @@ const MovingCow = require('./moving_cow')
 
 const CYCLELOOP = [0, 1, 0, 2];
 let CURRENTLOOPINDEX = 0;
+let CURRENTDIRECTION = 0;
 let FRAMECOUNT = 0;
-
 
 function Player(data) {
     this.radius = 5;
@@ -18,11 +18,14 @@ function Player(data) {
     this.height = 18;
     this.scaledWidth = this.scale * this.width;
     this.scaledHeight = this.scale * this.height;
+    const el = document.getElementById('game-canvas');
+    const ctx = el.getContext('2d');
+    this.alive = true;
     }
 
-Player.prototype.draw = function (ctx) {
-    window.requestAnimationFrame(() => this.step(ctx))
-}
+// Player.prototype.draw = function (ctx) {
+//     window.requestAnimationFrame(() => this.(ctx))
+// }
 
 Player.prototype.drawFrame = function (frameX, frameY, canvasX, canvasY, ctx) {
     ctx.drawImage(
@@ -38,37 +41,58 @@ Player.prototype.drawFrame = function (frameX, frameY, canvasX, canvasY, ctx) {
     );
 }
 
-Player.prototype.step = function (ctx) {
-    const canvas = document.getElementById("game-canvas");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    this.drawFrame(CYCLELOOP[CURRENTLOOPINDEX], 0, 0, 0, ctx);
-    CURRENTLOOPINDEX++;
-    if (CURRENTLOOPINDEX >= CYCLELOOP.length) {
-        CURRENTLOOPINDEX = 0;
+Player.prototype.looperino = function(ctx) {
+    // const canvas = document.getElementById("game-canvas");
+    // ctx.clearRect(0, 0, canvas.width, canvas.height);
+    this.drawFrame(0, 0, this.pos[0], this.pos[1], ctx)
+    let animationId = window.requestAnimationFrame(() => this.looperino(ctx))
+    if (!this.alive) {
+        window.cancelAnimationFrame(animationId);
     }
-    let that = this;
-    window.requestAnimationFrame(() => that.step(ctx))
-
 }
 
-Player.prototype = Object.create(MovingCow.prototype);
-Player.prototype.constructor = Player;
+// Player.prototype.step = function (ctx) {
+//     FRAMECOUNT++;
+//     debugger
+//     if (FRAMECOUNT < 15) {
+//         window.requestAnimationFrame(() => this.step(ctx));
+//         return;
+//     }
+//     FRAMECOUNT = 0;
+//     const canvas = document.getElementById("game-canvas");
+//     ctx.clearRect(0, 0, canvas.width, canvas.height);
+//     this.drawFrame(CYCLELOOP[CURRENTLOOPINDEX], CURRENTDIRECTION, 0, 0, ctx);
+//     CURRENTLOOPINDEX++;
+//     if (CURRENTLOOPINDEX >= CYCLELOOP.length) {
+//         CURRENTLOOPINDEX = 0;
+//         CURRENTDIRECTION ++
+//     }
 
-Player.prototype.movee = function(direction) {
+//     if (CURRENTDIRECTION >= 4) {
+//         CURRENTDIRECTION = 0;
+//     }
+//     window.requestAnimationFrame(() => this.step(ctx))
+
+// }
+
+// Player.prototype = Object.create(MovingCow.prototype);
+// Player.prototype.constructor = Player;
+
+Player.prototype.move = function(direction) {
     // this.vel[0] += direction[0];
     // this.vel[1] += direction[1];
-    if (this.pos[0] > 1300) {
+    if (this.pos[0] > 1500) {
         this.pos[0] = 0;
     } else if (this.pos[0] < 0) {
-        this.pos[0] = 1300;
+        this.pos[0] = 1500;
     }
-    if (this.pos[1] > 800) {
+    if (this.pos[1] > 500) {
         this.pos[1] = 0;
     } else if (this.pos[1] < 0) {
-        this.pos[1] = 800;
+        this.pos[1] = 500;
     }
-    this.pos[0] = (this.pos[0] + direction[0]) % 1300;
-    this.pos[1] = (this.pos[1] + direction[1]) % 800;
+    this.pos[0] = (this.pos[0] + direction[0]) % 1000;
+    this.pos[1] = (this.pos[1] + direction[1]) % 500;
 }
 
 Player.prototype.collects = function(doll) {

@@ -21,7 +21,7 @@ GameView.prototype.bindKeyHandlers = function() {
     const player = this.player;
     Object.keys(GameView.MOVES).forEach(function (k) {
         const direction = GameView.MOVES[k];
-        key(k, function () { player.movee(direction); });
+        key(k, function () { player.move(direction); });
     });
 };
 

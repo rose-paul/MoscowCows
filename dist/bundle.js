@@ -64,6 +64,7 @@
 	    restart.disabled = true;
 	    restart.addEventListener('click', () => {
 	        ctx.clearRect(0, 0, 1000, 500);
+	        debugger
 	        let newGame = new Game();
 	        let newGv = new GameView(newGame, ctx);
 	        newGv.start();
@@ -90,6 +91,7 @@
 	function Game() {
 	    this.cows = [];
 	    this.players = [];
+	    debugger
 	    this.doll;
 	    this.collected = 0;
 	    this.size = 60;
@@ -119,6 +121,7 @@
 	    })
 	
 	    this.players.push(player);
+	    debugger
 	    return player;
 	}
 	
@@ -139,15 +142,17 @@
 	};
 	
 	Game.prototype.all = function() {
-	    return [].concat(this.cows, this.players);
+	    return [].concat(this.cows);
 	}
 	
 	
 	Game.prototype.draw = function(ctx) {
-	  ctx.clearRect(0, 0, 1000, 500);
+	    const canvas = document.getElementById("game-canvas");
+	    ctx.clearRect(0, 0, canvas.width, canvas.height);
 	  this.all().forEach(thing => {
 	    thing.draw(ctx);
 	  });
+	  this.players[0].looperino(ctx);
 	  if (this.collected === 1) {
 	      this.size = 54;
 	  } else if (this.collected === 2) {
@@ -186,6 +191,7 @@
 	    this.cows.forEach( cow => {
 	        if (cow.tramples(this.players[0])) {
 	            this.lose();
+	            this.players[0].alive = false;
 	        }
 	    })
 	}
@@ -306,8 +312,8 @@
 	
 	const CYCLELOOP = [0, 1, 0, 2];
 	let CURRENTLOOPINDEX = 0;
+	let CURRENTDIRECTION = 0;
 	let FRAMECOUNT = 0;
-	
 	
 	function Player(data) {
 	    this.radius = 5;
@@ -321,11 +327,14 @@
 	    this.height = 18;
 	    this.scaledWidth = this.scale * this.width;
 	    this.scaledHeight = this.scale * this.height;
+	    const el = document.getElementById('game-canvas');
+	    const ctx = el.getContext('2d');
+	    this.alive = true;
 	    }
 	
-	Player.prototype.draw = function (ctx) {
-	    window.requestAnimationFrame(() => this.step(ctx))
-	}
+	// Player.prototype.draw = function (ctx) {
+	//     window.requestAnimationFrame(() => this.(ctx))
+	// }
 	
 	Player.prototype.drawFrame = function (frameX, frameY, canvasX, canvasY, ctx) {
 	    ctx.drawImage(
@@ -341,37 +350,58 @@
 	    );
 	}
 	
-	Player.prototype.step = function (ctx) {
-	    const canvas = document.getElementById("game-canvas");
-	    ctx.clearRect(0, 0, canvas.width, canvas.height);
-	    this.drawFrame(CYCLELOOP[CURRENTLOOPINDEX], 0, 0, 0, ctx);
-	    CURRENTLOOPINDEX++;
-	    if (CURRENTLOOPINDEX >= CYCLELOOP.length) {
-	        CURRENTLOOPINDEX = 0;
+	Player.prototype.looperino = function(ctx) {
+	    // const canvas = document.getElementById("game-canvas");
+	    // ctx.clearRect(0, 0, canvas.width, canvas.height);
+	    this.drawFrame(0, 0, this.pos[0], this.pos[1], ctx)
+	    let animationId = window.requestAnimationFrame(() => this.looperino(ctx))
+	    if (!this.alive) {
+	        window.cancelAnimationFrame(animationId);
 	    }
-	    let that = this;
-	    window.requestAnimationFrame(() => that.step(ctx))
-	
 	}
 	
-	Player.prototype = Object.create(MovingCow.prototype);
-	Player.prototype.constructor = Player;
+	// Player.prototype.step = function (ctx) {
+	//     FRAMECOUNT++;
+	//     debugger
+	//     if (FRAMECOUNT < 15) {
+	//         window.requestAnimationFrame(() => this.step(ctx));
+	//         return;
+	//     }
+	//     FRAMECOUNT = 0;
+	//     const canvas = document.getElementById("game-canvas");
+	//     ctx.clearRect(0, 0, canvas.width, canvas.height);
+	//     this.drawFrame(CYCLELOOP[CURRENTLOOPINDEX], CURRENTDIRECTION, 0, 0, ctx);
+	//     CURRENTLOOPINDEX++;
+	//     if (CURRENTLOOPINDEX >= CYCLELOOP.length) {
+	//         CURRENTLOOPINDEX = 0;
+	//         CURRENTDIRECTION ++
+	//     }
 	
-	Player.prototype.movee = function(direction) {
+	//     if (CURRENTDIRECTION >= 4) {
+	//         CURRENTDIRECTION = 0;
+	//     }
+	//     window.requestAnimationFrame(() => this.step(ctx))
+	
+	// }
+	
+	// Player.prototype = Object.create(MovingCow.prototype);
+	// Player.prototype.constructor = Player;
+	
+	Player.prototype.move = function(direction) {
 	    // this.vel[0] += direction[0];
 	    // this.vel[1] += direction[1];
-	    if (this.pos[0] > 1300) {
+	    if (this.pos[0] > 1500) {
 	        this.pos[0] = 0;
 	    } else if (this.pos[0] < 0) {
-	        this.pos[0] = 1300;
+	        this.pos[0] = 1500;
 	    }
-	    if (this.pos[1] > 800) {
+	    if (this.pos[1] > 500) {
 	        this.pos[1] = 0;
 	    } else if (this.pos[1] < 0) {
-	        this.pos[1] = 800;
+	        this.pos[1] = 500;
 	    }
-	    this.pos[0] = (this.pos[0] + direction[0]) % 1300;
-	    this.pos[1] = (this.pos[1] + direction[1]) % 800;
+	    this.pos[0] = (this.pos[0] + direction[0]) % 1000;
+	    this.pos[1] = (this.pos[1] + direction[1]) % 500;
 	}
 	
 	Player.prototype.collects = function(doll) {
@@ -441,7 +471,7 @@
 	    const player = this.player;
 	    Object.keys(GameView.MOVES).forEach(function (k) {
 	        const direction = GameView.MOVES[k];
-	        key(k, function () { player.movee(direction); });
+	        key(k, function () { player.move(direction); });
 	    });
 	};
 	
