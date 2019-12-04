@@ -121,7 +121,6 @@
 	    })
 	
 	    this.players.push(player);
-	    debugger
 	    return player;
 	}
 	
@@ -312,8 +311,12 @@
 	
 	const CYCLELOOP = [0, 1, 0, 2];
 	let CURRENTLOOPINDEX = 0;
-	let CURRENTDIRECTION = 0;
 	let FRAMECOUNT = 0;
+	
+	const FACING_DOWN = 0;
+	const FACING_UP = 1;
+	const FACING_LEFT = 2;
+	const FACING_RIGHT = 3;
 	
 	function Player(data) {
 	    this.radius = 5;
@@ -330,6 +333,7 @@
 	    const el = document.getElementById('game-canvas');
 	    const ctx = el.getContext('2d');
 	    this.alive = true;
+	    this.currentDirection = FACING_DOWN;
 	    }
 	
 	// Player.prototype.draw = function (ctx) {
@@ -353,7 +357,7 @@
 	Player.prototype.looperino = function(ctx) {
 	    // const canvas = document.getElementById("game-canvas");
 	    // ctx.clearRect(0, 0, canvas.width, canvas.height);
-	    this.drawFrame(0, 0, this.pos[0], this.pos[1], ctx)
+	    this.drawFrame(0, this.currentDirection, this.pos[0], this.pos[1], ctx)
 	    let animationId = window.requestAnimationFrame(() => this.looperino(ctx))
 	    if (!this.alive) {
 	        window.cancelAnimationFrame(animationId);
@@ -390,6 +394,16 @@
 	Player.prototype.move = function(direction) {
 	    // this.vel[0] += direction[0];
 	    // this.vel[1] += direction[1];
+	    if (direction[1] < 0) {
+	        this.currentDirection = FACING_UP;
+	    } else if (direction[0] < 0) {
+	        this.currentDirection = FACING_LEFT;
+	    } else if (direction[1] > 0) {
+	        this.currentDirection = FACING_DOWN
+	    } else {
+	        this.currentDirection = FACING_RIGHT;
+	    }
+	
 	    if (this.pos[0] > 1500) {
 	        this.pos[0] = 0;
 	    } else if (this.pos[0] < 0) {
@@ -461,10 +475,6 @@
 	    a: [-10, 0],
 	    s: [0, 10],
 	    d: [10, 0],
-	    "s+d": [10, 10],
-	    "s+a": [-10, 10],
-	    "w+d": [10, -10],
-	    "w+a": [-10, -10]
 	};
 	// 
 	GameView.prototype.bindKeyHandlers = function() {

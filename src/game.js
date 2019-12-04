@@ -40,7 +40,6 @@ Game.prototype.addPlayer = function() {
     })
 
     this.players.push(player);
-    debugger
     return player;
 }
 
