@@ -50,6 +50,7 @@
 	
 	document.addEventListener('DOMContentLoaded', () => {
 	    //MUSIC
+	    browser = window.navigator.userAgent.toLowerCase();
 	    const musicSource = './music/midnight.m4a';
 	    const audio = document.createElement('audio')
 	    audio.setAttribute('src', musicSource);
@@ -71,6 +72,15 @@
 	            muteUnmute.src = 'images/icons8-audio-100.png'
 	        }
 	    })
+	    if (browser.indexOf('firefox') === -1) {
+	        const audio = document.createElement('embed');
+	        audio.className = "audio"
+	        audio.setAttribute('src', musicSource);
+	        audio.autostart = true;
+	        audio.loop = true;
+	        audio.muted = true;
+	        audio.controls = true;
+	    } 
 	
 	
 	    //GAME
@@ -93,9 +103,6 @@
 	        let newGv = new GameView(newGame, ctx);
 	        newGv.start();
 	    })
-	    
-	
-	    console.log('in add event listener')
 	
 	})
 
