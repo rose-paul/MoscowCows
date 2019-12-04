@@ -18,18 +18,20 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('musicToggle').addEventListener('click', function () {
             
             if (audioCtx.state === "suspended") {
-                this.dataset.playing = "true"
                 audioCtx.resume().then( () => audio.play() )
+                this.dataset.playing = "true"
+                muteUnmute.setAttribute('src', 'images/icons8-mute-100.png')
+                return;
             }  
             console.log(this.dataset.playing);
             if (this.dataset.playing === 'false') {
                 audio.play();
                 this.dataset.playing = "true";
-                muteUnmute.src = 'images/icons8-audio-100.png'
+                muteUnmute.setAttribute('src', 'images/icons8-mute-100.png')
             } else if (this.dataset.playing === 'true') {
                 audio.pause();
                 this.dataset.playing = "false";
-                muteUnmute.setAttribute('src', 'images/icons8-mute-100.png')
+                muteUnmute.src = 'images/icons8-audio-100.png'
             }
         }, false)
 
