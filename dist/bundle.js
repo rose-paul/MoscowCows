@@ -325,7 +325,7 @@
 	    img2.src = "./images/playersprite.png"
 	    this.sprite = img2;
 	    this.pos = data.pos;
-	    this.scale = 2.5;
+	    this.scale = 1.5;
 	    this.width = 16;
 	    this.height = 18;
 	    this.scaledWidth = this.scale * this.width;
