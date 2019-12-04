@@ -57,6 +57,19 @@ Player.prototype.move = function(direction) {
     } else {
         this.currentDirection = FACING_RIGHT;
     }
+
+    if (this.vel[1] < 0 && direction[1] > 0) {
+        this.vel[1] = 0;
+    } else if (this.vel[1] > 0 && direction[1] < 0) {
+        this.vel[1] = 0;
+    } else if (this.vel[0] < 0 && direction[0] > 0) {
+        this.vel[0] = 0;
+    } else if (this.vel[0] > 0 && direction[0] < 0) {
+        this.vel[0] = 0;
+    } else {
+        this.vel[0] += direction[0];
+        this.vel[1] += direction[1];
+    }
     
     CURRENTLOOPINDEX++
     if (CURRENTLOOPINDEX >= 3) {

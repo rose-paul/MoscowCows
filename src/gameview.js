@@ -7,10 +7,10 @@ function GameView(game, ctx) {
 
 
 GameView.MOVES = {
-    w: [0, -10],
-    a: [-10, 0],
-    s: [0, 10],
-    d: [10, 0],
+    w: [0, -.1],
+    a: [-.1, 0],
+    s: [0, .1],
+    d: [.1, 0],
 };
 
 GameView.prototype.bindKeyHandlers = function() {

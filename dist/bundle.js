@@ -116,7 +116,8 @@
 	
 	Game.prototype.addPlayer = function() {
 	    const player = new Player({
-	        pos: this.randomPosition()
+	        pos: this.randomPosition(),
+	        vel: [1, 1]
 	    })
 	
 	    this.players.push(player);
@@ -324,8 +325,6 @@
 	    this.height = 18;
 	    this.scaledWidth = this.scale * this.width;
 	    this.scaledHeight = this.scale * this.height;
-	    const el = document.getElementById('game-canvas');
-	    const ctx = el.getContext('2d');
 	    this.alive = true;
 	    this.currentDirection = FACING_DOWN;
 	    this.frameCount = 0;
@@ -364,6 +363,19 @@
 	        this.currentDirection = FACING_DOWN
 	    } else {
 	        this.currentDirection = FACING_RIGHT;
+	    }
+	
+	    if (this.vel[1] < 0 && direction[1] > 0) {
+	        this.vel[1] = 0;
+	    } else if (this.vel[1] > 0 && direction[1] < 0) {
+	        this.vel[1] = 0;
+	    } else if (this.vel[0] < 0 && direction[0] > 0) {
+	        this.vel[0] = 0;
+	    } else if (this.vel[0] > 0 && direction[0] < 0) {
+	        this.vel[0] = 0;
+	    } else {
+	        this.vel[0] += direction[0];
+	        this.vel[1] += direction[1];
 	    }
 	    
 	    CURRENTLOOPINDEX++
@@ -438,10 +450,10 @@
 	
 	
 	GameView.MOVES = {
-	    w: [0, -10],
-	    a: [-10, 0],
-	    s: [0, 10],
-	    d: [10, 0],
+	    w: [0, -.1],
+	    a: [-.1, 0],
+	    s: [0, .1],
+	    d: [.1, 0],
 	};
 	
 	GameView.prototype.bindKeyHandlers = function() {
