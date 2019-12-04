@@ -90,18 +90,27 @@
 	                audio.load();
 	                moos.load();
 	                document.getElementById('musicToggle').addEventListener('click', function() {
+	                    
 	                    if (audio.muted) {
-	                        audio.play().then( () => moos.play());
+	                        audio.play()
 	                        audio.muted = false;
 	                        moos.muted = false;
+	
+	                        var intervalId = setInterval(function () {
+	                            moos.play();
+	                        }, 10000)
+	
 	                        muteUnmute.setAttribute('src', 'images/icons8-mute-100.png')
 	                    } else {
 	                        audio.pause();
 	                        moos.pause();
+	                        clearInterval(intervalId)
 	                        audio.muted = true;
-	                        moos.muted = false;
+	                        moos.muted = true;
 	                        muteUnmute.src = 'images/icons8-audio-100.png'
 	                    }
+	
+	                   
 	                })
 	    
 	            // }
