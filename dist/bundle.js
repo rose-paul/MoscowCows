@@ -230,6 +230,7 @@
 	    this.cows.forEach( cow => {
 	        if (cow.tramples(this.player)) {
 	            this.lose();
+	            this.activateRestart();
 	            this.player.alive = false;
 	        }
 	    })
@@ -241,6 +242,7 @@
 	        this.doll.pos = this.randomPosition();
 	        if (this.collected === 9) {
 	            this.win();
+	            this.activateRestart();
 	        }
 	    }
 	}
@@ -252,11 +254,7 @@
 	    ctx.font = "bold 48px Arial"
 	    ctx.fillText("Moo. Trampled.", el.width * .34, el.height * .5)
 	    this.lost = true;
-	    let restart = document.getElementById('restart')
-	    restart.disabled = false;
-	    restart.addEventListener('click', () => {
-	        restart.disabled = true;
-	    })
+	   
 	}
 	
 	Game.prototype.win = function() {
@@ -268,6 +266,13 @@
 	    this.won = true;
 	}
 	
+	Game.prototype.activateRestart = function() {
+	    let restart = document.getElementById('restart')
+	    restart.disabled = false;
+	    restart.addEventListener('click', () => {
+	        restart.disabled = true;
+	    })
+	}
 	module.exports = Game;
 
 /***/ }),
