@@ -191,7 +191,7 @@
 	  this.all().forEach(thing => {
 	    thing.draw(ctx);
 	  });
-	  this.player.looperino(ctx);
+	  this.player.loop(ctx);
 	  if (this.collected === 1) {
 	      this.size = 54;
 	  } else if (this.collected === 2) {
@@ -389,10 +389,10 @@
 	    );
 	}
 	
-	Player.prototype.looperino = function(ctx) {
+	Player.prototype.loop = function(ctx) {
 	    
 	    this.drawFrame(CYCLELOOP[CURRENTLOOPINDEX], this.currentDirection, this.pos[0], this.pos[1], ctx)
-	    let animationId = window.requestAnimationFrame(() => this.looperino(ctx))
+	    let animationId = window.requestAnimationFrame(() => this.loop(ctx))
 	    if (!this.alive) {
 	        window.cancelAnimationFrame(animationId);
 	    }

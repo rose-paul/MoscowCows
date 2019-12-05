@@ -75,7 +75,7 @@ Game.prototype.draw = function(ctx) {
   this.all().forEach(thing => {
     thing.draw(ctx);
   });
-  this.player.looperino(ctx);
+  this.player.loop(ctx);
   if (this.collected === 1) {
       this.size = 54;
   } else if (this.collected === 2) {

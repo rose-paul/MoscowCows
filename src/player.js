@@ -37,10 +37,10 @@ Player.prototype.drawFrame = function (frameX, frameY, canvasX, canvasY, ctx) {
     );
 }
 
-Player.prototype.looperino = function(ctx) {
+Player.prototype.loop = function(ctx) {
     
     this.drawFrame(CYCLELOOP[CURRENTLOOPINDEX], this.currentDirection, this.pos[0], this.pos[1], ctx)
-    let animationId = window.requestAnimationFrame(() => this.looperino(ctx))
+    let animationId = window.requestAnimationFrame(() => this.loop(ctx))
     if (!this.alive) {
         window.cancelAnimationFrame(animationId);
     }
