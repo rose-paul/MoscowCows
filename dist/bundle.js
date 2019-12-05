@@ -55,34 +55,7 @@
 	    const moos = document.getElementById('moos')
 	    muteUnmute = document.getElementById('music')
 	    muteUnmute.src = 'images/icons8-audio-100.png'
-	    // if (browser.indexOf('firefox') === -1) {
-	
-	    //     AudioContext = window.AudioContext || window.webkitAudioContext;
-	    //     const audioCtx = new AudioContext();
-	    //     const track = audioCtx.createMediaElementSource(audio);
-	    //     track.connect(audioCtx.destination);
-	    //     audioCtx.onstatechange = () => { console.log( audioCtx.state )}
-	    //     document.getElementById('musicToggle').addEventListener('click', function () {
-	            
-	    //         if (audioCtx.state === "suspended") {
-	    //             audioCtx.resume().then( () => audio.play() )
-	    //             this.dataset.playing = "true"
-	    //             muteUnmute.setAttribute('src', 'images/icons8-mute-100.png')
-	    //             return;
-	    //         }  
-	
-	    //         if (this.dataset.playing === 'false') {
-	    //             audio.play();
-	    //             this.dataset.playing = "true";
-	    //             muteUnmute.setAttribute('src', 'images/icons8-mute-100.png')
-	    //         } else if (this.dataset.playing === 'true') {
-	    //             audio.pause();
-	    //             this.dataset.playing = "false";
-	    //             muteUnmute.src = 'images/icons8-audio-100.png'
-	    //         }
-	    //     }, false)
-	
-	    // } else {
+	 
 	                audio.loop = true;
 	                audio.muted = true;
 	                moos.loop = true;
@@ -112,8 +85,6 @@
 	
 	                   
 	                })
-	    
-	            // }
 	
 	
 	    //GAME
