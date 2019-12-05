@@ -135,7 +135,7 @@ Game.prototype.collect = function() {
 Game.prototype.lose = function() {
     this.ctx.fillStyle = "red"
     this.ctx.font = "bold 48px Arial"
-    this.ctx.fillText("Moo. Trampled.", el.width * .34, el.height * .5)
+    this.ctx.fillText("Moo. Trampled.", this.canvas.width * .34, this.canvas.height * .5)
     this.lost = true;
    
 }
