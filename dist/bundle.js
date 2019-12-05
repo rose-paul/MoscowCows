@@ -132,6 +132,8 @@
 	    this.addCows();
 	    this.lost = false;
 	    this.won = false;
+	    this.canvas = document.getElementById('game-canvas');
+	    this.ctx = this.canvas.getContext('2d');
 	    // this.level = 0;
 	}
 	
@@ -186,8 +188,7 @@
 	
 	
 	Game.prototype.draw = function(ctx) {
-	const canvas = document.getElementById("game-canvas");
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	  this.all().forEach(thing => {
 	    thing.draw(ctx);
 	  });
@@ -211,16 +212,16 @@
 	  } else if (this.collected === 9) {
 	      this.size = 6;
 	  }
-	  this.doll.draw(ctx, this.size);
+	  this.doll.draw(this.ctx, this.size);
 	};
 	
-	Game.prototype.step = function(ctx) {
-	    this.moveAll(ctx);
+	Game.prototype.step = function() {
+	    this.moveAll(this.ctx);
 	    this.trampled();
 	    this.collect();
 	}
 	
-	Game.prototype.moveAll = function(ctx) {
+	Game.prototype.moveAll = function() {
 	    this.all().forEach(thing => {
 	        thing.move();
 	    })
@@ -248,21 +249,17 @@
 	}
 	
 	Game.prototype.lose = function() {
-	    const el = document.getElementById('game-canvas');
-	    const ctx = el.getContext('2d');
-	    ctx.fillStyle = "red"
-	    ctx.font = "bold 48px Arial"
-	    ctx.fillText("Moo. Trampled.", el.width * .34, el.height * .5)
+	    this.ctx.fillStyle = "red"
+	    this.ctx.font = "bold 48px Arial"
+	    this.ctx.fillText("Moo. Trampled.", el.width * .34, el.height * .5)
 	    this.lost = true;
 	   
 	}
 	
-	Game.prototype.win = function() {
-	    const el = document.getElementById('game-canvas');
-	    const ctx = el.getContext('2d');
-	    ctx.fillStyle = "blue"
-	    ctx.font = "bold 48px Arial"
-	    ctx.fillText("Молодец, все собрали", el.width * .24, el.height * .5)
+	Game.prototype.win = function() { 
+	    this.ctx.fillStyle = "blue"
+	    this.ctx.font = "bold 48px Arial"
+	    this.ctx.fillText("Молодец, все собрали", el.width * .24, el.height * .5)
 	    this.won = true;
 	}
 	
