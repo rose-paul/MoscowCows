@@ -121,7 +121,7 @@
 	
 	Game.DIM_X = 990;
 	Game.DIM_Y = 480;
-	Game.NUM_COWS = 20;
+	Game.NUM_COWS = 15;
 	
 	function Game() {
 	    this.cows = [];
@@ -258,7 +258,7 @@
 	    const ctx = el.getContext('2d');
 	    ctx.fillStyle = "blue"
 	    ctx.font = "bold 48px Arial"
-	    ctx.fillText("Молодец, все собрали", el.width * .3, el.height * .5)
+	    ctx.fillText("Молодец, все собрали", el.width * .24, el.height * .5)
 	    this.won = true;
 	}
 	
