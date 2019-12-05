@@ -39,6 +39,27 @@ this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   this.doll.draw(this.ctx, this.size);
 };
 ```
+# Game Steps
+Each step in the game (on a set setInterval) the objects are moved and the game checks if the player has been trampled or collected a doll. Upon winning or losing, the restart button is enabled. 
+```javascript 
+Game.prototype.step = function() {
+    this.moveAll(this.ctx);
+    this.trampled();
+    this.collect();
+}
+```
+
+```javascript 
+Game.prototype.trampled = function() {
+    this.cows.forEach( cow => {
+        if (cow.tramples(this.player)) {
+            this.lose();
+            this.activateRestart();
+            this.player.alive = false;
+        }
+    })
+}
+```
 
 ```javascript
 Game.prototype.collect = function() {
