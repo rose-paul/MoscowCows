@@ -156,13 +156,6 @@
 	        pos: this.randomPosition()
 	    })
 	    this.player = player;
-	    while (this.trampled()) {
-	         player = new Player({
-	            pos: this.randomPosition()
-	        })
-	    }
-	
-	    this.player = player;
 	    return player;
 	}
 	
@@ -231,7 +224,6 @@
 	    this.cows.forEach( cow => {
 	        if (cow.tramples(this.player)) {
 	            this.lose();
-	            this.activateRestart();
 	            this.player.alive = false;
 	        }
 	    })
@@ -243,7 +235,6 @@
 	        this.doll.pos = this.randomPosition();
 	        if (this.collected === 9) {
 	            this.win();
-	            this.activateRestart();
 	        }
 	    }
 	}
@@ -251,8 +242,13 @@
 	Game.prototype.lose = function() {
 	    this.ctx.fillStyle = "red"
 	    this.ctx.font = "bold 48px Arial"
-	    this.ctx.fillText("Moo. Trampled.", el.width * .34, el.height * .5)
+	    this.ctx.fillText("Moo. Trampled.", this.canvas.width * .34, this.canvas.height * .5)
 	    this.lost = true;
+	    let restart = document.getElementById('restart')
+	    restart.disabled = false;
+	    restart.addEventListener('click', () => {
+	        restart.disabled = true;
+	    })
 	   
 	}
 	
@@ -261,9 +257,6 @@
 	    this.ctx.font = "bold 48px Arial"
 	    this.ctx.fillText("Молодец, все собрали", el.width * .24, el.height * .5)
 	    this.won = true;
-	}
-	
-	Game.prototype.activateRestart = function() {
 	    let restart = document.getElementById('restart')
 	    restart.disabled = false;
 	    restart.addEventListener('click', () => {
@@ -358,7 +351,7 @@
 	function Player(data) {
 	    this.radius = 5;
 	    this.vel = data.vel || [0, 0];
-	    let img2 = new Image();
+	    const img2 = new Image();
 	    img2.src = "./images/playersprite.png"
 	    this.sprite = img2;
 	    this.pos = data.pos;
@@ -389,7 +382,7 @@
 	Player.prototype.loop = function(ctx) {
 	    
 	    this.drawFrame(CYCLELOOP[CURRENTLOOPINDEX], this.currentDirection, this.pos[0], this.pos[1], ctx)
-	    let animationId = window.requestAnimationFrame(() => this.loop(ctx))
+	    const animationId = window.requestAnimationFrame(() => this.loop(ctx))
 	    if (!this.alive) {
 	        window.cancelAnimationFrame(animationId);
 	    }

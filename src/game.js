@@ -40,13 +40,6 @@ Game.prototype.addPlayer = function() {
         pos: this.randomPosition()
     })
     this.player = player;
-    while (this.trampled()) {
-         player = new Player({
-            pos: this.randomPosition()
-        })
-    }
-
-    this.player = player;
     return player;
 }
 
@@ -115,7 +108,6 @@ Game.prototype.trampled = function() {
     this.cows.forEach( cow => {
         if (cow.tramples(this.player)) {
             this.lose();
-            this.activateRestart();
             this.player.alive = false;
         }
     })
@@ -127,7 +119,6 @@ Game.prototype.collect = function() {
         this.doll.pos = this.randomPosition();
         if (this.collected === 9) {
             this.win();
-            this.activateRestart();
         }
     }
 }
@@ -137,6 +128,11 @@ Game.prototype.lose = function() {
     this.ctx.font = "bold 48px Arial"
     this.ctx.fillText("Moo. Trampled.", this.canvas.width * .34, this.canvas.height * .5)
     this.lost = true;
+    let restart = document.getElementById('restart')
+    restart.disabled = false;
+    restart.addEventListener('click', () => {
+        restart.disabled = true;
+    })
    
 }
 
@@ -145,9 +141,6 @@ Game.prototype.win = function() {
     this.ctx.font = "bold 48px Arial"
     this.ctx.fillText("Молодец, все собрали", el.width * .24, el.height * .5)
     this.won = true;
-}
-
-Game.prototype.activateRestart = function() {
     let restart = document.getElementById('restart')
     restart.disabled = false;
     restart.addEventListener('click', () => {

@@ -9,7 +9,7 @@ const FACING_RIGHT = 3;
 function Player(data) {
     this.radius = 5;
     this.vel = data.vel || [0, 0];
-    let img2 = new Image();
+    const img2 = new Image();
     img2.src = "./images/playersprite.png"
     this.sprite = img2;
     this.pos = data.pos;
@@ -40,7 +40,7 @@ Player.prototype.drawFrame = function (frameX, frameY, canvasX, canvasY, ctx) {
 Player.prototype.loop = function(ctx) {
     
     this.drawFrame(CYCLELOOP[CURRENTLOOPINDEX], this.currentDirection, this.pos[0], this.pos[1], ctx)
-    let animationId = window.requestAnimationFrame(() => this.loop(ctx))
+    const animationId = window.requestAnimationFrame(() => this.loop(ctx))
     if (!this.alive) {
         window.cancelAnimationFrame(animationId);
     }
