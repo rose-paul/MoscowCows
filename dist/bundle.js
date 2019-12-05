@@ -125,7 +125,7 @@
 	
 	function Game() {
 	    this.cows = [];
-	    this.players = [];
+	    this.player;
 	    this.doll;
 	    this.collected = 0;
 	    this.size = 60;
@@ -150,11 +150,17 @@
 	}
 	
 	Game.prototype.addPlayer = function() {
-	    const player = new Player({
+	    let player = new Player({
 	        pos: this.randomPosition()
 	    })
+	    this.player = player;
+	    while (this.trampled()) {
+	         player = new Player({
+	            pos: this.randomPosition()
+	        })
+	    }
 	
-	    this.players.push(player);
+	    this.player = player;
 	    return player;
 	}
 	
@@ -185,7 +191,7 @@
 	  this.all().forEach(thing => {
 	    thing.draw(ctx);
 	  });
-	  this.players[0].looperino(ctx);
+	  this.player.looperino(ctx);
 	  if (this.collected === 1) {
 	      this.size = 54;
 	  } else if (this.collected === 2) {
@@ -222,19 +228,21 @@
 	
 	Game.prototype.trampled = function() {
 	    this.cows.forEach( cow => {
-	        if (cow.tramples(this.players[0])) {
+	        if (cow.tramples(this.player)) {
 	            this.lose();
-	            this.players[0].alive = false;
+	            this.activateRestart();
+	            this.player.alive = false;
 	        }
 	    })
 	}
 	
 	Game.prototype.collect = function() {
-	    if (this.players[0].collects(this.doll)) {
+	    if (this.player.collects(this.doll)) {
 	        this.collected++;
 	        this.doll.pos = this.randomPosition();
 	        if (this.collected === 9) {
 	            this.win();
+	            this.activateRestart();
 	        }
 	    }
 	}
@@ -246,11 +254,7 @@
 	    ctx.font = "bold 48px Arial"
 	    ctx.fillText("Moo. Trampled.", el.width * .34, el.height * .5)
 	    this.lost = true;
-	    let restart = document.getElementById('restart')
-	    restart.disabled = false;
-	    restart.addEventListener('click', () => {
-	        restart.disabled = true;
-	    })
+	   
 	}
 	
 	Game.prototype.win = function() {
@@ -262,6 +266,13 @@
 	    this.won = true;
 	}
 	
+	Game.prototype.activateRestart = function() {
+	    let restart = document.getElementById('restart')
+	    restart.disabled = false;
+	    restart.addEventListener('click', () => {
+	        restart.disabled = true;
+	    })
+	}
 	module.exports = Game;
 
 /***/ }),
