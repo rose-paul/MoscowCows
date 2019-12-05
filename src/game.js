@@ -9,7 +9,7 @@ Game.NUM_COWS = 15;
 
 function Game() {
     this.cows = [];
-    this.players = [];
+    this.player;
     this.doll;
     this.collected = 0;
     this.size = 60;
@@ -34,11 +34,17 @@ Game.prototype.addCows = function() {
 }
 
 Game.prototype.addPlayer = function() {
-    const player = new Player({
+    let player = new Player({
         pos: this.randomPosition()
     })
+    this.player = player;
+    while (this.trampled()) {
+         player = new Player({
+            pos: this.randomPosition()
+        })
+    }
 
-    this.players.push(player);
+    this.player = player;
     return player;
 }
 
@@ -69,7 +75,7 @@ Game.prototype.draw = function(ctx) {
   this.all().forEach(thing => {
     thing.draw(ctx);
   });
-  this.players[0].looperino(ctx);
+  this.player.looperino(ctx);
   if (this.collected === 1) {
       this.size = 54;
   } else if (this.collected === 2) {
@@ -106,15 +112,15 @@ Game.prototype.moveAll = function(ctx) {
 
 Game.prototype.trampled = function() {
     this.cows.forEach( cow => {
-        if (cow.tramples(this.players[0])) {
+        if (cow.tramples(this.player)) {
             this.lose();
-            this.players[0].alive = false;
+            this.player.alive = false;
         }
     })
 }
 
 Game.prototype.collect = function() {
-    if (this.players[0].collects(this.doll)) {
+    if (this.player.collects(this.doll)) {
         this.collected++;
         this.doll.pos = this.randomPosition();
         if (this.collected === 9) {
