@@ -73,3 +73,13 @@ Game.prototype.collect = function() {
     }
 }
 ```
+
+```javascript
+Game.prototype.activateRestart = function() {
+    let restart = document.getElementById('restart')
+    restart.disabled = false;
+    restart.addEventListener('click', () => {
+        restart.disabled = true;
+    })
+}
+```
