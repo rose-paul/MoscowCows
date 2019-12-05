@@ -49,6 +49,45 @@
 	const Modal = __webpack_require__(7)
 	
 	document.addEventListener('DOMContentLoaded', () => {
+	    //MUSIC
+	    browser = window.navigator.userAgent.toLowerCase();
+	    const audio = document.getElementById('audio')
+	    const moos = document.getElementById('moos')
+	    muteUnmute = document.getElementById('music')
+	    muteUnmute.src = 'images/icons8-audio-100.png'
+	 
+	                audio.loop = true;
+	                audio.muted = true;
+	                moos.loop = true;
+	                moos.muted = true;
+	                audio.load();
+	                moos.load();
+	                document.getElementById('musicToggle').addEventListener('click', function() {
+	                    
+	                    if (audio.muted) {
+	                        audio.play()
+	                        audio.muted = false;
+	                        moos.muted = false;
+	
+	                        var intervalId = setInterval(function () {
+	                            moos.play();
+	                        }, 10000)
+	
+	                        muteUnmute.setAttribute('src', 'images/icons8-mute-100.png')
+	                    } else {
+	                        audio.pause();
+	                        moos.pause();
+	                        clearInterval(intervalId)
+	                        audio.muted = true;
+	                        moos.muted = true;
+	                        muteUnmute.src = 'images/icons8-audio-100.png'
+	                    }
+	
+	                   
+	                })
+	
+	
+	    //GAME
 	    const el = document.getElementById('game-canvas');
 	    const ctx = el.getContext('2d');
 	    Modal();
@@ -68,9 +107,6 @@
 	        let newGv = new GameView(newGame, ctx);
 	        newGv.start();
 	    })
-	    
-	
-	    console.log('in add event listener')
 	
 	})
 
@@ -323,8 +359,6 @@
 	    this.height = 18;
 	    this.scaledWidth = this.scale * this.width;
 	    this.scaledHeight = this.scale * this.height;
-	    const el = document.getElementById('game-canvas');
-	    const ctx = el.getContext('2d');
 	    this.alive = true;
 	    this.currentDirection = FACING_DOWN;
 	    this.frameCount = 0;
@@ -364,6 +398,19 @@
 	    } else {
 	        this.currentDirection = FACING_RIGHT;
 	    }
+	
+	    // if (this.vel[1] < 0 && direction[1] > 0) {
+	    //     this.vel[1] = 0;
+	    // } else if (this.vel[1] > 0 && direction[1] < 0) {
+	    //     this.vel[1] = 0;
+	    // } else if (this.vel[0] < 0 && direction[0] > 0) {
+	    //     this.vel[0] = 0;
+	    // } else if (this.vel[0] > 0 && direction[0] < 0) {
+	    //     this.vel[0] = 0;
+	    // } else {
+	    //     this.vel[0] += direction[0];
+	    //     this.vel[1] += direction[1];
+	    // }
 	    
 	    CURRENTLOOPINDEX++
 	    if (CURRENTLOOPINDEX >= 3) {
@@ -380,6 +427,8 @@
 	    } else if (this.pos[1] < 0) {
 	        this.pos[1] = 500;
 	    }
+	    // this.pos[0] = (this.pos[0] + this.vel[0]) % 1000;
+	    // this.pos[1] = (this.pos[1] + this.vel[1]) % 500;
 	    this.pos[0] = (this.pos[0] + direction[0]) % 1000;
 	    this.pos[1] = (this.pos[1] + direction[1]) % 500;
 	}
@@ -437,10 +486,10 @@
 	
 	
 	GameView.MOVES = {
-	    w: [0, -10],
-	    a: [-10, 0],
-	    s: [0, 10],
-	    d: [10, 0],
+	    w: [0, -5],
+	    a: [-5, 0],
+	    s: [0, 5],
+	    d: [5, 0],
 	};
 	
 	GameView.prototype.bindKeyHandlers = function() {
