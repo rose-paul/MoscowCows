@@ -70,8 +70,8 @@ Game.prototype.all = function() {
 
 
 Game.prototype.draw = function(ctx) {
-    const canvas = document.getElementById("game-canvas");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+const canvas = document.getElementById("game-canvas");
+ctx.clearRect(0, 0, canvas.width, canvas.height);
   this.all().forEach(thing => {
     thing.draw(ctx);
   });
