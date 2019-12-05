@@ -87,6 +87,11 @@ button:disabled {
 .links img {
     height: 48px;
     width: 48px;
+}
+
+.links a {
+    height: 48px;
+    width: 48px;
     margin-left: 200px;
     margin-right: 200px;
 }
