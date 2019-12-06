@@ -5,7 +5,7 @@ const Doll = require('./doll');
 
 Game.DIM_X = 990;
 Game.DIM_Y = 480;
-Game.NUM_COWS = 0;
+Game.NUM_COWS = 20;
 
 function Game() {
     this.cows = [];
