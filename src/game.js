@@ -5,7 +5,7 @@ const Doll = require('./doll');
 
 Game.DIM_X = 990;
 Game.DIM_Y = 480;
-Game.NUM_COWS = 15;
+Game.NUM_COWS = 0;
 
 function Game() {
     this.cows = [];
@@ -117,7 +117,7 @@ Game.prototype.collect = function() {
     if (this.player.collects(this.doll)) {
         this.collected++;
         this.doll.pos = this.randomPosition();
-        if (this.collected === 9) {
+        if (this.collected === 1) {
             this.win();
         }
     }
@@ -139,7 +139,7 @@ Game.prototype.lose = function() {
 Game.prototype.win = function() { 
     this.ctx.fillStyle = "blue"
     this.ctx.font = "bold 48px Arial"
-    this.ctx.fillText("Молодец, все собрали", el.width * .24, el.height * .5)
+    this.ctx.fillText("Молодец, все собрали", this.canvas.width * .24, this.canvas.height * .5)
     this.won = true;
     let restart = document.getElementById('restart')
     restart.disabled = false;
