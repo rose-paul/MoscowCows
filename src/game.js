@@ -117,7 +117,7 @@ Game.prototype.collect = function() {
     if (this.player.collects(this.doll)) {
         this.collected++;
         this.doll.pos = this.randomPosition();
-        if (this.collected === 1) {
+        if (this.collected === 9) {
             this.win();
         }
     }
