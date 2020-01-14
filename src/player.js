@@ -58,6 +58,13 @@ Player.prototype.move = function(direction) {
         this.currentDirection = FACING_RIGHT;
     }
 
+    this.frameCount++
+    if (this.frameCount > 15) {
+        this.frameCount = 0;
+        this.drawFrame(CYCLELOOP[CURRENTLOOPINDEX], this.currentDirection, this.pos[0], this.pos[1], ctx)
+        return;
+    }
+
     // if (this.vel[1] < 0 && direction[1] > 0) {
     //     this.vel[1] = 0;
     // } else if (this.vel[1] > 0 && direction[1] < 0) {

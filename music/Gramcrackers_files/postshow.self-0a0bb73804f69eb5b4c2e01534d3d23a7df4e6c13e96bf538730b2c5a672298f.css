@@ -1,0 +1,112 @@
+/* line 1, /Users/prose009/Desktop/igclone/app/assets/stylesheets/postshow.scss */
+.post-show-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* line 7, /Users/prose009/Desktop/igclone/app/assets/stylesheets/postshow.scss */
+.post-show-main {
+  margin-top: 45px;
+  margin-bottom: 45px;
+  display: flex;
+  justify-content: center;
+  height: 450px;
+  width: 825px;
+  background-color: white;
+}
+
+/* line 17, /Users/prose009/Desktop/igclone/app/assets/stylesheets/postshow.scss */
+.post-show-row {
+  display: flex;
+}
+
+/* line 21, /Users/prose009/Desktop/igclone/app/assets/stylesheets/postshow.scss */
+.post-show-right {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  padding-right: 18px;
+}
+
+/* line 28, /Users/prose009/Desktop/igclone/app/assets/stylesheets/postshow.scss */
+.post-show-user {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #bdbdbd;
+  width: 375px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* line 37, /Users/prose009/Desktop/igclone/app/assets/stylesheets/postshow.scss */
+.post-options {
+  cursor: pointer;
+  margin-left: auto;
+  padding-right: 15px;
+}
+
+/* line 43, /Users/prose009/Desktop/igclone/app/assets/stylesheets/postshow.scss */
+.post-show-user > p {
+  font-weight: bold;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+/* line 50, /Users/prose009/Desktop/igclone/app/assets/stylesheets/postshow.scss */
+.post-show-main .username {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  margin-right: 7px;
+  cursor: pointer;
+}
+
+/* line 58, /Users/prose009/Desktop/igclone/app/assets/stylesheets/postshow.scss */
+.post-show-user > .username {
+  margin-left: 10px;
+}
+
+/* line 62, /Users/prose009/Desktop/igclone/app/assets/stylesheets/postshow.scss */
+.post-show-user > .username > p {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* line 66, /Users/prose009/Desktop/igclone/app/assets/stylesheets/postshow.scss */
+.owner-caption {
+  display: flex;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  padding-left: 6px;
+}
+
+/* line 72, /Users/prose009/Desktop/igclone/app/assets/stylesheets/postshow.scss */
+.owner-caption p {
+  margin-top: 0;
+}
+
+/* line 77, /Users/prose009/Desktop/igclone/app/assets/stylesheets/postshow.scss */
+.profile-pic-small {
+  border: 1px solid black;
+  width: 40px;
+  height: 40px;
+  border-radius: 100px;
+  margin-left: 6px;
+}
+
+/* line 85, /Users/prose009/Desktop/igclone/app/assets/stylesheets/postshow.scss */
+.profile-feed-img {
+  max-width: 300px;
+  max-height: 300px;
+  min-width: 300px;
+  min-height: 300px;
+  object-fit: cover;
+}
+
+/* line 93, /Users/prose009/Desktop/igclone/app/assets/stylesheets/postshow.scss */
+.post-show-img {
+  max-width: 450px;
+  max-height: 450px;
+  min-width: 450px;
+  min-height: 450px;
+  object-fit: cover;
+}
