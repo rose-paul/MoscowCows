@@ -2,6 +2,8 @@
 
 In Moscow Cows, a game implemented in JavaScript using the HTML5 canvas tag, players must successfully collect full sets of Russian nesting dolls while avoiding being trampled by a herd of cows. 
 
+![alt-text](https://github.com/rose-paul/MoscowCows/blob/master/images/mskcows.gif?raw=true)
+
 [Live Link](https://rose-paul.github.io/MoscowCows/)
 
 # Technologies and Languages
