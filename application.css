@@ -1,6 +1,7 @@
 body {
     margin: 0;
-    background-color: rgb(167, 167, 167);
+    background-image: url("images/game-background.jpg");
+    /* background-color: rgb(167, 167, 167); */
 }
 
 .center-col {
@@ -12,7 +13,8 @@ body {
 
 .title {
     font-family: 'Press Start 2P', cursive;
-    color: rgb(155, 50, 50);
+    /* color: rgb(155, 50, 50); */
+    color: rgb(214, 29, 29);
     margin-bottom: 15px;
     margin-top: 15px;
 }
@@ -62,7 +64,8 @@ button {
     margin-top: 10px;
     margin-bottom: 10px;
     border: none;
-    background-color: rgb(155, 50, 50);
+    /* background-color: rgb(155, 50, 50); */
+    background-color: rgb(214, 29, 29);
     padding: 15px;
     border-radius: 5px;
     color: white;

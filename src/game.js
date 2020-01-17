@@ -141,7 +141,7 @@ Game.prototype.lose = function() {
 Game.prototype.win = function() { 
     this.ctx.fillStyle = "blue"
     this.ctx.font = "bold 48px Arial"
-    this.ctx.fillText("Молодец! You win!", this.canvas.width * .24, this.canvas.height * .5)
+    this.ctx.fillText("Молодец! You win!", this.canvas.width * .28, this.canvas.height * .5)
     this.won = true;
     let restart = document.getElementById('restart')
     restart.disabled = false;

@@ -263,7 +263,7 @@ Game.prototype.lose = function() {
 Game.prototype.win = function() { 
     this.ctx.fillStyle = "blue"
     this.ctx.font = "bold 48px Arial"
-    this.ctx.fillText("Молодец! You win!", this.canvas.width * .24, this.canvas.height * .5)
+    this.ctx.fillText("Молодец! You win!", this.canvas.width * .28, this.canvas.height * .5)
     this.won = true;
     let restart = document.getElementById('restart')
     restart.disabled = false;
@@ -428,7 +428,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const audio = document.getElementById('audio')
     const moos = document.getElementById('moos')
     muteUnmute = document.getElementById('music')
-    muteUnmute.src = 'images/icons8-audio-100.png'
+    muteUnmute.src = 'images/icons8-mute-100.png'
  
                 audio.loop = true;
                 audio.muted = true;
@@ -447,14 +447,14 @@ document.addEventListener('DOMContentLoaded', () => {
                             moos.play();
                         }, 10000)
 
-                        muteUnmute.setAttribute('src', 'images/icons8-mute-100.png')
+                        muteUnmute.setAttribute('src', 'images/icons8-audio-100.png')
                     } else {
                         audio.pause();
                         moos.pause();
                         clearInterval(intervalId)
                         audio.muted = true;
                         moos.muted = true;
-                        muteUnmute.src = 'images/icons8-audio-100.png'
+                        muteUnmute.src = 'images/icons8-mute-100.png'
                     }
 
                    
