@@ -46,7 +46,7 @@ Game.prototype.addPlayer = function() {
 Game.prototype.addDoll = function() {
     const doll = new Doll({
         pos: this.randomPosition(),
-        radius: 15
+        radius: 25
     })
 
     this.doll = doll;
