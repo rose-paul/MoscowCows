@@ -159,7 +159,7 @@ Game.prototype.addCows = function() {
 
 Game.prototype.addPlayer = function() {
     let player = new Player({
-        pos: this.randomPosition()
+        pos: [495, 240]
     })
     this.player = player;
     return player;
@@ -178,6 +178,9 @@ Game.prototype.addDoll = function() {
 Game.prototype.randomPosition = function() {
   let x = Math.floor(Math.random() * Math.floor(Game.DIM_X));
   let y = Math.floor(Math.random() * Math.floor(Game.DIM_Y));
+    if ((x > 470 && x < 520) || (y > 220 && y < 260)) {
+        return this.randomPosition()
+    }
   return [x, y];
 };
 
