@@ -125,7 +125,7 @@ const Player = __webpack_require__(/*! ./player */ "./src/player.js");
 const Doll = __webpack_require__(/*! ./doll */ "./src/doll.js");
 // const Level = require('./level')
 
-Game.DIM_X = 990;
+Game.DIM_X = 980;
 Game.DIM_Y = 480;
 Game.NUM_COWS = 12;
 
