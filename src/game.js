@@ -3,7 +3,7 @@ const Player = require("./player");
 const Doll = require('./doll');
 // const Level = require('./level')
 
-Game.DIM_X = 990;
+Game.DIM_X = 980;
 Game.DIM_Y = 480;
 Game.NUM_COWS = 12;
 

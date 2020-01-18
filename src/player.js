@@ -81,7 +81,7 @@ Player.prototype.move = function(direction) {
     if (this.pos[0] > 1500) {
         this.pos[0] = 0;
     } else if (this.pos[0] < 0) {
-        this.pos[0] = 1500;
+        this.pos[0] = 980;
     }
     if (this.pos[1] > 500) {
         this.pos[1] = 0;
