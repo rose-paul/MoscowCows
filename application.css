@@ -94,6 +94,7 @@ button:disabled {
 .links img {
     height: 48px;
     width: 48px;
+    filter: brightness(0);
 }
 
 .links a {
