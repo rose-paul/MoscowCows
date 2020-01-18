@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const audio = document.getElementById('audio')
     const moos = document.getElementById('moos')
     muteUnmute = document.getElementById('music')
-    muteUnmute.src = 'images/icons8-audio-100.png'
+    muteUnmute.src = 'images/icons8-mute-100.png'
  
                 audio.loop = true;
                 audio.muted = true;
@@ -27,14 +27,14 @@ document.addEventListener('DOMContentLoaded', () => {
                             moos.play();
                         }, 10000)
 
-                        muteUnmute.setAttribute('src', 'images/icons8-mute-100.png')
+                        muteUnmute.setAttribute('src', 'images/icons8-audio-100.png')
                     } else {
                         audio.pause();
                         moos.pause();
                         clearInterval(intervalId)
                         audio.muted = true;
                         moos.muted = true;
-                        muteUnmute.src = 'images/icons8-audio-100.png'
+                        muteUnmute.src = 'images/icons8-mute-100.png'
                     }
 
                    

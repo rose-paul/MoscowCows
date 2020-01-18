@@ -5,7 +5,7 @@ const Doll = require('./doll');
 
 Game.DIM_X = 990;
 Game.DIM_Y = 480;
-Game.NUM_COWS = 10;
+Game.NUM_COWS = 12;
 
 function Game() {
     this.cows = [];
@@ -86,9 +86,7 @@ this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       this.size = 18;
   } else if (this.collected === 8) {
       this.size = 12
-  } else if (this.collected === 9) {
-      this.size = 6;
-  }
+  } 
   this.doll.draw(this.ctx, this.size);
 };
 
@@ -96,6 +94,9 @@ Game.prototype.step = function() {
     this.moveAll(this.ctx);
     this.trampled();
     this.collect();
+    this.ctx.fillStyle = "red"
+    this.ctx.font = "bold 36px Comic Sans MS, cursive, sans-serif"
+    this.ctx.fillText(`${this.collected}/8 dolls`, this.canvas.width * .01, this.canvas.height * .99)
 }
 
 Game.prototype.moveAll = function() {
@@ -117,8 +118,9 @@ Game.prototype.collect = function() {
     if (this.player.collects(this.doll)) {
         this.collected++;
         this.doll.pos = this.randomPosition();
-        if (this.collected === 9) {
+        if (this.collected === 8) {
             this.win();
+            this.player.alive = false;
         }
     }
 }
@@ -139,7 +141,7 @@ Game.prototype.lose = function() {
 Game.prototype.win = function() { 
     this.ctx.fillStyle = "blue"
     this.ctx.font = "bold 48px Arial"
-    this.ctx.fillText("Молодец, все собрали", this.canvas.width * .24, this.canvas.height * .5)
+    this.ctx.fillText("Молодец! You win!", this.canvas.width * .28, this.canvas.height * .5)
     this.won = true;
     let restart = document.getElementById('restart')
     restart.disabled = false;

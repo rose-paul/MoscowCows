@@ -7,7 +7,7 @@ const FACING_LEFT = 2;
 const FACING_RIGHT = 3;
 
 function Player(data) {
-    this.radius = 5;
+    this.radius = 10;
     this.vel = data.vel || [0, 0];
     const img2 = new Image();
     img2.src = "./images/playersprite.png"
@@ -21,6 +21,8 @@ function Player(data) {
     this.alive = true;
     this.currentDirection = FACING_DOWN;
     this.frameCount = 0;
+    this.canvas = document.getElementById('game-canvas');
+    this.ctx = this.canvas.getContext('2d');
     }
 
 Player.prototype.drawFrame = function (frameX, frameY, canvasX, canvasY, ctx) {
@@ -39,7 +41,7 @@ Player.prototype.drawFrame = function (frameX, frameY, canvasX, canvasY, ctx) {
 
 Player.prototype.loop = function(ctx) {
     
-    this.drawFrame(CYCLELOOP[CURRENTLOOPINDEX], this.currentDirection, this.pos[0], this.pos[1], ctx)
+    this.drawFrame(CYCLELOOP[CURRENTLOOPINDEX], this.currentDirection, this.pos[0], this.pos[1], this.ctx)
     const animationId = window.requestAnimationFrame(() => this.loop(ctx))
     if (!this.alive) {
         window.cancelAnimationFrame(animationId);
@@ -56,13 +58,6 @@ Player.prototype.move = function(direction) {
         this.currentDirection = FACING_DOWN
     } else {
         this.currentDirection = FACING_RIGHT;
-    }
-
-    this.frameCount++
-    if (this.frameCount > 15) {
-        this.frameCount = 0;
-        this.drawFrame(CYCLELOOP[CURRENTLOOPINDEX], this.currentDirection, this.pos[0], this.pos[1], ctx)
-        return;
     }
 
     // if (this.vel[1] < 0 && direction[1] > 0) {
@@ -97,11 +92,13 @@ Player.prototype.move = function(direction) {
     // this.pos[1] = (this.pos[1] + this.vel[1]) % 500;
     this.pos[0] = (this.pos[0] + direction[0]) % 1000;
     this.pos[1] = (this.pos[1] + direction[1]) % 500;
+
+    // this.drawFrame(CYCLELOOP[CURRENTLOOPINDEX], this.currentDirection, this.pos[0], this.pos[1], this.ctx)
 }
 
 Player.prototype.collects = function(doll) {
     const xDist = Math.abs(this.pos[0] - doll.pos[0]);
-    const yDist = Math.abs(this.pos[1] - doll.pos[1]);
+    const yDist = Math.abs(this.pos[1] - (doll.pos[1]));
     const rDist = this.radius + doll.radius;
 
     if (rDist > xDist && rDist > yDist) {
