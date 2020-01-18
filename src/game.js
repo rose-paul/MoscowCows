@@ -46,7 +46,7 @@ Game.prototype.addPlayer = function() {
 Game.prototype.addDoll = function() {
     const doll = new Doll({
         pos: this.randomPosition(),
-        radius: 25
+        radius: 15
     })
 
     this.doll = doll;
@@ -95,7 +95,7 @@ Game.prototype.step = function() {
     this.trampled();
     this.collect();
     this.ctx.fillStyle = "red"
-    this.ctx.font = "bold 36px Arial"
+    this.ctx.font = "bold 36px Comic Sans MS, cursive, sans-serif"
     this.ctx.fillText(`${this.collected}/8 dolls`, this.canvas.width * .01, this.canvas.height * .99)
 }
 
@@ -118,7 +118,7 @@ Game.prototype.collect = function() {
     if (this.player.collects(this.doll)) {
         this.collected++;
         this.doll.pos = this.randomPosition();
-        if (this.collected === 1) {
+        if (this.collected === 8) {
             this.win();
             this.player.alive = false;
         }

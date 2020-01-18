@@ -7,7 +7,7 @@ const FACING_LEFT = 2;
 const FACING_RIGHT = 3;
 
 function Player(data) {
-    this.radius = 5;
+    this.radius = 10;
     this.vel = data.vel || [0, 0];
     const img2 = new Image();
     img2.src = "./images/playersprite.png"
@@ -98,7 +98,7 @@ Player.prototype.move = function(direction) {
 
 Player.prototype.collects = function(doll) {
     const xDist = Math.abs(this.pos[0] - doll.pos[0]);
-    const yDist = Math.abs(this.pos[1] - doll.pos[1]);
+    const yDist = Math.abs(this.pos[1] - (doll.pos[1]));
     const rDist = this.radius + doll.radius;
 
     if (rDist > xDist && rDist > yDist) {

@@ -168,7 +168,7 @@ Game.prototype.addPlayer = function() {
 Game.prototype.addDoll = function() {
     const doll = new Doll({
         pos: this.randomPosition(),
-        radius: 25
+        radius: 15
     })
 
     this.doll = doll;
@@ -217,7 +217,7 @@ Game.prototype.step = function() {
     this.trampled();
     this.collect();
     this.ctx.fillStyle = "red"
-    this.ctx.font = "bold 36px Arial"
+    this.ctx.font = "bold 36px Comic Sans MS, cursive, sans-serif"
     this.ctx.fillText(`${this.collected}/8 dolls`, this.canvas.width * .01, this.canvas.height * .99)
 }
 
@@ -240,7 +240,7 @@ Game.prototype.collect = function() {
     if (this.player.collects(this.doll)) {
         this.collected++;
         this.doll.pos = this.randomPosition();
-        if (this.collected === 1) {
+        if (this.collected === 8) {
             this.win();
             this.player.alive = false;
         }
@@ -502,7 +502,7 @@ const FACING_LEFT = 2;
 const FACING_RIGHT = 3;
 
 function Player(data) {
-    this.radius = 5;
+    this.radius = 10;
     this.vel = data.vel || [0, 0];
     const img2 = new Image();
     img2.src = "./images/playersprite.png"
@@ -593,7 +593,7 @@ Player.prototype.move = function(direction) {
 
 Player.prototype.collects = function(doll) {
     const xDist = Math.abs(this.pos[0] - doll.pos[0]);
-    const yDist = Math.abs(this.pos[1] - doll.pos[1]);
+    const yDist = Math.abs(this.pos[1] - (doll.pos[1]));
     const rDist = this.radius + doll.radius;
 
     if (rDist > xDist && rDist > yDist) {
