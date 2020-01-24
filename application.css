@@ -135,6 +135,7 @@ button:disabled {
         cursor: pointer;
         border-radius: 0.25rem;
         background-color: lightgray;
+        z-index: 2;
     }
     .close-button:hover {
         background-color: darkgray;
