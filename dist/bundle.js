@@ -140,7 +140,6 @@ function Game() {
     this.won = false;
     this.canvas = document.getElementById('game-canvas');
     this.ctx = this.canvas.getContext('2d');
-    // this.level = 0;
 }
 
 
@@ -162,6 +161,7 @@ Game.prototype.addPlayer = function() {
         pos: [495, 240]
     })
     this.player = player;
+    this.player.loop(this.ctx);
     return player;
 }
 
@@ -184,17 +184,11 @@ Game.prototype.randomPosition = function() {
   return [x, y];
 };
 
-Game.prototype.all = function() {
-    return [].concat(this.cows);
-}
-
-
 Game.prototype.draw = function(ctx) {
 this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-  this.all().forEach(thing => {
-    thing.draw(ctx);
+  this.cows.forEach(cow => {
+    cow.draw(ctx);
   });
-  this.player.loop(ctx);
   if (this.collected === 1) {
       this.size = 54;
   } else if (this.collected === 2) {
@@ -225,8 +219,8 @@ Game.prototype.step = function() {
 }
 
 Game.prototype.moveAll = function() {
-    this.all().forEach(thing => {
-        thing.move();
+    this.cows.forEach(cow => {
+        cow.move();
     })
 }
 
@@ -470,6 +464,9 @@ document.addEventListener('DOMContentLoaded', () => {
     Modal();
     let game = new Game();
     let gv = new GameView(game, ctx);
+    ctx.fillStyle = "rgb(214, 29, 29)"
+    ctx.font = "bold 48px Arial"
+    ctx.fillText("Welcome!", el.width * .40, el.height * .4)
     let start = document.getElementById('start')
     start.className = 'shown'
     start.addEventListener('click', () => {
@@ -557,19 +554,6 @@ Player.prototype.move = function(direction) {
     } else {
         this.currentDirection = FACING_RIGHT;
     }
-
-    // if (this.vel[1] < 0 && direction[1] > 0) {
-    //     this.vel[1] = 0;
-    // } else if (this.vel[1] > 0 && direction[1] < 0) {
-    //     this.vel[1] = 0;
-    // } else if (this.vel[0] < 0 && direction[0] > 0) {
-    //     this.vel[0] = 0;
-    // } else if (this.vel[0] > 0 && direction[0] < 0) {
-    //     this.vel[0] = 0;
-    // } else {
-    //     this.vel[0] += direction[0];
-    //     this.vel[1] += direction[1];
-    // }
     
     CURRENTLOOPINDEX++
     if (CURRENTLOOPINDEX >= 3) {
@@ -586,12 +570,10 @@ Player.prototype.move = function(direction) {
     } else if (this.pos[1] < 0) {
         this.pos[1] = 500;
     }
-    // this.pos[0] = (this.pos[0] + this.vel[0]) % 1000;
-    // this.pos[1] = (this.pos[1] + this.vel[1]) % 500;
+
     this.pos[0] = (this.pos[0] + direction[0]) % 1000;
     this.pos[1] = (this.pos[1] + direction[1]) % 500;
 
-    // this.drawFrame(CYCLELOOP[CURRENTLOOPINDEX], this.currentDirection, this.pos[0], this.pos[1], this.ctx)
 }
 
 Player.prototype.collects = function(doll) {

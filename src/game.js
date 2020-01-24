@@ -18,7 +18,6 @@ function Game() {
     this.won = false;
     this.canvas = document.getElementById('game-canvas');
     this.ctx = this.canvas.getContext('2d');
-    // this.level = 0;
 }
 
 
@@ -40,6 +39,7 @@ Game.prototype.addPlayer = function() {
         pos: [495, 240]
     })
     this.player = player;
+    this.player.loop(this.ctx);
     return player;
 }
 
@@ -62,17 +62,11 @@ Game.prototype.randomPosition = function() {
   return [x, y];
 };
 
-Game.prototype.all = function() {
-    return [].concat(this.cows);
-}
-
-
 Game.prototype.draw = function(ctx) {
 this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-  this.all().forEach(thing => {
-    thing.draw(ctx);
+  this.cows.forEach(cow => {
+    cow.draw(ctx);
   });
-  this.player.loop(ctx);
   if (this.collected === 1) {
       this.size = 54;
   } else if (this.collected === 2) {
@@ -103,8 +97,8 @@ Game.prototype.step = function() {
 }
 
 Game.prototype.moveAll = function() {
-    this.all().forEach(thing => {
-        thing.move();
+    this.cows.forEach(cow => {
+        cow.move();
     })
 }
 
