@@ -104,7 +104,6 @@ function Doll(data) {
 }
 
 Doll.prototype.draw = function (ctx, size) {
-    ctx.beginPath();
     ctx.drawImage(this.sprite, this.pos[0], this.pos[1], size, size)
 }
 
@@ -124,7 +123,6 @@ const MovingCow = __webpack_require__(/*! ./moving_cow */ "./src/moving_cow.js")
 const Player = __webpack_require__(/*! ./player */ "./src/player.js");
 const Doll = __webpack_require__(/*! ./doll */ "./src/doll.js");
 const Haybale = __webpack_require__(/*! ./haybale */ "./src/haybale.js")
-// const Level = require('./level')
 
 Game.DIM_X = 980;
 Game.DIM_Y = 480;
@@ -164,7 +162,7 @@ Game.prototype.addPlayer = function() {
         pos: [495, 240]
     })
     this.player = player;
-    this.player.loop(this.ctx);
+    this.player.loop();
     return player;
 }
 
@@ -360,7 +358,6 @@ function Haybale(data) {
 }
 
 Haybale.prototype.draw = function(ctx) {
-    ctx.beginPath();
     ctx.drawImage(this.hayDisplay, this.pos[0], this.pos[1], 50, 50)
 }
 
@@ -431,7 +428,6 @@ function MovingCow(data) {
 
 MovingCow.prototype.draw = function(ctx) {
 
-    ctx.beginPath();
     ctx.drawImage(this.sprite, this.pos[0], this.pos[1], this.size, this.size)
     
 }
@@ -597,9 +593,9 @@ Player.prototype.drawFrame = function (frameX, frameY, canvasX, canvasY, ctx) {
 Player.prototype.loop = function() {
     
     this.drawFrame(CYCLELOOP[CURRENTLOOPINDEX], this.currentDirection, this.pos[0], this.pos[1], this.ctx)
-    let animationId = window.requestAnimationFrame(() => this.loop(this.ctx))
+    let animationId = requestAnimationFrame(() => this.loop(this.ctx))
     if (!this.alive) {
-        window.cancelAnimationFrame(animationId);
+        cancelAnimationFrame(animationId);
     }
 }
 

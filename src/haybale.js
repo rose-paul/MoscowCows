@@ -7,7 +7,6 @@ function Haybale(data) {
 }
 
 Haybale.prototype.draw = function(ctx) {
-    ctx.beginPath();
     ctx.drawImage(this.hayDisplay, this.pos[0], this.pos[1], 50, 50)
 }
 

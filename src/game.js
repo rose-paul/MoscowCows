@@ -2,7 +2,6 @@ const MovingCow = require("./moving_cow");
 const Player = require("./player");
 const Doll = require('./doll');
 const Haybale = require('./haybale')
-// const Level = require('./level')
 
 Game.DIM_X = 980;
 Game.DIM_Y = 480;
@@ -42,7 +41,7 @@ Game.prototype.addPlayer = function() {
         pos: [495, 240]
     })
     this.player = player;
-    this.player.loop(this.ctx);
+    this.player.loop();
     return player;
 }
 
