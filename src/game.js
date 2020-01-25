@@ -40,6 +40,7 @@ Game.prototype.addPlayer = function() {
         pos: [495, 240]
     })
     this.player = player;
+    this.player.loop();
     return player;
 }
 
@@ -72,7 +73,6 @@ this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   this.all().forEach(thing => {
     thing.draw(ctx);
   });
-  this.player.loop(ctx);
   if (this.collected === 1) {
       this.size = 54;
   } else if (this.collected === 2) {

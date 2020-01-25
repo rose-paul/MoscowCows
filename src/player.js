@@ -39,13 +39,14 @@ Player.prototype.drawFrame = function (frameX, frameY, canvasX, canvasY, ctx) {
     );
 }
 
-Player.prototype.loop = function(ctx) {
+Player.prototype.loop = function() {
     
     this.drawFrame(CYCLELOOP[CURRENTLOOPINDEX], this.currentDirection, this.pos[0], this.pos[1], this.ctx)
-    const animationId = window.requestAnimationFrame(() => this.loop(ctx))
+    const animationId = requestAnimationFrame(() => this.loop(this.ctx))
     if (!this.alive) {
-        window.cancelAnimationFrame(animationId);
+        cancelAnimationFrame(animationId);
     }
+   
 }
 
 Player.prototype.move = function(direction) {
