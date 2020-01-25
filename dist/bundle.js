@@ -255,17 +255,16 @@ Game.prototype.collect = function() {
 
 Game.prototype.eatBale = function() {
     this.hayBale.draw(this.ctx)
-    this.cows.forEach( cow => {
-        if (this.hayBale.isEaten(cow)) {
-            let original = cow.vel;
-            cow.vel = [0, 0]
-            setTimeout(() => {
-                cow.vel = original;
-                cow.size += 10
-            }, 3000)
-            this.hayBale.pos = this.randomPosition()
-        }
-    })
+    // this.cows.forEach( cow => {
+    //     if (this.hayBale.isEaten(cow)) {
+    //         let original = cow.vel;
+    //         cow.vel = [0, 0]
+    //         setTimeout(() => {
+    //             cow.vel = original;
+    //         }, 3000)
+    //         this.hayBale.pos = this.randomPosition()
+    //     }
+    // })
 }
 
 Game.prototype.lose = function() {
@@ -329,7 +328,8 @@ GameView.prototype.bindKeyHandlers = function() {
 GameView.prototype.start = function () {
     let that = this;
     this.bindKeyHandlers();
-    let intId = setInterval(function () {
+    let intId = setInterval(
+        function () {
         that.game.draw(that.ctx);
         that.game.step(that.ctx);
         if (that.game.lost) {
@@ -594,10 +594,10 @@ Player.prototype.drawFrame = function (frameX, frameY, canvasX, canvasY, ctx) {
     );
 }
 
-Player.prototype.loop = function(ctx) {
+Player.prototype.loop = function() {
     
     this.drawFrame(CYCLELOOP[CURRENTLOOPINDEX], this.currentDirection, this.pos[0], this.pos[1], this.ctx)
-    const animationId = window.requestAnimationFrame(() => this.loop(ctx))
+    let animationId = window.requestAnimationFrame(() => this.loop(this.ctx))
     if (!this.alive) {
         window.cancelAnimationFrame(animationId);
     }

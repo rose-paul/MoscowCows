@@ -133,17 +133,16 @@ Game.prototype.collect = function() {
 
 Game.prototype.eatBale = function() {
     this.hayBale.draw(this.ctx)
-    this.cows.forEach( cow => {
-        if (this.hayBale.isEaten(cow)) {
-            let original = cow.vel;
-            cow.vel = [0, 0]
-            setTimeout(() => {
-                cow.vel = original;
-                cow.size += 10
-            }, 3000)
-            this.hayBale.pos = this.randomPosition()
-        }
-    })
+    // this.cows.forEach( cow => {
+    //     if (this.hayBale.isEaten(cow)) {
+    //         let original = cow.vel;
+    //         cow.vel = [0, 0]
+    //         setTimeout(() => {
+    //             cow.vel = original;
+    //         }, 3000)
+    //         this.hayBale.pos = this.randomPosition()
+    //     }
+    // })
 }
 
 Game.prototype.lose = function() {
