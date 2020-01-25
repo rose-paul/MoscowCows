@@ -464,14 +464,14 @@ document.addEventListener('DOMContentLoaded', () => {
     Modal();
     let game = new Game();
     let gv = new GameView(game, ctx);
+    load.style.display = "none"
     ctx.fillStyle = "rgb(214, 29, 29)"
     ctx.font = "bold 48px Arial"
     ctx.fillText("Welcome!", el.width * .40, el.height * .4)
     let start = document.getElementById('start')
     start.className = 'shown'
     start.addEventListener('click', () => {
-        gv.start();
-        start.disabled = 'true'
+            gv.start();
     })
     let restart = document.getElementById('restart')
     restart.disabled = true;
