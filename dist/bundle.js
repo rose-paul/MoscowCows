@@ -123,6 +123,7 @@ module.exports = Doll;
 const MovingCow = __webpack_require__(/*! ./moving_cow */ "./src/moving_cow.js");
 const Player = __webpack_require__(/*! ./player */ "./src/player.js");
 const Doll = __webpack_require__(/*! ./doll */ "./src/doll.js");
+const Haybale = __webpack_require__(/*! ./haybale */ "./src/haybale.js")
 // const Level = require('./level')
 
 Game.DIM_X = 980;
@@ -140,6 +141,8 @@ function Game() {
     this.won = false;
     this.canvas = document.getElementById('game-canvas');
     this.ctx = this.canvas.getContext('2d');
+    this.hayBale;
+    this.addBale();
 }
 
 
@@ -213,6 +216,7 @@ Game.prototype.step = function() {
     this.moveAll(this.ctx);
     this.trampled();
     this.collect();
+    this.eatBale()
     this.ctx.fillStyle = "red"
     this.ctx.font = "bold 36px Comic Sans MS, cursive, sans-serif"
     this.ctx.fillText(`${this.collected}/8 dolls`, this.canvas.width * .01, this.canvas.height * .99)
@@ -233,6 +237,11 @@ Game.prototype.trampled = function() {
     })
 }
 
+Game.prototype.addBale = function() {
+    let hay = new Haybale({ pos: this.randomPosition(), radius: 10})
+    this.hayBale = hay;
+}
+
 Game.prototype.collect = function() {
     if (this.player.collects(this.doll)) {
         this.collected++;
@@ -242,6 +251,21 @@ Game.prototype.collect = function() {
             this.player.alive = false;
         }
     }
+}
+
+Game.prototype.eatBale = function() {
+    this.hayBale.draw(this.ctx)
+    this.cows.forEach( cow => {
+        if (this.hayBale.isEaten(cow)) {
+            let original = cow.vel;
+            cow.vel = [0, 0]
+            setTimeout(() => {
+                cow.vel = original;
+                cow.size += 10
+            }, 3000)
+            this.hayBale.pos = this.randomPosition()
+        }
+    })
 }
 
 Game.prototype.lose = function() {
@@ -320,6 +344,42 @@ module.exports = GameView;
 
 /***/ }),
 
+/***/ "./src/haybale.js":
+/*!************************!*\
+  !*** ./src/haybale.js ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function Haybale(data) {
+    this.pos = data.pos
+    this.radius = data.radius;
+    let hay = new Image()
+    hay.src = "images/haybale.png"
+    this.hayDisplay = hay;
+}
+
+Haybale.prototype.draw = function(ctx) {
+    ctx.beginPath();
+    ctx.drawImage(this.hayDisplay, this.pos[0], this.pos[1], 50, 50)
+}
+
+Haybale.prototype.isEaten = function (cow) {
+    const xDist = Math.abs(this.pos[0] - cow.pos[0]);
+    const yDist = Math.abs(this.pos[1] - (cow.pos[1]));
+    const rDist = this.radius + cow.radius;
+
+    if (rDist > xDist && rDist > yDist) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+module.exports = Haybale;
+
+/***/ }),
+
 /***/ "./src/modal.js":
 /*!**********************!*\
   !*** ./src/modal.js ***!
@@ -366,12 +426,13 @@ function MovingCow(data) {
     let img = new Image();
     data.cowType === "brown-left" ? img.src = "./images/cow.png" : img.src = "./images/001-cow.png"
     this.sprite = img;
+    this.size = 30;
 }
 
 MovingCow.prototype.draw = function(ctx) {
 
     ctx.beginPath();
-    ctx.drawImage(this.sprite, this.pos[0], this.pos[1])
+    ctx.drawImage(this.sprite, this.pos[0], this.pos[1], this.size, this.size)
     
 }
 
@@ -464,7 +525,6 @@ document.addEventListener('DOMContentLoaded', () => {
     Modal();
     let game = new Game();
     let gv = new GameView(game, ctx);
-    load.style.display = "none"
     ctx.fillStyle = "rgb(214, 29, 29)"
     ctx.font = "bold 48px Arial"
     ctx.fillText("Welcome!", el.width * .40, el.height * .4)

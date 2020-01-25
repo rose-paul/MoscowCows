@@ -47,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
     Modal();
     let game = new Game();
     let gv = new GameView(game, ctx);
-    load.style.display = "none"
     ctx.fillStyle = "rgb(214, 29, 29)"
     ctx.font = "bold 48px Arial"
     ctx.fillText("Welcome!", el.width * .40, el.height * .4)

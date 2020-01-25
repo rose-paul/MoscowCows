@@ -1,6 +1,7 @@
 const MovingCow = require("./moving_cow");
 const Player = require("./player");
 const Doll = require('./doll');
+const Haybale = require('./haybale')
 // const Level = require('./level')
 
 Game.DIM_X = 980;
@@ -18,6 +19,8 @@ function Game() {
     this.won = false;
     this.canvas = document.getElementById('game-canvas');
     this.ctx = this.canvas.getContext('2d');
+    this.hayBale;
+    this.addBale();
 }
 
 
@@ -91,6 +94,7 @@ Game.prototype.step = function() {
     this.moveAll(this.ctx);
     this.trampled();
     this.collect();
+    this.eatBale()
     this.ctx.fillStyle = "red"
     this.ctx.font = "bold 36px Comic Sans MS, cursive, sans-serif"
     this.ctx.fillText(`${this.collected}/8 dolls`, this.canvas.width * .01, this.canvas.height * .99)
@@ -111,6 +115,11 @@ Game.prototype.trampled = function() {
     })
 }
 
+Game.prototype.addBale = function() {
+    let hay = new Haybale({ pos: this.randomPosition(), radius: 10})
+    this.hayBale = hay;
+}
+
 Game.prototype.collect = function() {
     if (this.player.collects(this.doll)) {
         this.collected++;
@@ -120,6 +129,21 @@ Game.prototype.collect = function() {
             this.player.alive = false;
         }
     }
+}
+
+Game.prototype.eatBale = function() {
+    this.hayBale.draw(this.ctx)
+    this.cows.forEach( cow => {
+        if (this.hayBale.isEaten(cow)) {
+            let original = cow.vel;
+            cow.vel = [0, 0]
+            setTimeout(() => {
+                cow.vel = original;
+                cow.size += 10
+            }, 3000)
+            this.hayBale.pos = this.randomPosition()
+        }
+    })
 }
 
 Game.prototype.lose = function() {

@@ -7,12 +7,13 @@ function MovingCow(data) {
     let img = new Image();
     data.cowType === "brown-left" ? img.src = "./images/cow.png" : img.src = "./images/001-cow.png"
     this.sprite = img;
+    this.size = 30;
 }
 
 MovingCow.prototype.draw = function(ctx) {
 
     ctx.beginPath();
-    ctx.drawImage(this.sprite, this.pos[0], this.pos[1])
+    ctx.drawImage(this.sprite, this.pos[0], this.pos[1], this.size, this.size)
     
 }
 
