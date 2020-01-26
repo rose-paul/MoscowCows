@@ -2,7 +2,6 @@ function GameView(game, ctx) {
     this.game = game;
     this.ctx = ctx;
     this.player = this.game.addPlayer();
-    this.doll = this.game.addDoll();
 }
 
 
@@ -24,6 +23,8 @@ GameView.prototype.bindKeyHandlers = function() {
 GameView.prototype.start = function () {
     let that = this;
     this.bindKeyHandlers();
+    this.doll = this.game.addDoll();
+    this.cows = this.game.addCows();
     let intId = setInterval(
         function () {
         that.game.draw(that.ctx);

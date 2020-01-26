@@ -13,7 +13,6 @@ function Game() {
     this.doll;
     this.collected = 0;
     this.size = 60;
-    this.addCows();
     this.lost = false;
     this.won = false;
     this.canvas = document.getElementById('game-canvas');

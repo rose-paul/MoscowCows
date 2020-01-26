@@ -134,7 +134,6 @@ function Game() {
     this.doll;
     this.collected = 0;
     this.size = 60;
-    this.addCows();
     this.lost = false;
     this.won = false;
     this.canvas = document.getElementById('game-canvas');
@@ -304,7 +303,6 @@ function GameView(game, ctx) {
     this.game = game;
     this.ctx = ctx;
     this.player = this.game.addPlayer();
-    this.doll = this.game.addDoll();
 }
 
 
@@ -326,6 +324,8 @@ GameView.prototype.bindKeyHandlers = function() {
 GameView.prototype.start = function () {
     let that = this;
     this.bindKeyHandlers();
+    this.doll = this.game.addDoll();
+    this.cows = this.game.addCows();
     let intId = setInterval(
         function () {
         that.game.draw(that.ctx);
