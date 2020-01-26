@@ -47,7 +47,7 @@ Game.prototype.addPlayer = function() {
 Game.prototype.addDoll = function() {
     const doll = new Doll({
         pos: this.randomPosition(),
-        radius: 15
+        radius: 20
     })
 
     this.doll = doll;
@@ -86,10 +86,14 @@ this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       this.size = 12
   } 
   this.doll.draw(this.ctx, this.size);
+
+  this.ctx.fillStyle = "red"
+  this.ctx.font = "bold 36px Comic Sans MS, cursive, sans-serif"
+  this.ctx.fillText(`${this.collected}/8 dolls`, this.canvas.width * .01, this.canvas.height * .99)
 };
 
 Game.prototype.step = function() {
-    this.moveAll(this.ctx);
+    this.moveAllCows();
     this.trampled();
     this.collect();
     this.eatBale()
@@ -98,7 +102,7 @@ Game.prototype.step = function() {
     this.ctx.fillText(`${this.collected}/8 dolls`, this.canvas.width * .01, this.canvas.height * .99)
 }
 
-Game.prototype.moveAll = function() {
+Game.prototype.moveAllCows = function() {
     this.cows.forEach(cow => {
         cow.move();
     })

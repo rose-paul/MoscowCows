@@ -46,6 +46,7 @@ Player.prototype.loop = function() {
     if (!this.alive) {
         cancelAnimationFrame(animationId);
     }
+   
 }
 
 Player.prototype.move = function(direction) {
