@@ -312,7 +312,7 @@ GameView.prototype.start = function () {
         } else if (that.game.won) {
             clearInterval(intId);
         }
-    }, 15);
+    }, 20);
 };
 
 module.exports = GameView;
