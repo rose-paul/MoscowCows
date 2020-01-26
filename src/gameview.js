@@ -32,7 +32,7 @@ GameView.prototype.start = function () {
         } else if (that.game.won) {
             clearInterval(intId);
         }
-    }, 20);
+    }, 15);
 };
 
 module.exports = GameView;

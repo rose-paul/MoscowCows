@@ -1,7 +1,6 @@
 const MovingCow = require("./moving_cow");
 const Player = require("./player");
 const Doll = require('./doll');
-// const Level = require('./level')
 
 Game.DIM_X = 980;
 Game.DIM_Y = 480;
@@ -18,7 +17,6 @@ function Game() {
     this.won = false;
     this.canvas = document.getElementById('game-canvas');
     this.ctx = this.canvas.getContext('2d');
-    // this.level = 0;
 }
 
 
@@ -47,7 +45,7 @@ Game.prototype.addPlayer = function() {
 Game.prototype.addDoll = function() {
     const doll = new Doll({
         pos: this.randomPosition(),
-        radius: 15
+        radius: 20
     })
 
     this.doll = doll;
@@ -63,15 +61,10 @@ Game.prototype.randomPosition = function() {
   return [x, y];
 };
 
-Game.prototype.all = function() {
-    return [].concat(this.cows);
-}
-
-
 Game.prototype.draw = function(ctx) {
 this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-  this.all().forEach(thing => {
-    thing.draw(ctx);
+  this.cows.forEach(cow => {
+    cow.draw(ctx);
   });
   if (this.collected === 1) {
       this.size = 54;
@@ -91,20 +84,21 @@ this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       this.size = 12
   } 
   this.doll.draw(this.ctx, this.size);
+
+  this.ctx.fillStyle = "red"
+  this.ctx.font = "bold 36px Comic Sans MS, cursive, sans-serif"
+  this.ctx.fillText(`${this.collected}/8 dolls`, this.canvas.width * .01, this.canvas.height * .99)
 };
 
 Game.prototype.step = function() {
-    this.moveAll(this.ctx);
+    this.moveAllCows();
     this.trampled();
     this.collect();
-    this.ctx.fillStyle = "red"
-    this.ctx.font = "bold 36px Comic Sans MS, cursive, sans-serif"
-    this.ctx.fillText(`${this.collected}/8 dolls`, this.canvas.width * .01, this.canvas.height * .99)
 }
 
-Game.prototype.moveAll = function() {
-    this.all().forEach(thing => {
-        thing.move();
+Game.prototype.moveAllCows = function() {
+    this.cows.forEach(cow => {
+        cow.move();
     })
 }
 

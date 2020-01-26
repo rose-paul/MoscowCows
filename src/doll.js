@@ -9,7 +9,6 @@ function Doll(data) {
 }
 
 Doll.prototype.draw = function (ctx, size) {
-    ctx.beginPath();
     ctx.drawImage(this.sprite, this.pos[0], this.pos[1], size, size)
 }
 
