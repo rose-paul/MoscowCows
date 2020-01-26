@@ -11,7 +11,6 @@ function MovingCow(data) {
 
 MovingCow.prototype.draw = function(ctx) {
 
-    ctx.beginPath();
     ctx.drawImage(this.sprite, this.pos[0], this.pos[1])
     
 }
