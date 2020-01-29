@@ -10,9 +10,7 @@ function MovingCow(data) {
 }
 
 MovingCow.prototype.draw = function(ctx) {
-
-    ctx.drawImage(this.sprite, this.pos[0], this.pos[1])
-    
+    ctx.drawImage(this.sprite, this.pos[0], this.pos[1]) 
 }
 
 MovingCow.prototype.move = function() {
@@ -26,8 +24,8 @@ MovingCow.prototype.move = function() {
   } else if (this.pos[1] < 0) {
     this.pos[1] = 490;
   }
-  this.pos[0] = (this.pos[0] + this.vel[0]) % 1000;
-  this.pos[1] = (this.pos[1] + this.vel[1]) % 500;
+  this.pos[0] = (this.pos[0] + this.vel[0]) 
+  this.pos[1] = (this.pos[1] + this.vel[1]) 
 };
 
 MovingCow.prototype.tramples = function(player) {

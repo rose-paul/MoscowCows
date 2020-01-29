@@ -42,7 +42,7 @@ Player.prototype.drawFrame = function (frameX, frameY, canvasX, canvasY, ctx) {
 Player.prototype.loop = function() {
     
     this.drawFrame(CYCLELOOP[CURRENTLOOPINDEX], this.currentDirection, this.pos[0], this.pos[1], this.ctx)
-    const animationId = requestAnimationFrame(() => this.loop(this.ctx))
+    let animationId = requestAnimationFrame(() => this.loop(this.ctx))
     if (!this.alive) {
         cancelAnimationFrame(animationId);
     }
@@ -60,41 +60,26 @@ Player.prototype.move = function(direction) {
     } else {
         this.currentDirection = FACING_RIGHT;
     }
-
-    // if (this.vel[1] < 0 && direction[1] > 0) {
-    //     this.vel[1] = 0;
-    // } else if (this.vel[1] > 0 && direction[1] < 0) {
-    //     this.vel[1] = 0;
-    // } else if (this.vel[0] < 0 && direction[0] > 0) {
-    //     this.vel[0] = 0;
-    // } else if (this.vel[0] > 0 && direction[0] < 0) {
-    //     this.vel[0] = 0;
-    // } else {
-    //     this.vel[0] += direction[0];
-    //     this.vel[1] += direction[1];
-    // }
     
     CURRENTLOOPINDEX++
     if (CURRENTLOOPINDEX >= 3) {
         CURRENTLOOPINDEX = 0;
     }
 
-    if (this.pos[0] > 1500) {
+    if (this.pos[0] > 1000) {
         this.pos[0] = 0;
     } else if (this.pos[0] < 0) {
-        this.pos[0] = 980;
+        this.pos[0] = 1000;
     }
     if (this.pos[1] > 500) {
         this.pos[1] = 0;
     } else if (this.pos[1] < 0) {
         this.pos[1] = 500;
     }
-    // this.pos[0] = (this.pos[0] + this.vel[0]) % 1000;
-    // this.pos[1] = (this.pos[1] + this.vel[1]) % 500;
-    this.pos[0] = (this.pos[0] + direction[0]) % 1000;
-    this.pos[1] = (this.pos[1] + direction[1]) % 500;
 
-    // this.drawFrame(CYCLELOOP[CURRENTLOOPINDEX], this.currentDirection, this.pos[0], this.pos[1], this.ctx)
+    this.pos[0] = (this.pos[0] + direction[0]) 
+    this.pos[1] = (this.pos[1] + direction[1]) 
+
 }
 
 Player.prototype.collects = function(doll) {
