@@ -1,7 +1,7 @@
 body {
     margin: 0;
     background-image: url("images/game-background.jpg");
-    /* background-color: rgb(167, 167, 167); */
+    background-size: cover;
 }
 
 .center-col {
@@ -13,18 +13,13 @@ body {
 
 .title {
     font-family: 'Press Start 2P', cursive;
-    /* color: rgb(155, 50, 50); */
     color: rgb(214, 29, 29);
     margin-bottom: 15px;
     margin-top: 15px;
 }
 
 canvas {
-    /* background: rgb(74, 141, 74); */
-    /* background: rgb(60, 189, 60); */
-    /* background-image: url("images/grass-texture.jpeg"); */
     background:linear-gradient(rgba(36, 146, 32, 0.5), rgba(29, 99, 23, 0.5)), url("images/grass-texture.jpeg");
-
     margin-right: 20px;
     margin-left: 20px;
 }
