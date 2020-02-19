@@ -1,7 +1,7 @@
 body {
     margin: 0;
     background-image: url("images/game-background.jpg");
-    /* background-color: rgb(167, 167, 167); */
+    background-size: cover;
 }
 
 .center-col {
